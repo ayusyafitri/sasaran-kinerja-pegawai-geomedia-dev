@@ -13,13 +13,16 @@ include_once('../../php/include_all.php');
         <table class="table table-bordered geo-table table-hover" width="100%">
             <thead>
                 <tr>
-                    <td width="3%">No</td>
-                    <td width="30%">Uraian</td> 
-                    <td width="7%">AK</td>
-                    <td width="15%">Output</td>
-                    <td width="15%">Mutu</td>
-                    <td width="15%">Waktu</td>
-                    <td width="15%">Biaya</td>
+                    <td align="center" valign="middle"rowspan="2" width="3%">No</td>
+                    <td align="center" rowspan="2" width="50%">Uraian</td> 
+                    <td align="center" rowspan="2" width="7%">AK</td>
+                    <td align="center" colspan="4" width="40%">Target</td>
+                </tr>
+                <tr>
+                    <td width="10%">Output</td>
+                    <td width="10%">Mutu</td>
+                    <td width="10%">Waktu</td>
+                    <td width="10%">Biaya</td> 
                 </tr>
             </thead>
             <tbody >
