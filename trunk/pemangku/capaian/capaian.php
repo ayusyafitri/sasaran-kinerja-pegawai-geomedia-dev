@@ -2,7 +2,7 @@
 if (@$_POST['open'] != 'please') {
     exit;
 }
-include_once('../php/include_all.php');
+include_once('../../php/include_all.php');
 ?>
 <div class="widget-header widget-header-flat ">
     <h5><i class="icon-calendar"></i>Target Kerja Per Tahun</h5>
