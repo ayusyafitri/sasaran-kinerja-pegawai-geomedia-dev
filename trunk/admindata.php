@@ -49,7 +49,7 @@ include_once 'php/postgre.php';
                 <?php include 'php/menu.php' ?>
             </div>
 
-            <div id="main-content" >
+            <div id="main-content"  >
                 Hello Admin!!
             </div>
         </div>
@@ -81,7 +81,7 @@ include_once 'php/postgre.php';
                 var urls = link.attr('href');
                 var post = $.post(urls,{open:'please'});
                 post.done(function(response){
-                    $('#admin_content').html(response);
+                    $('#main-content').html(response);
                 });
             });
         </script>
