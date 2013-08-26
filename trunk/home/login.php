@@ -1,12 +1,12 @@
 <?php
 @session_start();
 ?>
-<div class="box">
-    <div data-original-title="" class="box-header well">
-        <h2><i class="icon-user"></i> AUTENTIKASI USER</h2>
-        <a title="Refresh" class="btn pull-right btRefresh"><i class="icon-refresh"></i></a>
+<div class="widget-box">
+    <div data-original-title="" class="widget-header">
+        <h4 class="lighter smaller"><i class="icon-user"></i> AUTENTIKASI USER</h2>
+        <a title="Refresh" class="btn btn-primary btn-small pull-right btRefresh"><i class="icon-refresh"></i></a>
     </div>
-    <div class="box-content" style="padding:20px">
+    <div class="widget-body" style="padding:20px">
         <div class="box center" style="width:250px; margin-bottom:80px; margin-top:70px">
             <div class="box-content">
                 <div class="row-fluid" id="f0rm">
@@ -16,8 +16,8 @@
                     <input name="whoareyou" type="text" placeholder="NIPegawai">
                     <input name="yoursecret" type="password" placeholder="Password">
 
-                    <input type="button" class="btn bt-cancel" value="Cancel">
-                    <input type="button" class="btn bt-login" value="Login">
+                    <input type="button" class="btn btn-danger btn-small bt-cancel" value="Cancel">
+                    <input type="button" class="btn  btn-primary btn-small bt-login" value="Login">
                     <input type="hidden" value="hearme" name="what">
                 </div>                   
             </div>
