@@ -18,7 +18,7 @@ include_once 'php/postgre.php';
         <link rel="stylesheet" href="themes/css/w8.min.css" />
         <link     
     </head>
-    <body>
+    <body style=" font-family:'Open Sans' ;" >
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="container-fluid">
