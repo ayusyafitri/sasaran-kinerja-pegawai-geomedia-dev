@@ -53,7 +53,7 @@ include_once 'php/postgre.php';
                 Hello Admin!!
             </div>
         </div>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
 		<script src="themes/js/jquery.ui.touch-punch.min.js"></script>
