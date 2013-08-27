@@ -17,7 +17,7 @@
                     <input name="yoursecret" type="password" placeholder="Password">
 
                     <input type="button" class="btn btn-danger btn-small bt-cancel" value="Cancel">
-                    <input type="button" class="btn  btn-primary btn-small bt-login" value="Login">
+                    <input type="button" class="btn btn-primary btn-small bt-login" value="Login">
                     <input type="hidden" value="hearme" name="what">
                 </div>                   
             </div>
