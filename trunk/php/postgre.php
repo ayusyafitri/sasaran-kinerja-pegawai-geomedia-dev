@@ -1,10 +1,16 @@
 <?php
+if (isset($_SESSION['_nip'])) define ('SKP_NIP', $_SESSION['_nip']);
+if (isset($_SESSION['_nama'])) define ('SKP_NAMA', $_SESSION['_nama']);
+if (isset($_SESSION['_kdJabatan'])) define ('SKP_KODE', $_SESSION['_kdJabatan']);
+if (isset($_SESSION['_username'])) define ('SKP_USER', $_SESSION['_username']); 
+
+
 function openDB(){
 	$_server = "localhost";
 	$_dbport = "5432";
 	$_dbname = "eskape";
 	$_dbuser = "postgres";
-	$_dbpass = "roketpostgre";
+	$_dbpass = "root";
 	$con = pg_connect("host=$_server port=$_dbport dbname=$_dbname user=$_dbuser password=$_dbpass");
 	return $con;
 }

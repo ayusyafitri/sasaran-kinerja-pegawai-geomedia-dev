@@ -1,7 +1,13 @@
 <?php
 ob_start();
 session_start();
-include_once 'php/postgre.php';
+include_once 'php/include_all.php';
+
+//if (!isset($_SESSION['_username'])){
+//    header("Location:index.php");
+//}
+
+print_r($_SESSION);
 ?>
 <!DOCTIYPE html>
 <html>
