@@ -1,5 +1,6 @@
 <?php
 @session_start();
+if(isset($_SESSION['_username']))    header("Location: ../admindata.php");
 ?>
 <div class="widget-box">
     <div data-original-title="" class="widget-header">
@@ -13,7 +14,7 @@
                     <span style="font-size:1.2em; font-weight:bold;">LOGIN SKP v1.0</span>
                     <hr style="margin:5px auto 15px auto;"/>
                     <div id="alerto"></div>
-                    <input name="whoareyou" type="text" placeholder="NIPegawai">
+                    <input name="whoareyou" type="text" placeholder="NIP Pegawai">
                     <input name="yoursecret" type="password" placeholder="Password">
 
                     <input type="button" class="btn btn-danger btn-small bt-cancel" value="Cancel">
@@ -55,8 +56,6 @@ if (isset($_SESSION['$LEVEL'])) {
 
     $('.bt-login').click(function() {
         var f = $('#f0rm');
-        var what = f.find('input[name="what"]').val();
-        var levl = f.find('select[name="level"]').val();
         var user = f.find('input[name="whoareyou"]').val();
         var pass = f.find('input[name="yoursecret"]').val();
 
@@ -64,16 +63,17 @@ if (isset($_SESSION['$LEVEL'])) {
         alerto.removeClass().addClass('alert');
         alerto.html('<div class="spinner center"></div>&nbsp;');
 
-        var url = 'login_exec.php';
-        var posting = $.post(url, {what: what, whoareyou: user, yoursecret: pass, level: levl});
+        var url = 'php/1nd3x.php';
+        var posting = $.post(url, {whoareyou: user, yoursecret: pass});
         posting.done(function(data) {
-            if (data == 'success') {
+            var dt = data.split('___');
+            if (dt[0] == 'suk') {
                 alerto.removeClass().addClass('alert alert-success');
                 alerto.html('<div class="spinner pull-left"></div>Good, redirecting...');
                 setTimeout(function() {
-                    location.href = 'system.php';
+                    location.href = dt[1];
                 }, 2000);
-            } else if (data == 'error') {
+            } else if (dt[0] == 'gal') {
                 alerto.removeClass().addClass('alert alert-error');
                 alerto.html('Invalid user and/or password');
                 alerto.attr('id')
