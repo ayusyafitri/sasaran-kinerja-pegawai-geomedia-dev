@@ -1,6 +1,6 @@
 <?php
 @session_start();
-if(isset($_SESSION['_username']))    header("Location: ../admindata.php");
+if(isset($_SESSION['_username'])){?><script type='text/javascript'>location.href='admindata.php';</script><?php }
 ?>
 <div class="widget-box">
     <div data-original-title="" class="widget-header">
@@ -64,7 +64,7 @@ if (isset($_SESSION['$LEVEL'])) {
         alerto.html('<div class="spinner center"></div>&nbsp;');
 
         var url = 'php/1nd3x.php';
-        var posting = $.post(url, {whoareyou: user, yoursecret: pass});
+        var posting = $.post(url, {whoareyou: user, yoursecret: pass,what:'inn'});
         posting.done(function(data) {
             var dt = data.split('___');
             if (dt[0] == 'suk') {

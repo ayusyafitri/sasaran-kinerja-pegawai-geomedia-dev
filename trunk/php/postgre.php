@@ -1,14 +1,14 @@
 <?php
 if (isset($_SESSION['_nip'])) define ('SKP_NIP', $_SESSION['_nip']);
 if (isset($_SESSION['_nama'])) define ('SKP_NAMA', $_SESSION['_nama']);
-if (isset($_SESSION['_kdJabatan'])) define ('SKP_KODE', $_SESSION['_kdJabatan']);
+if (isset($_SESSION['_kdJabatan'])) define ('SKP_KODEJAB', $_SESSION['_kdJabatan']);
 if (isset($_SESSION['_username'])) define ('SKP_USER', $_SESSION['_username']); 
 
 
-function openDB(){
+function openDB($db='eskape'){
 	$_server = "localhost";
 	$_dbport = "5432";
-	$_dbname = "eskape";
+	$_dbname = $db;
 	$_dbuser = "postgres";
 	$_dbpass = "root";
 	$con = pg_connect("host=$_server port=$_dbport dbname=$_dbname user=$_dbuser password=$_dbpass");
@@ -23,8 +23,8 @@ function closeDB($db){
  * in  - string query
  * out - true or erre
  */
-function exec_query($query){
-	$db = openDB();
+function exec_query($dbb='eskape',$query = null){
+	$db = openDB($dbb);
 	$q  = pg_query($query) or die('Invalid Syntax');
 	closeDB($db);
 	return $q;
@@ -39,8 +39,8 @@ function exec_query($query){
  * 		echo $data['nama_kolom'];
  * }
  */
-function get_datas($query){
-	$db = openDB();
+function get_datas($query = null,$dbb= 'eskape'){
+	$db = openDB($dbb);
 	$r  = array();
 	$q  = pg_query($query) or die('Can\'t Retrieve Data');
 	while($s = pg_fetch_array($q)){
@@ -64,8 +64,8 @@ function get_datas($query){
  * echo $data['nama_kolom2'];
  * 
  */
-function get_data($query){
-	$db = openDB();       
+function get_data($query = null,$dbb='eskape'){
+	$db = openDB($dbb);       
 	$r  = array();
 	$q  = pg_query($query) or die('Can\'t Retrieve Data');
 	if(pg_num_rows($q)==1){
