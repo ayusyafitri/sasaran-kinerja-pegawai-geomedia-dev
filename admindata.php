@@ -3,11 +3,10 @@ ob_start();
 session_start();
 include_once 'php/include_all.php';
 
-//if (!isset($_SESSION['_username'])){
-//    header("Location:index.php");
-//}
+if (!isset($_SESSION['_username'])){
+    header("Location:index.php");
+}
 
-print_r($_SESSION);
 ?>
 <!DOCTIYPE html>
 <html>
@@ -39,16 +38,17 @@ print_r($_SESSION);
                             <a data-togle="dropdown" href="#" class="user-menu dropdown-toggle">
                                 <img class="nav-user-photo" src="" alt="" />
                                 <span id="user_info">
-                                    <small>Selamat datang</small> admin
+                                    <small>Selamat datang</small> <?php echo SKP_USER;?>
+                                    <small><a href="" id="idTextLogOut" title="logout" name="" >Logout</a></small>
                                 </span>
+                                <span class="pull-left"></span>
                                 <i class="icon-caret-down"></i>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
-
+        </div>        
         <!--content-->
         <div class="container-fluid" id="main-container">
             <div id="sidebar" >
@@ -77,6 +77,11 @@ print_r($_SESSION);
 		<script src="themes/js/w8-elements.min.js"></script>
 		<script src="themes/js/w8.min.js"></script>
         <script>
+            $('a#idTextLogout').click(function(){
+               var to = 'php/1nd3x.php';
+               $.post(to,{what:'outt'});
+            });
+            
             $('a.geo-link').click(function(e){
                 if(e.preventDefault()) e.preventDefault = false;
 	
@@ -84,7 +89,7 @@ print_r($_SESSION);
                 link.parent().parent().children().removeClass('active');
                 link.parent().addClass('active');
 	
-                var urls = link.attr('href');
+                var urls = link.attr('lnk')+''+link.attr('name');
                 var post = $.post(urls,{open:'please'});
                 post.done(function(response){
                     $('#main-content').html(response);

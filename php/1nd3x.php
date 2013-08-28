@@ -1,30 +1,34 @@
 <?php
 
 ob_start();
-
+session_start();
 include_once('postgre.php');
 $usr = addslashes($_POST['whoareyou']);
 $pwd = addslashes($_POST['yoursecret']);
 
-$r = 'index.php';
-$h = get_datas("select nip, nama, kode_jabatan, username, id_pns from skp_pns where username='" . $usr . "' and password='" . $pwd . "'");
-//$d = count($ih);
-print_r($h);
-if (count($h) > 0) {    
-    session_start();
-    $_SESSION['_nip'] = $h[0];
-    echo $h[0]." - ";
-    $_SESSION['_nama'] = $h[1];
-    echo $h[1]." - ";
-    $_SESSION['_kdJabatan'] = $h[2];
-    echo $h[2]." - ";
-    $_SESSION['_username'] = $h[3];
-    echo $h[3]." - ";
-    echo 'suk___admindata.php<br>';
-    
-    print_r($_SESSION);
-    
-} else {
-    echo 'gal';
+if (isset($_POST['what']))
+    $what = $_POST['what'];
+if (isset($_GET['what']))
+    $what = $_GET['what'];
+
+if ($what == 'inn') {
+    $h = get_datas("select nip, nama, kode_jabatan, username, id_pns from skp_pns where username='" . $usr . "' and password='" . $pwd . "'");    
+    if (count($h) > 0) {
+        
+        $_SESSION['_nip'] = $h[0]['nip'];
+        $_SESSION['_nama'] = $h[0]['nama'];
+        $_SESSION['_kdJabatan'] = $h[0]['kode_jabatan'];
+        $_SESSION['_username'] = $h[0]['username'];
+        echo 'suk___admindata.php';
+    } else {
+        echo 'gal';
+    }
+}else if ($what == 'outt'){
+    unset($_SESSION['_nip']);
+    unset($_SESSION['_nama']);
+    unset($_SESSION['_kdJabatan']);
+    unset($_SESSION['_username']);
+    session_destroy();
+    header("Location:index.php");
 }
 ?>
