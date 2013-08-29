@@ -12,19 +12,19 @@ include_once 'php/postgre.php';
         <meta name="description" content="Sistem Informasi Manajemen Kepegawaian">
         <meta name="author" content="haripinter">
 
-        <link href="css/bootstrap.min.css" id="bs-css" rel="stylesheet">
-        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="themes/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="themes/css/prettify.css"/>
         <link rel="stylesheet" href="css/skp.css"/>
         <link rel="stylesheet" href="themes/css/w8.min.css" />
-
-        <script src="js/jquery-1.10.1.min.js"></script>
-
+        <link rel="stylesheet" href="themes/css/css.css" />
+        <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
+        <link rel="stylesheet" href="themes/css/w8-skins.min.css" />
     </head>
     <body>
         <!-- topbar starts -->
-        <div class="navbar navbar-fixed-top" style="background-color:#fff;">
+        <div class="navbar navbar-fixed-top" >
             <div class="navbar-inner home-pad-header">
                 <div class="container-fluid">
                     <div class="top-nav">
@@ -99,13 +99,23 @@ include_once 'php/postgre.php';
             </marquee>
         </div>
 
+        <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/bootbox.min.js"></script>
-        <script src="js/jquery-ui.min.js"></script>
-        <script src="js/jquery.cleditor.min.js"></script>
-        <script src="js/klik.js"></script>
-        <script src="js/pagination.js"></script>
+        <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
+        <script src="themes/js/jquery.ui.touch-punch.min.js"></script>
 
+        <script src="themes/js/jquery.slimscroll.min.js"></script>
+        <script src="themes/js/jquery.easy-pie-chart.min.js"></script>
+        <script src="themes/js/jquery.sparkline.min.js"></script>
+
+        <script src="themes/js/jquery.flot.min.js"></script>
+        <script src="themes/js/jquery.flot.pie.min.js"></script>
+        <script src="themes/js/jquery.flot.resize.min.js"></script>
+
+        <!--w8 scripts-->
+
+        <script src="themes/js/w8-elements.min.js"></script>
+        <script src="themes/js/w8.min.js"></script>
         <script>
             $('.bt-home').click(function(x){
                 var btn = $(this);

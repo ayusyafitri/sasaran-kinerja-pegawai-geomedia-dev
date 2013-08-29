@@ -1,11 +1,11 @@
 <?php
 @session_start();
-if(isset($_SESSION['_username'])){?><script type='text/javascript'>location.href='admindata.php';</script><?php }
-?>
+if (isset($_SESSION['_username'])) {
+    ?><script type='text/javascript'>location.href='admindata.php';</script><?php } ?>
 <div class="widget-box">
     <div data-original-title="" class="widget-header">
         <h4 class="lighter smaller"><i class="icon-user"></i> AUTENTIKASI USER</h2>
-        <a title="Refresh" class="btn btn-primary btn-small pull-right btRefresh"><i class="icon-refresh"></i></a>
+            <a title="Refresh" class="btn btn-primary btn-small pull-right btRefresh"><i class="icon-refresh"></i></a>
     </div>
     <div class="widget-body" style="padding:20px">
         <div class="box center" style="width:250px; margin-bottom:80px; margin-top:70px">
@@ -14,8 +14,18 @@ if(isset($_SESSION['_username'])){?><script type='text/javascript'>location.href
                     <span style="font-size:1.2em; font-weight:bold;">LOGIN SKP v1.0</span>
                     <hr style="margin:5px auto 15px auto;"/>
                     <div id="alerto"></div>
-                    <input name="whoareyou" type="text" placeholder="NIP Pegawai">
+                    <label>
+                        <span class="block input-icon input-icon-right">
+                            <input name="whoareyou" type="text" placeholder="NIP Pegawai">
+                            <i class="icon-user"></i>
+                        </span>
+                    </label>
+                    <label>
+                        <span class="block input-icon input-icon-right">
                     <input name="yoursecret" type="password" placeholder="Password">
+                    <i class="icon-lock"></i>
+                        </span>
+                    </label>
 
                     <input type="button" class="btn btn-danger btn-small bt-cancel" value="Cancel">
                     <input type="button" class="btn btn-primary btn-small bt-login" value="Login">

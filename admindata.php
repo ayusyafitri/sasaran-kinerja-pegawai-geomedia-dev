@@ -3,10 +3,9 @@ ob_start();
 session_start();
 include_once 'php/include_all.php';
 
-if (!isset($_SESSION['_username'])){
+if (!isset($_SESSION['_username'])) {
     header("Location:index.php");
 }
-
 ?>
 <!DOCTIYPE html>
 <html>
@@ -21,7 +20,9 @@ if (!isset($_SESSION['_username'])){
         <link rel="stylesheet" href="themes/css/prettify.css"/>
         <link rel="stylesheet" href="css/skp.css"/>
         <link rel="stylesheet" href="themes/css/w8.min.css" />
-        <link     
+        <link rel="stylesheet" href="themes/css/css.css" />
+        <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
+        <link rel="stylesheet" href="themes/css/w8-skins.min.css" />
     </head>
     <body style=" font-family:'Open Sans' ;" >
         <div class="navbar">
@@ -38,8 +39,8 @@ if (!isset($_SESSION['_username'])){
                             <a data-togle="dropdown" href="#" class="user-menu dropdown-toggle">
                                 <img class="nav-user-photo" src="" alt="" />
                                 <span id="user_info">
-                                    <small>Selamat datang</small> <?php echo SKP_USER;?>
-                                    <small><a href="" id="idTextLogOut" title="logout" name="" >Logout</a></small>
+                                    <small>Selamat datang</small> <?php echo SKP_USER; ?>
+
                                 </span>
                                 <span class="pull-left"></span>
                                 <i class="icon-caret-down"></i>
@@ -60,26 +61,26 @@ if (!isset($_SESSION['_username'])){
             </div>
         </div>
         <script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
-		<script src="themes/js/jquery.ui.touch-punch.min.js"></script>
-		
-		<script src="themes/js/jquery.slimscroll.min.js"></script>
-		<script src="themes/js/jquery.easy-pie-chart.min.js"></script>
-		<script src="themes/js/jquery.sparkline.min.js"></script>
-		
-		<script src="themes/js/jquery.flot.min.js"></script>
-		<script src="themes/js/jquery.flot.pie.min.js"></script>
-		<script src="themes/js/jquery.flot.resize.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
+        <script src="themes/js/jquery.ui.touch-punch.min.js"></script>
 
-		<!--w8 scripts-->
+        <script src="themes/js/jquery.slimscroll.min.js"></script>
+        <script src="themes/js/jquery.easy-pie-chart.min.js"></script>
+        <script src="themes/js/jquery.sparkline.min.js"></script>
 
-		<script src="themes/js/w8-elements.min.js"></script>
-		<script src="themes/js/w8.min.js"></script>
+        <script src="themes/js/jquery.flot.min.js"></script>
+        <script src="themes/js/jquery.flot.pie.min.js"></script>
+        <script src="themes/js/jquery.flot.resize.min.js"></script>
+
+        <!--w8 scripts-->
+
+        <script src="themes/js/w8-elements.min.js"></script>
+        <script src="themes/js/w8.min.js"></script>
         <script>
             $('a#idTextLogout').click(function(){
-               var to = 'php/1nd3x.php';
-               $.post(to,{what:'outt'});
+                var to = 'php/1nd3x.php';
+                $.post(to,{what:'outt'});
             });
             
             $('a.geo-link').click(function(e){
