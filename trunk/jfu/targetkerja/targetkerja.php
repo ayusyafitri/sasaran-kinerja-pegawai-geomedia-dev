@@ -9,37 +9,41 @@ include_once('../../php/include_all.php');
 </div>
 <div class="page-header position-relative" id="page-content">
     <button class="btn btn-small btn-info no-radius" id="loadUraian"><i class="icon-upload-alt"></i>Load Uraian</button>
-    <button class="btn btn-small btn-succes no-radius" id="tgsTambahan"><i class="icon-plus-sign-alt"></i>Tugas Tambahan</button>
     &nbsp;<span id="load" class="spinner"></span>
 </div>
 <div class="row-fluid clearfix" >
     <div id="page-content">
         <form id="foTargetKerja">
-            <table class="table table-bordered geo-table table-hover " width="100%">
-                <thead id="rlTabel">
+            <table class="table table-striped table-bordered table-hover geo-table" style="width:100%">
+                <thead >
                     <tr>
-                        <td align="center" valign="middle"rowspan="2" width="3%">No</td>
-                        <td align="center" rowspan="2" width="50%">Uraian</td> 
-                        <td align="center" rowspan="2" width="7%">AK</td>
-                        <td align="center" colspan="4" width="40%">Target</td>
+                        <th class="center" valign="middle" rowspan="2" style="width:3%;">No</th>
+                        <th class="center" rowspan="2" style="width:50%">Uraian</th> 
+                        <th class="center" rowspan="2" style="width:7%">AK</th>
+                        <th class="center" colspan="4" style="width:32%">Target</th>
+                        <th class="center" rowspan="2" style="width:8%">aksi</th>
                     </tr>
                     <tr>
-                        <td width="10%">Output</td>
-                        <td width="10%">Mutu</td>
-                        <td width="10%">Waktu</td>
-                        <td width="10%">Biaya</td> 
+                        <th style="width:8%">Output</th>
+                        <th style="width:8%">Mutu</th>
+                        <th style="width:8%">Waktu</th>
+                        <th style="width:8%">Biaya</th> 
                     </tr>
                 </thead>
-                <tbody >
+                <tbody id="rlTabel">
 
                 </tbody>
             </table>
         </form>
     </div>
+    <div class=" position-relative pull-right" id="page-content">
+        <button class="btn btn-small btn-primary no-radius" id=""><i class="icon-save"></i>Simpan</button>
+        &nbsp;<span id="load" class="spinner"></span>
+    </div>
 </div>
-</div>
+
 <script type="text/javascript">
-    var urls = 'pemangku/targetkerja/targetKerja__.php';
+    var urls = 'jfu/targetkerja/targetKerja__.php';
     $('#loadUraian').click(function() {
         var ld = $('#load');
         ld.addClass('loading');

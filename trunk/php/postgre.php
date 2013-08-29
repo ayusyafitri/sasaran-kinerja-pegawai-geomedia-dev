@@ -10,7 +10,7 @@ function openDB($db='eskape'){
 	$_dbport = "5432";
 	$_dbname = $db;
 	$_dbuser = "postgres";
-	$_dbpass = "root";
+	$_dbpass = "roketpostgre";
 	$con = pg_connect("host=$_server port=$_dbport dbname=$_dbname user=$_dbuser password=$_dbpass");
 	return $con;
 }
