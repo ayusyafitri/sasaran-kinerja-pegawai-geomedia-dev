@@ -34,17 +34,21 @@ if (!isset($_SESSION['_username'])) {
                             Sasaran Kinerja Pegawai Versi 1.0
                         </small>
                     </a>
-                    <ul class="nav pull-right">
-                        <li >
-                            <a data-togle="dropdown" href="#" class="user-menu dropdown-toggle">
-                                <img class="nav-user-photo" src="" alt="" />
+                    <ul class="nav ace-nav pull-right">
+                        <li class="light-blue user-profile">
+                            <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
+                                <img class="nav-user-photo" src="img/16.jpg" alt="Shinta Re" />
                                 <span id="user_info">
-                                    <small>Selamat datang</small> <?php echo SKP_USER; ?>
-
+                                    <small>Welcome,</small><?php echo SKP_USER; ?>
                                 </span>
-                                <span class="pull-left"></span>
                                 <i class="icon-caret-down"></i>
                             </a>
+
+                            <ul class="pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer" id="user_menu">
+                                <li><a href="#"> <i class="icon-user"></i>Profil</a></li>
+                                <li><a href="#"><i class="icon-cog"></i>Edit Profil</a></li>
+                                <li><a href="#"> <i class="icon-off"></i>Logout</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -68,7 +72,8 @@ if (!isset($_SESSION['_username'])) {
         <script src="themes/js/jquery.slimscroll.min.js"></script>
         <script src="themes/js/jquery.easy-pie-chart.min.js"></script>
         <script src="themes/js/jquery.sparkline.min.js"></script>
-
+        <script src="themes/js/bootstrap-editable.min.js"> </script>
+        <script src="themes/js/w8-editable.min.js"></script>
         <script src="themes/js/jquery.flot.min.js"></script>
         <script src="themes/js/jquery.flot.pie.min.js"></script>
         <script src="themes/js/jquery.flot.resize.min.js"></script>
@@ -96,6 +101,9 @@ if (!isset($_SESSION['_username'])) {
                     $('#main-content').html(response);
                 });
             });
+     
+			
         </script>
     </body>
 </html>
+<!---->
