@@ -1,0 +1,6 @@
+=== untuk jfu ===
+username : 197507242007012012
+pass:123
+
+== untuk struktural ==
+link ../skp/admindata.php diganti ../skp/struktural.php
