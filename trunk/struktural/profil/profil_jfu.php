@@ -31,7 +31,7 @@ include_once('../../php/include_all.php');
                     <div class="span3">
                         <div class="center">
                             <span class="profile-picture">
-                                <img id="avatar" class="editable editable-click editable-empty" src="img/162.jpg"></img>
+                                <img id="avatar" class="editable editable-click editable-empty" src="img/172.jpg"></img>
                             </span>
                         </div>
                         <div class="space-4"></div>

@@ -32,7 +32,7 @@ include_once('../../php/include_all.php');
             <tbody >
                 <tr>
                     <td valign="middle" align="center" style="width:3%;">1 </td>
-                    <td align="center" style="width:58%;">Membantu instansi lain untuk teknis pertanian, perkebunan dan kehutanan</td>
+                    <td align="center" style="width:58%;">Melaksanakan kegiatan pemberdayaan masyarakat, pelayanan umum terhadap masyarakat dan menyelenggarakan ketentraman umum, pemeliharaan prasarana dan fasilitas pelayanan umum serta pembinaan lembaga kemasyarakatan.</td>
                     <td>
                         -
                     </td>
@@ -57,7 +57,7 @@ include_once('../../php/include_all.php');
                 </tr>
                 <tr>
                     <td valign="middle" align="center" style="width:3%;">2 </td>
-                    <td align="center" style="width:58%;">Merekap hasil perkembangan data dalam bentuk laporan</td>
+                    <td align="center" style="width:58%;">Melaksanakan pelaporan kegiatan tugas secara periodik dan tepat waktu kepada Kepala Daerah melalui Camat.</td>
                     <td>
                         -
                     </td>
@@ -82,7 +82,7 @@ include_once('../../php/include_all.php');
                 </tr>
                 <tr>
                     <td valign="middle" align="center" style="width:3%;">3 </td>
-                    <td align="center" style="width:58%;">Melakukan pembinaan teknis ke petani</td>
+                    <td align="center" style="width:58%;">Melaksanakan Koordinasi terhadap jalannya Pemerintahan Kelurahan dan Pelaksanaan Pembangunan</td>
                     <td>
                         -
                     </td>
@@ -107,7 +107,7 @@ include_once('../../php/include_all.php');
                 </tr>
                 <tr>
                     <td valign="middle" align="center" style="width:3%;">4 </td>
-                    <td align="center" style="width:58%;">Mendata perkembangan luas tanam, luas panen, produktvitas,produksi, harga jual petani untuk komoditi tanaman pangan dan holtikultura</td>
+                    <td align="center" style="width:58%;">Melaksanakan kegiatan pemerintahan kelurahan dan melakukan koordinasi dengan Camat dan instansi vertikal yang berada di wilayah kerjanya.</td>
                     <td>
                         -
                     </td>

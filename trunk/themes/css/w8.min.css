@@ -6472,17 +6472,17 @@ td.td-actions a.td-action{
 }
 
 .infobox-green{
-	color:#9abc32;
-	border-color:#9abc32
+	color:#3A87AD;
+	border-color:#3A87AD
 }
 
 .infobox-green>.infobox-icon>[class*="icon-"]{
-	background-color:#9abc32
+	background-color:#3A87AD
 }
 
 .infobox-green.infobox-dark{
-	background-color:#9abc32;
-	border-color:#9abc32
+	background-color:#3A87AD;
+	border-color:#3A87AD
 }
 
 .infobox-green2{
