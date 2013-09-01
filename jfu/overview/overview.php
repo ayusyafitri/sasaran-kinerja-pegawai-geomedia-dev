@@ -24,31 +24,31 @@ include_once('../../php/include_all.php');
         <h1><i class="icon-user-md"></i>&nbsp;Overview</h1>
     </div>
     <div class="row-fluid">
-        <div class="span12 pull-right">
-            <div class="infobox btn infobox-small infobox-dark">
+        <div class="span12 center">
+            <div class="infobox infobox-green infobox-small infobox-dark">
                 <div class="infobox-progress">
                     <div class="easy-pie-chart percentage easyPieChart" data-size="39" data-percent="61" style="width: 39px; height: 39px; line-height: 39px;">
-                        <span class="percent">61</span>
+                        <span class="percent">100</span>
                         %
-                        <canvas height="39" width="39"></canvas>
+                        <canvas height="39" width="39">dfvdc</canvas>
                     </div>
                 </div>
                 <div class="infobox-data">
                     <div class="infobox-content">Target</div>
-                    <div class="infobox-content">Confirmed</div>
+                    <div class="infobox-content">konfirmasi</div>
                 </div>
             </div>
-            <div class="infobox btn-primary infobox-small infobox-dark">
+            <div class="infobox infobox-grey infobox-small infobox-dark">
                 <div class="infobox-progress">
                     <div class="easy-pie-chart percentage easyPieChart" data-size="39" data-percent="61" style="width: 39px; height: 39px; line-height: 39px;">
-                        <span class="percent">61</span>
+                        <span class="percent">0</span>
                         %
-                        <canvas height="39" width="39"></canvas>
+                        <canvas height="39" width="39">dfvdc</canvas>
                     </div>
                 </div>
                 <div class="infobox-data">
                     <div class="infobox-content">Realisasi</div>
-                    <div class="infobox-content">Approved</div>
+                    <div class="infobox-content">-</div>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@ include_once('../../php/include_all.php');
     <div class="row-fluid">
         <div class="span12 widget-container-span ui-sortable">
             <div class="widget-box transparent">
-                <div class="widget-header widget-header-flat"><h5 >Badan Kepegawaian Daerah</h5>
+                <div class="widget-header widget-header-flat"><h5 >SUB BAGIAN PERENCANAAN PROGRAM</h5>
                     <div class="widget-toolbar">
                         <a data-action="collapse" href="#">
                             <i class="icon-chevron-up"></i>
@@ -65,7 +65,7 @@ include_once('../../php/include_all.php');
                     </div>
                 </div>
                 <div class="widget-body">
-                    <div style="height:300px;">bagan </div>
+                    <div style="height:300px;"><img src="img/bagan1.png" /></div>
                 </div>
             </div>
         </div>
@@ -74,20 +74,18 @@ include_once('../../php/include_all.php');
     <div class="row-fluid">
         <div class="span12">
             <div class="row-fluid">
-                <div class="span7 widget-container-span ui-sortable">
+                <div class="span6 widget-container-span ui-sortable">
                     <div class="widget-box">
                         <div class="widget-header widget-header-flat">
-                            <i class="icon-signal icon-large" ></i><h5 class="pull-left">&nbsp;Realisasi Tahun 2013</h5>
+                            <h5>&nbsp;Realisasi Tahun 2013</h5>
                         </div>
                         <div class="widget-body">
-                            <div style="height:300px;">Chart</div>
+                            <div style="height:300px;"><img src="img/chart1.png" /></div>
 
                         </div>
                     </div>
                 </div>
-                <div class="span5 widget-container-span ui-sortable">
-                    adfaf
-                </div>
+                
             </div>
 
         </div>
