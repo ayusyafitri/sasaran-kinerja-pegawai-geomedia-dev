@@ -39,7 +39,7 @@ include_once('../../php/include_all.php');
                             <div class="inline position-relative">
                                 <a class="user-title-label dropdown-toggle" data-toggle="dropdown" href="#">
                                     <i class="icon-circle light-green middle"></i>
-                                    <span class="white middle bigger-120 ">INDRIYANI, SP </span>
+                                    <span class="white middle bigger-120 ">DWI RAHMI ADIATY, SP</span>
                                 </a>
 
                             </div>
@@ -56,31 +56,31 @@ include_once('../../php/include_all.php');
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> NIP</div>
                                 <div class="profile-info-value">
-                                    <span id="username" class="editable editable-click" style="display: inline;">197507242007012012</span>
+                                    <span id="username" class="editable editable-click" style="display: inline;">197203291998032007</span>
                                 </div>
                             </div>
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Nama</div>
                                 <div class="profile-info-value">
-                                    <span id="username" class="editable editable-click" style="display: inline;">INDRIYANI, SP</span>
+                                    <span id="username" class="editable editable-click" style="display: inline;">DWI RAHMI ADIATY, SP</span>
                                 </div>
                             </div> 
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Jabatan</div>
                                 <div class="profile-info-value">
-                                    <span id="username" class="editable editable-click" style="display: inline;">Mantri Pertanian</span>
+                                    <span id="username" class="editable editable-click" style="display: inline;">Kepala Sub Bagian Perencanaan Program</span>
                                 </div>
                             </div>
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Atasan Langsung</div>
                                 <div class="profile-info-value">
-                                    <span id="username" class="editable editable-click" style="display: inline;">Kepala Sub Bagian Perencanaan Program</span>
+                                    <span id="username" class="editable editable-click" style="display: inline;">Sekretaris</span>
                                 </div>
                             </div>
                             <div class="profile-info-row">
                                 <div class="profile-info-name">Nama Atasan Langsung</div>
                                 <div class="profile-info-value">
-                                    <span id="username" class="editable editable-click" style="display: inline;">DWI RAHMI ADIATY, SP</span>
+                                    <span id="username" class="editable editable-click" style="display: inline;">Hj. HAYATI MARHAMAH, SE.MM</span>
                                 </div>
                             </div>
                             <div class="profile-info-row">
@@ -101,13 +101,13 @@ include_once('../../php/include_all.php');
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Tanggal Lahir</div>
                                 <div class="profile-info-value">
-                                    <span id="username" class="editable editable-click" style="display: inline;">24/07/1975</span>
+                                    <span id="username" class="editable editable-click" style="display: inline;">29/03/1972</span>
                                 </div>
                             </div>
                             <div class="profile-info-row">
                                 <div class="profile-info-name">Alamat</div>
                                 <div class="profile-info-value">
-                                    <span id="username" class="editable editable-click" style="display: inline;">Karang Jepun Street No. 50 Samarinda City - Republic of Indonesia</span>
+                                    <span id="username" class="editable editable-click" style="display: inline;">Karang Tengah Street No. 52 Samarinda City - Republic of Indonesia</span>
                                 </div>
                             </div>
                             <div class="profile-info-row">
@@ -122,13 +122,13 @@ include_once('../../php/include_all.php');
                             <div class="profile-info-row">
                                 <div class="profile-info-name">Username</div>
                                 <div class="profile-info-value">
-                                    <span id="username" class="editable editable-click" style="display: inline;">Indri</span>
+                                    <span id="username" class="editable editable-click" style="display: inline;">Dwi</span>
                                 </div>
                             </div>
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Password</div>
                                 <div class="profile-info-value">
-                                    <span id="username" class="editable editable-click" style="display: inline;">123</span>
+                                    <span id="username" class="editable editable-click" style="display: inline;">112</span>
                                 </div>
                             </div>
                         </div>
