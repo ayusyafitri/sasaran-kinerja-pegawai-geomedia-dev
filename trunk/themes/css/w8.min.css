@@ -1715,25 +1715,25 @@ button.btn:active{
 }
 
 .btn-primary{
-	background-color:#2283c5!important;
-	border-color:#2283c5
+	background-color:#229668!important;
+	border-color:#229668
 }
 
 .btn-primary:hover{
-	background-color:#045e9f!important
+	background-color:#095436!important
 }
 
 .btn-primary.no-border:hover{
-	border-color:#045e9f
+	border-color:#095436
 }
 
 .btn-primary.no-hover:hover{
-	background-color:#2283c5!important
+	background-color:#2E8965!important
 }
 
 .btn-primary.active{
-	background-color:#1371b2!important;
-	border-color:#105f96
+	background-color:#1E845B!important;
+	border-color:#0B603E
 }
 
 .btn-primary.no-border.active{
@@ -1742,9 +1742,39 @@ button.btn:active{
 }
 
 .btn-primary.disabled,.btn-primary[disabled]{
+	background-color:#229668!important
+}
+
+.btn-primary2{
+	background-color:#2283c5!important;
+	border-color:#2283c5
+}
+
+.btn-primary2:hover{
+	background-color:#045e9f!important
+}
+
+.btn-primary2.no-border:hover{
+	border-color:#045e9f
+}
+
+.btn-primary2.no-hover:hover{
 	background-color:#2283c5!important
 }
 
+.btn-primary2.active{
+	background-color:#1371b2!important;
+	border-color:#105f96
+}
+
+.btn-primary2.no-border.active{
+	background-color:#1268a4!important;
+	border-color:#1268a4
+}
+
+.btn-primary2.disabled,.btn-primary[disabled]{
+	background-color:#2283c5!important
+}
 .btn-info{
 	background-color:#6fb3e0!important;
 	border-color:#6fb3e0
@@ -9977,7 +10007,7 @@ img.editable-click:hover{
 
 .editable-buttons .btn{
 	padding:0;
-	width:28px;
+	width:20px;
 	line-height:24px;
 	border-width:3px;
 	font-size:12px;
