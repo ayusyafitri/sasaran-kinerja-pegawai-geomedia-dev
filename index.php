@@ -57,10 +57,10 @@ include_once 'php/postgre.php';
                 </div>
                 <div class="span6">
                     <div class="btn-group pull-right" style="margin-top:0px" id="toprightmenu">
-                        <input type="button" class="btn btn-primary bt-home active" name="banner.php" value="Home">
-                        <input type="button" class="btn btn-primary bt-home" name="profil.php" value="Profil">
-                        <input type="button" class="btn btn-primary bt-home" name="info.php" value="Informasi">
-                        <input type="button" class="btn btn-primary bt-home bt-login" name="login.php" value="Login">
+                        <input type="button" class="btn btn-primary2 bt-home active" name="banner.php" value="Home">
+                        <input type="button" class="btn btn-primary2 bt-home" name="profil.php" value="Profil">
+                        <input type="button" class="btn btn-primary2 bt-home" name="info.php" value="Informasi">
+                        <input type="button" class="btn btn-primary2 bt-home bt-login" name="login.php" value="Login">
                     </div>
                 </div>
             </div>

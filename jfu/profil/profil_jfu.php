@@ -162,5 +162,6 @@ include_once('../../php/include_all.php');
         $('#username').editable({
             type: 'text',
             name: 'username'
-        }); 
+        });
+});        
 </script>

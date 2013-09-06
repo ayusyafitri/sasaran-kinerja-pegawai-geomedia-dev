@@ -23,6 +23,11 @@ if (!isset($_SESSION['_username'])) {
         <link rel="stylesheet" href="themes/css/css.css" />
         <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
         <link rel="stylesheet" href="themes/css/w8-skins.min.css" />
+        <script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootbox.min.js"></script>
+	<script type="text/javascript" charset="utf-8" language="javascript" src="js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf-8" language="javascript" src="js/DT_bootstrap.js"></script>
     </head>
     <body style=" font-family:'Open Sans' ;" >
         <div class="navbar">
@@ -57,7 +62,7 @@ if (!isset($_SESSION['_username'])) {
         <!--content-->
         <div class="container-fluid" id="main-container">
             <div id="sidebar" >
-                <?php include 'php/menu.php' ?>
+                <?php include 'php/menuadmin.php' ?>
             </div>
 
             <div id="main-content"  >
