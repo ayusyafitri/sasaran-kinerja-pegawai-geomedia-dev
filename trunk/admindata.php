@@ -24,9 +24,9 @@ if (!isset($_SESSION['_username'])) {
         <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
         <link rel="stylesheet" href="themes/css/w8-skins.min.css" />
         <script src="js/jquery.js"></script>
-        <script src="js/bootbox.min.js"></script>
         <script type="text/javascript" charset="utf-8" language="javascript" src="js/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf-8" language="javascript" src="js/DT_bootstrap.js"></script>
+
     </head>
     <body style=" font-family:'Open Sans' ;" >
         <div class="navbar">
@@ -51,7 +51,9 @@ if (!isset($_SESSION['_username'])) {
                             <ul class="pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer" id="user_menu">
                                 <li><a href="#"> <i class="icon-user"></i>Profil</a></li>
                                 <li><a href="#"><i class="icon-cog"></i>Edit Profil</a></li>
+
                                 <li><a href="#" id="idTextLogout"> <i class="icon-off"></i>Logout</a></li>
+
                             </ul>
                         </li>
                     </ul>
@@ -71,6 +73,7 @@ if (!isset($_SESSION['_username'])) {
             </div>
         </div>
         <script src="js/jquery.min.js"></script>
+        <script src="js/bootbox.min.js"></script>
         <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
         <script src="themes/js/jquery.ui.touch-punch.min.js"></script>
 
