@@ -9,7 +9,7 @@ include_once('../../php/include_all.php');
 </div>
 <div class="page-header position-relative" id="page-content">
     <button class="btn btn-small btn-info no-radius" id="loadUraian"><i class="icon-upload-alt"></i>Load Uraian</button>
-    &nbsp;<span id="load" class="spinner"></span>
+    &nbsp;<span id="load">&nbsp;</span>
 </div>
 <div class="row-fluid clearfix" >
     <div id="page-content">
@@ -30,8 +30,7 @@ include_once('../../php/include_all.php');
                         <th style="width:8%">Biaya</th> 
                     </tr>
                 </thead>
-                <tbody id="rlTabel">
-
+                <tbody id="rlTabel">                 
                 </tbody>
             </table>
         </form>
@@ -48,9 +47,13 @@ include_once('../../php/include_all.php');
         var ld = $('#load');
         ld.addClass('loading');
         var tbl = $('#rlTabel');
-        var post = $.post(urls,{act : 'LdUraian'});
-        post.done(function(ser){
-            tbl.html(ser);            
+        var post = $.post(urls, {act: 'LdUraian'});
+        post.done(function(ser) {
+            var s = tbl.html();            
+            console.log(s);
+            setTimeout(function() {
+                ld.removeClass('loading')
+            }, 2000);
         });
     });
     $('#tgsTambahan').click(function() {
