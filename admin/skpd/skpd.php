@@ -14,7 +14,7 @@ include_once('../../php/include_all.php');
 <div id="modalwin" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     <header class="modal-header"> 
-        <a href="#" class="close" data-dismiss="modal">x</a>
+        <a href="#" class="close geo-clear" data-dismiss="modal">x</a>
         <h3>Data SKPD</h3>
     </header>
 
@@ -65,7 +65,7 @@ include_once('../../php/include_all.php');
         <tbody id="tampilSKPD">
             <?php
             $x = 1;
-            $pr = get_datas("select * from skp_skpd");
+            $pr = get_datas("select * from skp_skpd order by id");
             foreach ($pr as $pr) {
                 ?><tr>
                     <td><?php echo $x ?></td>
@@ -109,6 +109,7 @@ include_once('../../php/include_all.php');
                     var tbody = $('#tampilSKPD');
                     tbody.html(result[2]);
                     init();
+                    $("#id").val("0");
                     $("#kode").val("");
                     $("#nama").val("");
                     $('#modalwin').modal('hide');
@@ -174,4 +175,9 @@ include_once('../../php/include_all.php');
     }
     init();
     
+    $('.btn-tambah').click(function(){
+        $('#id').val("0");
+        $('#kode').val("");
+        $('#nama').val("");
+    })
 </script>
