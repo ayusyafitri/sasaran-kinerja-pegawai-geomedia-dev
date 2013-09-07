@@ -6,6 +6,7 @@ if (@$_POST['open'] != 'please') {
 include_once('../../php/include_all.php');
 $info = get_data("SELECT * from skp_pns where id_pns = " . SKP_ID);
 $gol = get_data("SELECT nama_golongan from skp_golongan where id_gol = " . $info['id_golongan']);
+$atsan = get_data("SELECT from skp_pns p, ");
 ?>
 
 <div id="breadcrumbs">
