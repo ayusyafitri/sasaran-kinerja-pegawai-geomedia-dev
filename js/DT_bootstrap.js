@@ -148,12 +148,12 @@ if ( $.fn.DataTable.TableTools ) {
 
 
 /* Table initialisation */
-$(document).ready(function() {
-	$('#example').dataTable( {
-		
-		"sPaginationType": "bootstrap",
-		"oLanguage": {
-			
-		}
-	} );
-} );
+//$(document).ready(function() {
+//	$('#example').dataTable( {
+//		
+//		"sPaginationType": "bootstrap",
+//		"oLanguage": {
+//			
+//		}
+//	} );
+//} );

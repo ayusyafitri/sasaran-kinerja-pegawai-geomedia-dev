@@ -85,7 +85,7 @@ include_once('../../php/include_all.php');
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
         </div>
@@ -97,9 +97,9 @@ include_once('../../php/include_all.php');
         var ld = $('#load');
         ld.addClass('loading');
         var tbl = $('#rlTabel');
-        var post = $.post(urls,{act : 'LdUraian'});
-        post.done(function(ser){
-            tbl.html(ser);            
+        var post = $.post(urls, {act: 'LdUraian'});
+        post.done(function(ser) {
+            tbl.html(ser);
         });
     });
     $('#tgsTambahan').click(function() {
@@ -110,10 +110,11 @@ include_once('../../php/include_all.php');
         //editables on first profile page
         $.fn.editable.defaults.mode = 'inline';
         $.fn.editableform.loading = "<div class='editableform-loading'><i class='light-blue icon-2x icon-spinner icon-spin'></i></div>";
-        $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="icon-ok icon-white"></i></button>'+
-            '<button type="button" class="btn editable-cancel"><i class="icon-remove"></i></button>'; 
+        $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="icon-ok icon-white"></i></button>' +
+                '<button type="button" class="btn editable-cancel"><i class="icon-remove"></i></button>';
         $('#username').editable({
             type: 'text',
             name: 'username'
-        }); 
+        });
+    });
 </script>

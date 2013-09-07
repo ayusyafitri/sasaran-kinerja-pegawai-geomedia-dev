@@ -24,7 +24,6 @@ if (!isset($_SESSION['_username'])) {
         <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
         <link rel="stylesheet" href="themes/css/w8-skins.min.css" />
         <script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootbox.min.js"></script>
 	<script type="text/javascript" charset="utf-8" language="javascript" src="js/jquery.dataTables.js"></script>
 	<script type="text/javascript" charset="utf-8" language="javascript" src="js/DT_bootstrap.js"></script>
@@ -70,7 +69,6 @@ if (!isset($_SESSION['_username'])) {
             </div>
         </div>
         <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
         <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
         <script src="themes/js/jquery.ui.touch-punch.min.js"></script>
 
@@ -81,8 +79,8 @@ if (!isset($_SESSION['_username'])) {
         <script src="themes/js/w8-editable.min.js"></script>
         <script src="themes/js/jquery.flot.min.js"></script>
         <script src="themes/js/jquery.flot.pie.min.js"></script>
-        <script src="themes/js/jquery.flot.resize.min.js"></script>
-
+        <script src="themes/js/jquery.flot.resize.min.js"></script>        
+	<script src="js/bootstrap.min.js"></script>
         <!--w8 scripts-->
 
         <script src="themes/js/w8-elements.min.js"></script>
@@ -105,9 +103,7 @@ if (!isset($_SESSION['_username'])) {
                 post.done(function(response){
                     $('#main-content').html(response);
                 });
-            });
-     
-			
+            });     			
         </script>
     </body>
 </html>
