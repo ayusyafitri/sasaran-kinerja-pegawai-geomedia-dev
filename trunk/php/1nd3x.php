@@ -13,8 +13,7 @@ if (isset($_GET['what']))
 
 if ($what == 'inn') {
     $h = get_datas("select p.nip, p.nama, p.kode_jabatan, p.username, p.id_pns, j.jabatan from skp_pns p, skp_jabatan j where p.kode_jabatan = j.kode_jabatan and p.username='" . $usr . "' and p.password='" . $pwd . "'");    
-    if (count($h) > 0) {
-        
+    if (count($h) > 0) {        
         $_SESSION['_nip'] = $h[0]['nip'];
         $_SESSION['_nama'] = $h[0]['nama'];
         $_SESSION['_kdJabatan'] = $h[0]['kode_jabatan'];

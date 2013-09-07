@@ -24,9 +24,9 @@ if (!isset($_SESSION['_username'])) {
         <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
         <link rel="stylesheet" href="themes/css/w8-skins.min.css" />
         <script src="js/jquery.js"></script>
-	<script src="js/bootbox.min.js"></script>
-	<script type="text/javascript" charset="utf-8" language="javascript" src="js/jquery.dataTables.js"></script>
-	<script type="text/javascript" charset="utf-8" language="javascript" src="js/DT_bootstrap.js"></script>
+        <script src="js/bootbox.min.js"></script>
+        <script type="text/javascript" charset="utf-8" language="javascript" src="js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf-8" language="javascript" src="js/DT_bootstrap.js"></script>
     </head>
     <body style=" font-family:'Open Sans' ;" >
         <div class="navbar">
@@ -51,7 +51,7 @@ if (!isset($_SESSION['_username'])) {
                             <ul class="pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer" id="user_menu">
                                 <li><a href="#"> <i class="icon-user"></i>Profil</a></li>
                                 <li><a href="#"><i class="icon-cog"></i>Edit Profil</a></li>
-                                <li><a href="#"> <i class="icon-off"></i>Logout</a></li>
+                                <li><a href="#" id="idTextLogout"> <i class="icon-off"></i>Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -61,7 +61,9 @@ if (!isset($_SESSION['_username'])) {
         <!--content-->
         <div class="container-fluid" id="main-container">
             <div id="sidebar" >
-                <?php include 'php/menuadmin.php' ?>
+                <?php
+                include 'php/menuadmin.php'
+                ?>
             </div>
 
             <div id="main-content"  >
@@ -75,35 +77,41 @@ if (!isset($_SESSION['_username'])) {
         <script src="themes/js/jquery.slimscroll.min.js"></script>
         <script src="themes/js/jquery.easy-pie-chart.min.js"></script>
         <script src="themes/js/jquery.sparkline.min.js"></script>
-        <script src="themes/js/bootstrap-editable.min.js"> </script>
+        <script src="themes/js/bootstrap-editable.min.js"></script>
         <script src="themes/js/w8-editable.min.js"></script>
         <script src="themes/js/jquery.flot.min.js"></script>
         <script src="themes/js/jquery.flot.pie.min.js"></script>
         <script src="themes/js/jquery.flot.resize.min.js"></script>        
-	<script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <!--w8 scripts-->
 
         <script src="themes/js/w8-elements.min.js"></script>
         <script src="themes/js/w8.min.js"></script>
         <script>
-            $('a#idTextLogout').click(function(){
+            $('a#idTextLogout').click(function() {
                 var to = 'php/1nd3x.php';
-                $.post(to,{what:'outt'});
+                var p = $.post(to, {what: 'outt'});
+                p.done(function(res_) {
+                    if (res_ == 'ko') {
+                        window.location.href = './';
+                    }
+                });
             });
-            
-            $('a.geo-link').click(function(e){
-                if(e.preventDefault()) e.preventDefault = false;
-	
+
+            $('a.geo-link').click(function(e) {
+                if (e.preventDefault())
+                    e.preventDefault = false;
+
                 var link = $(this);
                 link.parent().parent().children().removeClass('active');
                 link.parent().addClass('active');
-	
-                var urls = link.attr('lnk')+''+link.attr('name');
-                var post = $.post(urls,{open:'please'});
-                post.done(function(response){
+
+                var urls = link.attr('lnk') + '' + link.attr('name');
+                var post = $.post(urls, {open: 'please'});
+                post.done(function(response) {
                     $('#main-content').html(response);
                 });
-            });     			
+            });
         </script>
     </body>
 </html>
