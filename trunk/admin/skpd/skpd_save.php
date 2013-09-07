@@ -53,7 +53,7 @@ if ($act == 'skpd_simpan') {
 function view_skpd() {
 
     $x = 1;
-    $pr = get_datas("select * from skp_skpd");
+    $pr = get_datas("select * from skp_skpd order by id");
     foreach ($pr as $pr) {
         ?><tr>
             <td><?php echo $x ?></td>
