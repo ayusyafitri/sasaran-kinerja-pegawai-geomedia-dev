@@ -71,7 +71,7 @@ if (isset($_SESSION['$LEVEL'])) {
 
         var alerto = $("#alerto");
         alerto.removeClass().addClass('alert');
-        alerto.html('<div class="spinner center"></div>&nbsp;');
+        alerto.html('<div class="icon-spinner icon-spin pull-right"></div>&nbsp;Mohon tunggu...');
 
         var url = 'php/1nd3x.php';
         var posting = $.post(url, {whoareyou: user, yoursecret: pass,what:'inn'});
