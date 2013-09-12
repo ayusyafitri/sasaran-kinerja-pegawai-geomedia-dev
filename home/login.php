@@ -35,21 +35,7 @@ if (isset($_SESSION['_username'])) {
         </div><!--/span-->
     </div>
 </div>
-<?php
-if (isset($_SESSION['$LEVEL'])) {
-    ?>
-    <script>
-        var alerto = $("#alerto");
-        alerto.removeClass().addClass('alert alert-success');
-        alerto.html('<div class="spinner pull-left"></div> You have logged in, redirecting...');
-        setTimeout(function() {
-            location.href = 'system.php';
-        }, 3000);
-    </script>
-    <?php
-}
-?>
-<script>
+    <script type="text/javascript">
     $('.bt-cancel').click(function(x) {
         var btns = $('#toprightmenu').children('.btn');
         btns.removeClass('active')

@@ -1,10 +1,10 @@
 <?php
-if (isset($_SESSION['_nip'])) define ('SKP_NIP', $_SESSION['_nip']);
+if (isset($_SESSION['_nip'])) /* NIP Pegawai*/define ('SKP_NIP', $_SESSION['_nip']);
 if (isset($_SESSION['_nama'])) define ('SKP_NAMA', $_SESSION['_nama']);
 if (isset($_SESSION['_kdJabatan'])) define ('SKP_KODEJAB', $_SESSION['_kdJabatan']);
 if (isset($_SESSION['_username'])) define ('SKP_USER', $_SESSION['_username']); 
 if (isset($_SESSION['_idpns'])) define ('SKP_ID',$_SESSION['_idpns']);
-if (isset($_SESSION['_jabatan'])) define ('SKP_JAB',$_SESSION['_jabatan']);
+if (isset($_SESSION['_jabatan'])) define ('SKP_JNSJAB',$_SESSION['_jabatan']);
 
 
 function openDB($db='eskape'){
@@ -101,7 +101,7 @@ function get_datas_unconnect($query){
 	$r  = array();
 	$q  = pg_query($query) or die('Can\'t Retrieve Data');
 	while($s = pg_fetch_array($q)){
-		array_push($r,$s);
+		array_push($r,$s);                
 	}
 	return (count($r)>0) ? $r: array();
 }

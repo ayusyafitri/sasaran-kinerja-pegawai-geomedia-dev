@@ -6,14 +6,14 @@ if (@$_POST['open'] != 'please') {
 include_once('../../php/include_all.php');
 $info = get_data("SELECT * from skp_pns where id_pns = " . SKP_ID);
 $gol = get_data("SELECT nama_golongan from skp_golongan where id_gol = " . $info['id_golongan']);
-$atsan = get_data("SELECT from skp_pns p, ");
+//$atsan = get_data("SELECT from skp_pns p, ");
 ?>
 
 <div id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
             <i class="icon-home"></i>
-            <a href="#">Home</a>
+            <a href="/skp/admindata.php">Home</a>
 
             <span class="divider">
                 <i class="icon-angle-right"></i>
@@ -167,7 +167,8 @@ $atsan = get_data("SELECT from skp_pns p, ");
         var glongan = [];
         $('#username').editable({
             type: 'text',
-            name: 'username'
+            name: 'username',
+            id:'usernameeee'
         });
 <?php
 $gol = get_datas("SELECT nama_golongan, id_gol FROM skp_golongan order by id_gol ASC");
