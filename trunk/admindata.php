@@ -4,7 +4,7 @@ session_start();
 include_once 'php/include_all.php';
 
 if (!isset($_SESSION['_username'])) {
-    header("Location:index.php");
+    header("Location:./");
 }
 ?>
 <!DOCTIYPE html>
@@ -64,7 +64,7 @@ if (!isset($_SESSION['_username'])) {
         <div class="container-fluid" id="main-container">
             <div id="sidebar" >
                 <?php
-                include 'php/menuadmin.php'
+                include 'php/menu.php'
                 ?>
             </div>
 
