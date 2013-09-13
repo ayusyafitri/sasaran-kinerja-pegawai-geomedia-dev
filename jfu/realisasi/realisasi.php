@@ -5,13 +5,12 @@ if (@$_POST['open'] != 'please') {
 }
 include_once('../../php/include_all.php');
 $idSkp = get_data("SELECT DISTINCT(id_skp) FROM skp_t_kerja where kode_jabatan = '" . SKP_KODEJAB . "' and tahun = '" . date('Y') . "'");
-$dtaRealisasi = get_datas("SELECT t.id_skp,t.output, t.mutu, t.waktu, t.biaya, u.id_uraian, u.uraian, t.angka_kredit, r.id_realisasi, r.r_output,r.r_mutu,r.r_waktu,r.r_biaya FROM skp_t_kerja t 
+$dtaRealisasi = get_datas("SELECT t.id_skp,t.id_tkerja,t.output, t.mutu, t.waktu, t.biaya, u.id_uraian, u.uraian, t.angka_kredit, r.id_realisasi, r.r_output,r.r_mutu,r.r_waktu,r.r_biaya FROM skp_t_kerja t 
 INNER JOIN skp_uraian u  ON t.id_uraian = u.id_uraian and t.tahun = '" . date('Y') . "' and t.id_pns = '" . SKP_ID . "' and t.kode_jabatan = '" . SKP_KODEJAB . "'
-LEFT OUTER JOIN skp_r_kerja r ON t.id_skp = r.id_skp");
-echo "SELECT t.id_skp,t.output, t.mutu, t.waktu, t.biaya, u.id_uraian, u.uraian, t.angka_kredit, r.id_realisasi, r.r_output,r.r_mutu,r.r_waktu,r.r_biaya FROM skp_t_kerja t 
-INNER JOIN skp_uraian u  ON t.id_uraian = u.id_uraian and t.tahun = '" . date('Y') . "' and t.id_pns = '" . SKP_ID . "' and t.kode_jabatan = '" . SKP_KODEJAB . "'
-LEFT OUTER JOIN skp_r_kerja r ON t.id_skp = r.id_skp";
-$dtTmbhan = get_datas("SELECT * FROM skp_r_tambahan where id_skp = '" . $idSkp['id_skp'] . "'");
+LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja");
+if (!empty($idSkp['id_skp'])) {
+    $dtTmbhan = get_datas("SELECT * FROM skp_r_tambahan where id_skp = '" . $idSkp['id_skp'] . "'");
+}
 ?>
 <div class="widget-header widget-header-flat ">
     <h5><i class="icon-calendar"></i>Realisasi Kerja Per Tahun</h5>
@@ -69,6 +68,8 @@ $dtTmbhan = get_datas("SELECT * FROM skp_r_tambahan where id_skp = '" . $idSkp['
                                 <td align="center"><?php echo ucfirst($isiRealisasi['uraian']); ?></td>
                                 <td>
                                     <label><?php echo $isiRealisasi['angka_kredit']; ?></label>
+                                    <input type="hidden" name="trgtid[]" value="<?php echo $isiRealisasi['id_tkerja']; ?>" />
+                                    <input type="hidden" name="realssid[]" value="<?php echo $isiRealisasi['id_realisasi']; ?>" />
                                 </td>
                                 <td>
                                     <input type="text" class="input-small" name="output[]" id="output_<?php echo $no; ?>" value="<?php echo $r_output; ?>" />
@@ -83,7 +84,7 @@ $dtTmbhan = get_datas("SELECT * FROM skp_r_tambahan where id_skp = '" . $idSkp['
                                     <input type="text" class="input-small" name="biaya[]" id="biaya_<?php echo $no; ?>" value="<?php echo $r_biaya; ?>" />
                                 </td>
                                 <td class="center">
-                                    <?php echo $prhtungan; ?>
+                                    <?php echo number_format($prhtungan, 2); ?>
                                 </td>
                                 <td class="center">
                                     <?php echo $nCapaianSKP; ?>
@@ -190,7 +191,7 @@ $dtTmbhan = get_datas("SELECT * FROM skp_r_tambahan where id_skp = '" . $idSkp['
         </form>
     </div>
     <div class=" position-relative pull-right" id="page-content">
-        <span id="loadAl" class=""></span><span id="msgAl"></span>&nbsp;&nbsp;
+        <span id="loadAl" class=""></span>&nbsp;&nbsp;&nbsp;<span id="msgAl"></span>&nbsp;&nbsp;
         <button class="btn btn-small btn-primary no-radius" id="b-smpan"><i class="icon-save"></i>Simpan</button>       
     </div>           
 </div>
