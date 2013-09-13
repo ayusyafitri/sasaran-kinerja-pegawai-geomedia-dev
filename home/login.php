@@ -1,8 +1,9 @@
 <?php
 @session_start();
+include_once("../php/include_all.php");
 if (isset($_SESSION['_username'])) {
     ?><script type='text/javascript'>location.href='admindata.php';</script><?php } ?>
-<div class="widget-box">
+<div class="widget-box" id="login">
     <div data-original-title="" class="widget-header">
         <h4 class="lighter smaller"><i class="icon-user"></i> AUTENTIKASI USER</h2>
             <a title="Refresh" class="btn btn-primary btn-small pull-right btRefresh"><i class="icon-refresh"></i></a>
@@ -30,12 +31,138 @@ if (isset($_SESSION['_username'])) {
                     <input type="button" class="btn btn-danger btn-small bt-cancel" value="Cancel">
                     <input type="button" class="btn btn-primary btn-small bt-login" value="Login">
                     <input type="hidden" value="hearme" name="what">
-                </div>                   
+                </div>
+                <hr/>
+                 <center>Daftar<a href="#modalwin" data-toggle="modal">  disini</a>   </center>              
             </div>
         </div><!--/span-->
     </div>
 </div>
-    <script type="text/javascript">
+
+<div id="modalwin" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<header class="modal-header">
+    	<a href="#" class="close" data-dismiss="modal">x</a>
+        <h3> <i class="icon-user"></i> DAFTAR USER</h3>
+    </header>
+    <div class="modal-body">
+    	<form id="form_pendaftaran">
+        	<input type="hidden" name="act" value="simpan_daftar">
+            <input type="hidden" name="id_user" id="id_user" value="0">
+            	<table class="table-form">
+                    <tr>
+                    	<td>Nama</td><td><input name="nama" type="text" id="nama" placeholder="Nama"></td>
+                    </tr>
+                    <tr>
+                    	<td>NIP</td><td><input name="nip" type="text" id="nip" placeholder="NIP"></td>
+                    </tr>
+                    <tr>
+                    	<td>SKPD</td>
+                        <td>
+                        	<select name="skpd" id="skpd">
+                            	<option id="" value="">-Pilih SKPD-</option>
+                                <?
+								$skpd = get_datas ("select * from skp_skpd where nama not like '%admin%' order by id");
+								foreach ($skpd as $skpd){
+								?>
+                                	<option value="<? echo $skpd['id']?>"><? echo $skpd ['nama']?></option>
+                                 <?
+								}
+								?>
+                            </select>
+                        </td>
+                    </tr>
+                	<tr>
+                    	<td>Username</td><td><input name="username" type="text" id="username" placeholder="Username"></td>
+                    </tr>
+                    <tr>
+                    	<td>Password</td><td><input name="pass" type="password" id="pass" placeholder="Password"></td>
+                    </tr>
+                    <tr>
+                    	<td>Confirm Password</td><td><input name="co_pass" type="password" id="co_pass" placeholder="Confirm Password"></td><td><span id="confirm"></span></td>
+                    </tr>
+                </table>
+                <table align="right">
+                	<tr>
+                    	<td><input type="button" class="btn btn-primary bt-simpan-daftar" value="Simpan" /></td>
+                    </tr>
+                </table>
+        </form>
+    </div>
+</div>
+<?php
+if (isset($_SESSION['$LEVEL'])) {
+    ?>
+    <script>
+        var alerto = $("#alerto");
+        alerto.removeClass().addClass('alert alert-success');
+        alerto.html('<div class="spinner pull-left"></div> You have logged in, redirecting...');
+        setTimeout(function() {
+            location.href = 'system.php';
+        }, 3000);
+    </script>
+    <?php
+}
+?>
+<script type='text/javascript'>
+	var urls= 'home/aksi_daftar.php';
+	
+	$('.bt-simpan-daftar').click(function(){
+	var btn = $(this);
+	var load = $('#loader');
+	var rslt = $('#result');
+	load.addClass('spinner pull-left');
+	btn.removeClass('btn-primary').addClass('btn-info');
+	
+	var pass = $('#pass').val();
+	var copass = $('#co_pass').val();
+	
+	if (pass != copass){
+		var co = $('#confirm');
+		co.html ('<font color="red">Password salah</font>');
+				document.getElementById('username').value='';
+				document.getElementById('pass').value='';
+				document.getElementById('skpd').value='';
+				document.getElementById('nama').value='';
+				document.getElementById('nip').value='';
+				document.getElementById('id_user').value='0';
+				document.getElementById('co_pass').value='';
+
+	}
+	else{
+	var form =$('#form_pendaftaran');
+	var data = form.serializeArray();
+	var post = $.post(urls,data);
+	post.done(function(res){
+		console.log(res);
+		var result = res.split('__');
+		if(result.length==2){
+		 	
+			if(result[0]=='success'){
+				rslt.html('<font color="green">Tersimpan</font>');
+				setTimeout(function(){
+					rslt.html('');
+				},1500);
+				document.getElementById('username').value='';
+				document.getElementById('co_pass').value='';
+				document.getElementById('skpd').value='';
+				document.getElementById('pass').value='';
+				document.getElementById('nama').value='';
+				document.getElementById('nip').value='';
+				document.getElementById('id_user').value='0';
+				$('#modalwin').modal('hide');
+			}else{
+				rslt.html('<font color="red">'+res+'</font>');
+			}
+		}else{
+			rslt.html('<font color="red">'+res+'</font>');
+		}
+	
+		load.removeClass();
+		btn.removeClass('btn-info').addClass('btn-primary');
+
+		});
+		}
+	});
     $('.bt-cancel').click(function(x) {
         var btns = $('#toprightmenu').children('.btn');
         btns.removeClass('active')
