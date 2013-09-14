@@ -2,7 +2,7 @@
     <!--              <li class="nav-header">Master</li>-->
     <li><a class="geo-link" href="" lnk="admin/overview/" name="overview.php"><i class="icon-dashboard"></i><span>Overview</span></a></li>
     <li><a class="geo-link" href="" lnk="admin/realisasi/" name="jabatan.php" ><i class="icon-dashboard"></i><span>Daftar Jabatan</span></a></li>
-    <li><a class="geo-link" href="" lnk="admin/laporan/" name="pemangku.php" ><i class="icon-dashboard"></i><span>Daftar Pemangku</span></a></li>
+    <li><a class="geo-link" href="" lnk="skpd/pemangku/" name="pemangku.php" ><i class="icon-dashboard"></i><span>Daftar Pemangku</span></a></li>
     <li><a class="geo-link" href="" lnk="admin/target/" name="target.php"><i class="icon-user-md"></i><span>Daftar Target</span></a></li>
     <li><a class="geo-link" href="" lnk="admin/realisasi/" name="realisasi.php"><i class="icon-user-md"></i><span>Daftar Realisasi</span></a></li>
     <li><a class="geo-link" href="" lnk="skpd/konfirmasi/" name="konfirmasi.php"><i class="icon-user-md"></i><span>Konfirmasi</span></a></li>
