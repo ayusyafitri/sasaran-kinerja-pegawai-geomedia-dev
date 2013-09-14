@@ -8,6 +8,13 @@ include_once('../../php/include_all.php');
     <h5><i class="icon-calendar"></i>Konfirmasi User</h5>
 </div>
 <div class="box-content">
+    <form class="navbar-search pull-right">
+  		<input type="text" class="search-query" name="cari" id="cari" onkeyup="search(this.value)" placeholder="Cari">
+        <div id='loader' style='margin-top:2px'></div>
+	</form>
+</div>
+&nbsp;
+<div class="box-content">
 	<form class="form-horizontal" id="konfirmasi">
     <table class="table table-bordered geo-table table-hover" width="100%">
         <thead>
@@ -93,4 +100,22 @@ include_once('../../php/include_all.php');
                 }
             });
         });
+		function search(){
+			var si = $('#cari').val();
+			source = "skpd/konfirmasi/cari.php?si=" + si;
+			var cobapro = $.get(source);
+			cobapro.done(function(data){
+				$('#tampil_user').html(data);
+			});
+		}
+		/*
+		$('.search-query').change(function(){
+			var si = $('#cari').val();
+			source = "cari.php?si=" + si;
+			var cobapro = $.get(source);
+			cobapro.done(function(data){
+				$('#tampil_user').html(data);
+			});
+		});
+*/
 </script>
