@@ -71,6 +71,9 @@ if (isset($_SESSION['_username'])) {
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                    	<td>Email</td><td><input name="email" type="text" id="email" placeholder="Alamat Email"></td>
+                    </tr>
                 	<tr>
                     	<td>Username</td><td><input name="username" type="text" id="username" placeholder="Username"></td>
                     </tr>
@@ -124,6 +127,7 @@ if (isset($_SESSION['$LEVEL'])) {
 				document.getElementById('skpd').value='';
 				document.getElementById('nama').value='';
 				document.getElementById('nip').value='';
+				document.getElementById('email').value='';
 				document.getElementById('id_user').value='0';
 				document.getElementById('co_pass').value='';
 
@@ -148,6 +152,7 @@ if (isset($_SESSION['$LEVEL'])) {
 				document.getElementById('pass').value='';
 				document.getElementById('nama').value='';
 				document.getElementById('nip').value='';
+				document.getElementById('email').value='';
 				document.getElementById('id_user').value='0';
 				$('#modalwin').modal('hide');
 			}else{
