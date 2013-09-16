@@ -4,6 +4,7 @@ if (@$_POST['open'] != 'please') {
 }
 include_once('../../php/include_all.php');
 ?>
+	
 <div class="widget-header widget-header-flat ">
     <h5><i class="icon-calendar"></i>Daftar SKPD</h5>
 </div>
@@ -53,14 +54,16 @@ include_once('../../php/include_all.php');
 </div>
 
 <div class="box-content">
-    <table class="table table-bordered geo-table table-hover" width="100%">
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered geo-table" id="example">
         <thead>
             <tr>
                 <th class="center" width="3%">No</th>
                 <th class="center" width="12%">Kode SKPD</th> 
                 <th class="center" width="33%">Nama SKPD</th>
+				<th class="center" width="10%">Username</th>
+				<th class="center" width="10%">Password</th>
                 <th class="center" width="20%">aksi</th>
-            </tr>
+			</tr>
         </thead>
         <tbody id="tampilSKPD">
             <?php
@@ -71,6 +74,8 @@ include_once('../../php/include_all.php');
                     <td><?php echo $x ?></td>
                     <td>&nbsp;<?php echo $pr['kode'] ?></td>
                     <td><?php echo $pr['nama'] ?></td>
+					<td><?php echo $pr['username']?></td>
+					<td><?php echo $pr['password']?></td>
                     <td class="center" >
                         <a href="#modalwin" data-toggle="modal"  class="btn btn-info bt-edit btn-small" name="<?php echo $pr['id']; ?>"><i class="icon-edit icon-white"></i> ubah</a>
                         <a class="btn btn-danger bt-hapus btn-small" name="<?php echo $pr['id']; ?>"><i class="icon-trash icon-white"></i> hapus</a>
@@ -84,6 +89,8 @@ include_once('../../php/include_all.php');
         </tbody>
     </table>    
 </div>
+<script src="js/jquery.dataTables.js"></script>
+<script src="js/DT_bootstrap.js"></script>	
 
 <script>
     var url = 'admin/skpd/skpd_save.php';
