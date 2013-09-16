@@ -33,7 +33,7 @@ include_once ('../../php/postgre.php');
     <a href="#modalwin" data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
     &nbsp;<span id="load" class="spinner"></span>
 </div>
-<div>
+<div class="box-content">
 	<table>
 		<tr><b>
 			<td>Tabel SKPD</td>
@@ -89,7 +89,7 @@ include_once ('../../php/postgre.php');
                         <td>Induk Jabatan</td>
                         <td>:</td>
                         <td>
-                            <select  name="id_induk" id="id_induk">
+                            <select  name="id_induk" id="id_induk" onchange="data()" onclick="data()">
                                 <option value="0" id="idindukk"> Tidak ada </option> 
                             </select>
                         </td>
@@ -119,7 +119,7 @@ include_once ('../../php/postgre.php');
                     <tr>
                         <td>Unit Organisasi</td>
                         <td>:</td>
-                        <td id='unitOr'></td><!--td id='eslon'></td>
+                        <td id='unitOr' name="unitOr"></td><!--td id='eslon'></td>
                     </tr>
 
                     <!--tr>
@@ -173,6 +173,7 @@ include_once ('../../php/postgre.php');
 			$('#id_skpd').val(datt[0]);
 			$('#tampilJabatan').html(datt[2]);
 			$('#tabelSKPD').html(datt[1]); 
+		//	$('.btn-tambah').val()
 			init();
 		});
 		load.removeClass();
@@ -181,15 +182,15 @@ include_once ('../../php/postgre.php');
     var url = 'admin/jabatan/save_jabatan.php';
     var rslt = $('#result'); 
 	
-    $('#id_induk').click(function(){
-        var skpd = $('#id_skpd').val();
-	//	alert(skpd);
-        var post = $.post(url,{act:'get_kode', kode:this.value, skpdd:skpd});
+   function data(){
+		var skpd = $('#id_skpd').val();
+		var kode = $('#id_induk').val();
+	    var post = $.post(url,{act:'get_kode', kode:kode, skpdd:skpd});
         post.done(function(data){
             //$('#kodejab').html(data);
             document.getElementById('kodejab').value=data;
         });
-    }); 	
+	}	
 
     $('#id_jabatan').change(function(){
         var jabatan = $('#id_jabatan').val();
@@ -281,7 +282,8 @@ include_once ('../../php/postgre.php');
 				form.find('select[name="id_induk"]').html(value[7]);
 				form.find('select[name="id_skpd"]').val(value[4]);
 				form.find('select[name="id_jabatan"]').val(value[6]);
-				form.find('select[name="unitOr"]').html(value[8]);
+				$("#unitOr").html(value[8]);
+				$("#unitOr").val(value[5]);
 				//form.find('select[name="eslon"]').html(value[8]);
 			 });
         });
@@ -321,6 +323,18 @@ include_once ('../../php/postgre.php');
         
     }
     init();
-    
+	/*
+$(".geo-clear").change(function(){
+	$('#id').val('0');
+		var idinduk = $('#id_skpd').val();
+		var post = $.post(url,{act:'get_induk',idindukk:idinduk});
+			post.done(function(data){
+				$('#id_induk').html(data);
+			});
+      	document.getElementById('nama').value='';
+	//	document.getElementById('idindukk').selected=true;
+		document.getElementById('kodejab').value='';
+		document.getElementById('idjabatan').selected=true;
+})*/
   
 </script>
