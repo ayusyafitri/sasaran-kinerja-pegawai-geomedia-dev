@@ -64,7 +64,7 @@ if (!isset($_SESSION['_username'])) {
         <div class="container-fluid" id="main-container">
             <div id="sidebar" >
                 <?php
-                include 'php/menu.php'
+                include 'php/menuadmin.php'
                 ?>
             </div>
 

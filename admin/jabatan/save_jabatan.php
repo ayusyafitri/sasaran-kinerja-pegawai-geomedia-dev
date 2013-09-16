@@ -25,24 +25,33 @@ if ($act == 'jabatan_simpan') {
         exec_query("update skp_jabatan set unit_kerja=".$skpd."', nama_jabatan='".$nama."', parent=".$induk.", kode_jabatan='" . $kode . "', jabatan='".$jabatan."', unit_organisasi=".$unitorgnisasi." where idjab=" . $id . "");
         echo 'success__';
     } else {
-		//simpan unit organisasi
-		$maxid1 = get_maxid('id_unit','skp_unit_eselon');
-		exec_query("insert into skp_unit_eselon(id_unit,nama_unit, eselon, id_skpd) values (".$maxid1.",'".$nameUnit."','".$golUnit."',".$skpd." )");
-		$store1 = get_data("select id_unit from skp_unit_eselon where id_skpd=".$skpd);
-		if ($store1['id_unit'] == $maxid1) {
-            $idunit = $maxid1;
-        }
-		
-        $maxid = get_maxid('idjab', 'skp_jabatan');
-        exec_query("insert into skp_jabatan (idjab, nama_jabatan, kode_jabatan, parent, unit_kerja, unit_organisasi, jabatan) values(" . $maxid . ",'". $nama."','". $kode."',".$induk.", ".$skpd.",".$maxid1.",'".$jabatan."')");
-		$store = get_data("select idjab from skp_jabatan where idjab=".$maxid);
-		
-		
-		if($store['idjab']==$maxid){
-			echo "success__";
-			$id = $maxid;
+		if($jabatan=="Jabatan Struktural"){
+				//simpan unit organisasi
+			$maxid1 = get_maxid('id_unit','skp_unit_eselon');
+			exec_query("insert into skp_unit_eselon(id_unit,nama_unit, eselon, id_skpd) values (".$maxid1.",'".$nameUnit."','".$golUnit."',".$skpd." )");
+			$store1 = get_data("select id_unit from skp_unit_eselon where id_skpd=".$skpd);
+			if ($store1['id_unit'] == $maxid1) {
+				$idunit = $maxid1;
+			}
+			$maxid = get_maxid('idjab', 'skp_jabatan');
+			exec_query("insert into skp_jabatan (idjab, nama_jabatan, kode_jabatan, parent, unit_kerja, unit_organisasi, jabatan) values(" . $maxid . ",'". $nama."','". $kode."',".$induk.", ".$skpd.",".$maxid1.",'".$jabatan."')");
+			$store = get_data("select idjab from skp_jabatan where idjab=".$maxid);
+						
+			if($store['idjab']==$maxid){
+				echo "success__";
+				$id = $maxid;
+			}
+		}else{
+			$maxid = get_maxid('idjab', 'skp_jabatan');
+			exec_query("insert into skp_jabatan (idjab, nama_jabatan, kode_jabatan, parent, unit_kerja, unit_organisasi, jabatan) values(" . $maxid . ",'". $nama."','". $kode."',".$induk.", ".$skpd.",".$idunit.",'".$jabatan."')");
+			$store = get_data("select idjab from skp_jabatan where idjab=".$maxid);
+						
+			if($store['idjab']==$maxid){
+				echo "success__$jabatan";
+				$id = $maxid;
+			}		
 		}
-    }
+	}
     echo $id.'__';
 	view_jabatan($skpd);
 } 
@@ -62,7 +71,7 @@ else if ($act == 'hapus_skpd') {
     } else {
         echo 'error';
     }
- //   view_jabatan($skpd);
+    view_jabatan($status['unit_kerja']);
 } 
 
 else if ($act == 'ubah_jabatan') {
@@ -77,19 +86,22 @@ else if ($act == 'ubah_jabatan') {
 		$parent = 0;
 		if ($val == $induk['idjab'])
 		$kk = get_induk($val='', $parent, $iter=1, $idinduk);
-	
-		$unit = get_datas("select * from skp_unit_eselon where id_skpd=".$data['unit_kerja']);
+		
+		$unit = get_datas("select distinct u.nama_unit, u.id_unit,  u.id_skpd, j.unit_organisasi from skp_unit_eselon u, skp_jabatan j where u.id_skpd=j.unit_kerja and u.id_unit=j.unit_organisasi and u.id_skpd=".$data['unit_kerja']);
+	//	$unit = get_datas("select * from skp_unit_eselon where id_skpd=".$data['unit_kerja']);
+		$i = '__';
 		if($data=="Jabatan Struktural"){
-		//	$i = $unit['nama_unit'];
-			$i.= '<input type="text" name="unit" id="unit" class="span3" value="'.$unit['nama_unit'].'">
+			$i.= '<input type="text" name="unit" id="unit" class="span3" value="'.$unit['nama_unit'].'" >
 				  <input type="text" name="eslon" id="eslon" class="span2" value="'.$unit['eselon'].'">';
 		}
 		else {
+		$i.= "<select name='unitorgnisasi' id='unitorgnisasi'>";
 			foreach ($unit as $unit){
-				$i.= '<option value="' . $unit["id_unit"] . '">"' . $unit["nama_unit"] . '"</option>';
+				$i.= '<option value="'. $unit["id_unit"].'">'.$unit["nama_unit"] . '</option>';
 			}
+		 $i.= '</select>';
 		}
-		echo "__".$i;
+		echo $i;
 	} else {
         echo 'error';
     }
@@ -141,7 +153,7 @@ else if ($act == 'get_kode') {
      */
 } else if ($act == 'rlJabatan') {
     $skp = $_POST['skp'];
-	echo $skp;
+//	echo $skp;
     $unitorganisasi = get_datas("select * from skp_unit_eselon where id_skpd=" .$skp);
     $i = "<select name='unitorgnisasi' id='unitorgnisasi'>";
     foreach ($unitorganisasi as $unitor) {
