@@ -14,22 +14,24 @@ $nmJabatan = get_data("SELECT nama_jabatan FROM skp_jabatan where kode_jabatan =
     <div id="msgAll" class="pull-right"></div>
     <?php
     if (count($tkerja) > 0) {
+          $kinerjaJfu_awal = get_datas("SELECT u.uraian,u.no_uraian,u.tupoksi,k.angka_kredit,k.output, k.mutu,k.waktu,k.biaya,k.id_tkerja, s.status FROM skp_t_kerja k, skp_uraian u, skp_t_status s 
+where s.id_tkerja = k.id_tkerja AND k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns = '" . SKP_ID . "' and k.kode_jabatan = '" . SKP_KODEJAB . "' order by u.no_uraian ASC");
         if (SKP_JNSJAB == 'Jabatan Struktural') {
             ?>
-            <button class="btn btn-small btn-info no-radius" id="loadUraian"><i class="icon-upload-alt"></i>Load Uraian</button>
-            <?php
-        } else {
-            $kinerjaJfu_awal = get_datas("SELECT u.uraian,u.no_uraian,u.tupoksi,k.angka_kredit,k.output, k.mutu,k.waktu,k.biaya,k.id_tkerja FROM skp_t_kerja k, skp_uraian u 
-where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns = '" . SKP_ID . "' and k.kode_jabatan = '" . SKP_KODEJAB . "' order by u.no_uraian ASC");
+            <button class="btn btn-small btn-info no-radius" id="plusUraian"><i class="icon-plus-sign"></i>Tambah Uraian</button>
+            <!--<button class="btn btn-small btn-info no-radius" id="loadUraian"><i class="icon-upload-alt"></i>Load Uraian</button>-->
+            <?php            
         }
     } else {
         if (SKP_JNSJAB == 'Jabatan Struktural') {
             ?>
             <button class="btn btn-small btn-info no-radius" id="plusUraian"><i class="icon-plus-sign"></i>Tambah Uraian</button>
             <?php
+            $kinerjaJfu_awal = get_datas("SELECT uraian_temp as uraian,no_uraian from skp_uraiantemp where kodejab_temp = '".SKP_KODEJAB."'");
         } else {
             $kinerjaJfu_awal = get_datas("SELECT u.uraian, u.no_uraian,u.tupoksi FROM skp_bkn_uraian u, skp_bkn_jabatan j 
    where j.nama_jabatan LIKE '%" . $nmJabatan['nama_jabatan'] . "%' and u.kode_jabatan = j.kode_jabatan order by u.no_uraian ASC");
+            
         }
     }
     ?>
@@ -48,9 +50,9 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
                 <th class="center" rowspan="2" style="width:7%">AK</th>
             <?php } ?>
             <th class="center" colspan="4" style="width:32%">Target</th>
-            <?php if (count($tkerja) > 0) { ?>
+            <?php // if (count($tkerja) > 0) { ?>
                 <th class="center" rowspan="2" style="width:8%">aksi</th>
-            <?php } ?>
+            <?php // } ?>
         </tr>
         <tr>
             <th style="width:8%;text-align: center;">Output</th>
@@ -65,7 +67,9 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
             $no = 1;
             foreach ($kinerjaJfu_awal as $isiData) {
                 ?>
-                <tr id="tr<?php echo $no; ?>"><td valign="middle" style="width:3%;text-align: center;"><?php echo $no; ?> </td>
+                <tr id="tr<?php echo $no; ?>">
+                    <?php if (count($tkerja) > 0) { ?>
+                    <td valign="middle" style="width:3%;text-align: center;"><?php echo $no; ?> </td>
                     <td style="width:58%;"><label style="width: 100%;" id="uraian_<?php echo $no; ?>"name="uraian[]"><?php echo ucfirst($isiData['uraian']); ?></label></td> 
                     <?php if (SKP_JNSJAB == 'Jabatan Fungsional Tertentu') { ?>
                         <td style="width:8%;text-align: center;"><label id="ak_<?php echo $no; ?>" name="ak[]" ><?php echo $isiData['angka_kredit']; ?></label></td>
@@ -78,9 +82,18 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
                         <input type="hidden" id="tupoksi_<?php echo $no; ?>" name="tupoksi[]" value="<?php echo $isiData['tupoksi']; ?>" />
                         <input type="hidden" id="nouraian_<?php echo $no; ?>"name="nouraian[]" value="<?php echo $isiData['no_uraian']; ?>" />
                     </td>
-                    <?php if (count($tkerja) > 0) { ?>
-                        <td style="text-align:center;">                                   
-                            <span style='cursor:pointer;' class='badge badge-user center' onclick="edtRow(this)" title="Ubah" name ="ed_<?php echo $no; ?>" id="ed_<?php echo $no . "_" . $isiData['id_tkerja']; ?>"><i class="icon-pencil"></i></span>
+                        <td style="text-align:center;">   
+                            <?php if ($isiData['status'] == '1'){?>
+                            <span style='cursor:pointer;' class='badge badge-user center' title="Sudah Dikonfirmasi" ><i class="icon-check-sign"></i></span>
+                            <?php }else{?>
+                            <div id="btns-act_<?php echo  $no; ?>" style='width:75px;'>
+                                <span id="msgD_<?php echo $no; ?>"></span>
+                                <span style='cursor:pointer;' class='badge badge-user center' onclick="edtRow(this);" title="Ubah" name ="ed_<?php echo $no; ?>" id="ed_<?php echo $no . "_" . $isiData['id_tkerja']; ?>"><i class="icon-pencil"></i></span>
+                                <?php if(SKP_JNSJAB != 'Jabatan Fungsional Umum'){?>
+                                <span style='cursor:pointer;' class='badge badge-important center' onclick="delTgt(this);" title="Ubah" name ="del_<?php echo $no; ?>" id="del_<?php echo $no . "_" . $isiData['id_tkerja']; ?>"><i class="icon-trash"></i></span>
+                                <?php } ?>
+                            </div>
+                            <?php }?>
                             <div id="btn-act_<?php echo  $no; ?>" style="width:75px;" class="hide">
                             <span id="msgEd_<?php echo $no; ?>"></span>
                             <span style='cursor:pointer;' class='badge badge-info center' onclick="edtRow1(this)" title="Simpan" id="sm_<?php echo $no."_".$isiData['id_tkerja']; ?>"><i class="icon-save"></i></span>
@@ -88,6 +101,23 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
                             </div>
                             
                             <!--<span style='cursor:pointer;' class='badge badge-important remRow center' name='r<?php echo $no; ?>' title='Hapus' ><i class='icon-remove'></i></span>-->
+                        </td>
+                    <?php }else{ ?>
+                        <td valign="middle" style="width:3%;text-align: center;"><?php echo $no; ?> </td>
+                        <td style="width:58%;"><textarea style="width: 100%;" id="uraian_<?php echo $no; ?>"name="uraian[]"><?php echo ucfirst($isiData['uraian']); ?></textarea></td> 
+                    <?php if (SKP_JNSJAB == 'Jabatan Fungsional Tertentu') { ?>
+                        <td style="width:8%;text-align: center;"><input type='text' id="ak_<?php echo $no; ?>" name="ak[]" /></td>
+                    <?php } ?>
+                    <td style="width:8%;text-align: center;"><input type='text' class='input-small' id="output_<?php echo $no; ?>" name="output[]" /></td>
+                    <td style="width:8%;text-align: center;"><input type='text' class='input-small' id="mutu_<?php echo $no; ?>" name="mutu[]" /></td>
+                    <td style="width:8%;text-align: center;"><input type='text' class='input-small' id="waktu_<?php echo $no; ?>" name="waktu[]" /></td>
+                    <td style="width:8%;text-align: center;"><input type='text' class='input-small' id="biaya_<?php echo $no; ?>" name="biaya[]" />
+                        <input type="hidden" name="idtkerja[]" value="<?php echo $isiData['id_tkerja']; ?>" />
+                        <input type="hidden" id="tupoksi_<?php echo $no; ?>" name="tupoksi[]" value="<?php echo $isiData['tupoksi']; ?>" />
+                        <input type="hidden" id="nouraian_<?php echo $no; ?>"name="nouraian[]" value="<?php echo $isiData['no_uraian']; ?>" />
+                    </td>
+                        <td style="text-align:center;">                            
+                            <span style='cursor:pointer;' class='badge badge-info remRow' name='r<?php echo $no; ?>' title='Remove' ><i class='icon-remove'></i></span>
                         </td>
                     <?php } ?>
                 </tr>
@@ -138,7 +168,8 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
         $('#biaya_'+d[1]).replaceWith(function(){
             return $('<input>',{type:'text', value:$(this).html(), class:'input-small',id:$(this).attr('id'),name:$(this).attr('name'),style:$(this).attr('style')});
         });
-        $(a).addClass('hide');
+        $(a).parent().addClass('hide');
+        console.log($(a).parent().attr('style'));
         $('#btn-act_'+d[1]).removeClass('hide');
         $('#tr'+d[1]).addClass('row_edt');
     }
@@ -163,7 +194,7 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
         $('#biaya_'+a).replaceWith(function(){
             return $('<label />',{html:$(this).val(), id:$(this).attr('id'),name:$(this).attr('name')});
         });
-        $("[name='ed_"+a+"']").removeClass('hide');
+        $("#btns-act_"+a).removeClass('hide');
         console.log('#btn-act_'+a);
         $('#btn-act_'+a).addClass('hide');
         $('#tr'+a).removeClass('row_edt');
@@ -209,6 +240,36 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
         }, 1650);
     }
     
+    function delTgt(a){
+        var splt = a.id.split('_');
+        var ms = $('#msgAll'); 
+        var ld = $('#msgD_'+splt[1]);;
+        ld.addClass('icon-spin icon-spinner');
+        var ask = confirm('Apakah data uraian berikut akan di hapus ??');
+        if(ask){
+        ms.html('Menghapus data...');
+        if(splt[0] == 'del'){
+            var pst = $.post(urls,{act:'delTgt', idtgt:splt[2]});
+            pst.done(function(res){
+                var rs = res.split("___");
+                if(rs[0] == '3'){
+                    ms.html(rs[1]);
+                   $('#allTable').html(rs[2]);
+                   console.log(rs[2]);
+                }else if(rs[0] == '2'){
+                    ms.html(rs[1])
+                }else{
+                    ms.html("<font color='red'>No respon accepted !!!</font>");
+                }
+                setTimeout(function(){ld.removeClass('icon-spin icon-spinner'); ms.html('');},2000);
+            });
+        }else{
+            ms.html("<font color='red'>Missing paramater, delete function error !!! </font>");
+        }
+        }
+        setTimeout(function(){ld.removeClass('icon-spin icon-spinner');});
+    }
+    
     $('#loadUraian').click(function() {
         var ld = $('#load');
         ld.addClass('icon-spinner icon-spin');
@@ -226,9 +287,17 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
     $('#plusUraian').click(function() {
         var tbl = $('#rlTabel');
         var lenth = tbl.children().length;
-        console.log(lenth);
+        var child = tbl.children();
+        var idLastNoUraian = $(child[lenth - 1]).attr('id');
+        var rowNum = idLastNoUraian.replace('tr','');
+        var vNouraian = parseInt($('#nouraian_'+rowNum).val());        
+        var noUraian = (vNouraian > 0)? (vNouraian + 1): 1;        
         lenth = lenth + 1;
-        tbl.append("<tr id='tr" + lenth + "'><td style='text-align:center;'>#</td><td><textarea style='width:100%;'></textarea></td><td style='width:8%;'><input class='input-small' type='text' name='ak[]' /></td><td style='width:8%;'><input class='input-small' type='text' name='output[]' /></td><td style='width:8%;'><input class='input-small' type='text' name='mutu[]' /></td><td style='width:8%;'><input class='input-small' type='text' name='waktu[]' /></td><td style='width:8%;'><input class='input-small' type='text' name='biaya[]' /></td><td style='text-align:center;'><span style='cursor:pointer;' class='badge badge-important remRow center' name='r" + lenth + "' title='Hapus' ><i class='icon-remove'></i></span></td></tr>");
+        <?php             
+            $jft = (SKP_JNSJAB == 'Jabatan Fungsional Tertentu')? "<td style='width:8%;'><input class='input-small' id='ak_\"+lenth+\"' type='text' name='ak[]' /></td>":"<input class='input-small' type='hidden' id='ak_\"+lenth+\"' name='ak[]' />";
+            $sveButton = (SKP_JNSJAB == 'Jabatan Struktural')? "<span style='cursor:pointer;' class='badge badge-user saveRow center' name='s\"+lenth+\"' title='Simpan' ><i class='icon-save'></i></span>":"";            
+        ?>
+        tbl.append("<tr id='tr" + lenth + "'><td style='text-align:center;'>#</td><td><textarea name='uraian[]' id='uraian_"+lenth+"' style='width:100%;'></textarea></td><?php echo $jft;?><td style='width:8%;'><input type='hidden' name='tupoksi[]' id='tupoksi_"+lenth+"' value='1' />  <input type='hidden' value='"+noUraian+"' id='nouraian_"+lenth+"' name='nouraian[]' /><input type='hidden' name='idtkerja[]' id='idtkerja_"+lenth+"' value='0' /><input class='input-small' type='text' id='output_"+lenth+"' name='output[]' /></td><td style='width:8%;'><input class='input-small' type='text' id='mutu_"+lenth+"' name='mutu[]' /></td><td style='width:8%;'><input class='input-small' type='text' id='waktu_"+lenth+"' name='waktu[]' /></td><td style='width:8%;'><input class='input-small' type='text' id='biaya_"+lenth+"' name='biaya[]' /></td><td style='text-align:center;'><span id='msgRow_"+lenth+"'></span><?php echo $sveButton; ?><span style='cursor:pointer;' class='badge badge-important remRow center' name='r" + lenth + "' title='Hapus' ><i class='icon-remove'></i></span></td></tr>");
         removeR();
     });
 
@@ -237,8 +306,9 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
         var form = $('#foTargetKerja');
         $('#loadS').addClass("icon-spinner icon-spin");
         ms.html("&nbsp;&nbsp;<font color='green'>Meyimpan...</font>&nbsp;&nbsp;");
-        var dt = form.serializeArray();
+        var dt = form.serializeArray();        
         var post = $.post(urls, dt);
+        var scn = 2000;
         post.done(function(srr) {
             $('#loadS').removeClass('icon-spinner icon-spin');
             var dto = srr.split('___');
@@ -250,19 +320,21 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
                       $('#page-content-bottom').remove();
                 }, 2000);                
             } else if (dto[0] == '5') {
-                ms.html("<font color='red' >" + dto[1] + "&nbsp;&nbsp;&nbsp;&nbsp;</font>")
+                ms.html("<font color='red' >" + dto[1] + "&nbsp;&nbsp;&nbsp;&nbsp;</font>");
             } else {
-                ms.html("<font color='red' >No data Found... Error cek paramater&nbsp;&nbsp;&nbsp;&nbsp;</font>")
+                ms.html("<font color='red' >No data Found... Error cek paramater&nbsp;&nbsp;&nbsp;&nbsp;</font><br/>");
+                scn = 4000;
             }
             setTimeout(function() {
                 ms.html('');
-            }, 2000);
-        });
+            }, scn);
+        });        
     });
     $('#tgsTambahan').click(function() {
         var ld = $('#load');
         ld.addClass('icon-spinner');
         ld.addClass('icon-spin');
+        removeR();
     });
     removeR();
     function removeR() {
@@ -271,6 +343,37 @@ where k.id_uraian = u.id_uraian and k.tahun = '" . date('Y') . "' and k.id_pns =
             var di = nm.replace('r', '');
             console.log(di);
             $('#tr' + di).remove();
+        });
+        
+        $('.saveRow').click(function(){
+             var ms = $('#msgS');
+            var nm = $(this).attr('name');
+            var no = nm.replace('s','');
+            var ld = $('#msgRow_'+no);
+            ld.addClass('icon-spinner icon-spin');
+            var ur = $('#uraian_'+no).val(); var nouraian = $('#nouraian_'+no).val(); var tpksi = $('#tupoksi_'+no).val();
+            var idt = $('#idtkerja_'+no).val(); var ak = $('#ak_'+no).val(); var out = $('#output_'+no).val(); var mut = $('#mutu_'+no).val();
+            var wkt = $('#waktu_'+no).val(); var bya = $('#biaya_'+no).val();
+            var pst = $.post('jfu/targetkerja/targetkerja__.php',{act : 'saveTgt', 'uraian[]':ur, 'mutu[]':mut, 'biaya[]': bya,'output[]':out,'waktu[]' : wkt,
+                                    'tupoksi[]':tpksi, 'nouraian[]':nouraian, 'idtkerja[]' : idt, 'ak[]':ak});
+            pst.done(function(rse){
+                var dt = rse.split('___');
+                if (dt[0] == '2') {
+                ms.html("<font color='green' >" + dt[1] + "&nbsp;&nbsp;&nbsp;&nbsp;</font>");
+                $('#allTable').html(dt[2]);
+                setTimeout(function() {
+                      ms.html('');                      
+                }, 2000);                
+            } else if (dt[0] == '5') {
+                ms.html("<font color='red' >" + dt[1] + "&nbsp;&nbsp;&nbsp;&nbsp;</font>");
+            } else {
+                ms.html("<font color='red' >No data Found... Error cek paramater&nbsp;&nbsp;&nbsp;&nbsp;</font><br/>")                
+            }
+            setTimeout(function() {
+                ms.html('');
+                ld.removeClass('icon-spinner icon-spin');
+            }, 1300);
+            });
         });
     }
 </script>
