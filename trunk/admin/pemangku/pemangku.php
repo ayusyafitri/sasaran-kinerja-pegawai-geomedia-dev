@@ -32,8 +32,20 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 	</table>
 </div>
 <div class="position-relative" id="page-content">
-    <a href="#modalwin" data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
-    &nbsp;<span id="load" class="spinner"></span>
+   <table>
+	<tr><td> <a href='#modalwin' data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
+			&nbsp;<span id="load" class="spinner"></span></td>
+		<td id="tulisan"></td>
+	</tr></table>
+</div>
+<div class="box-content">
+	<table>
+		<tr><b>
+			<td>Tabel Pemangku </td>
+			<td>:</td>
+			<td id="tabelSKPD"></td>
+		</b></tr>
+	</table>
 </div>
 <div id="modalwin" class="modal hide fade" style="width:800px;left:40%" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
@@ -46,22 +58,15 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
         <form id="form_pemangku">
             <input type="hidden" name="act" value="simpan_pemangku">
             <input type="hidden" id="id_pns" name="id_pns" value="0"> 
+			<input type="hidden" id="id_skpd" name="id_skpd" value="0">
+           
             <table class="table-form">
                 <tbody>
                     <tr>
                         <td>Jabatan</td>
                         <td>:</td>
                         <td>
-                            <select name="jab" id="jab" onChange="jab()" class="jab">
-                            	<option id="">-Pilih Jabatan-</option>
-                                <?php
-                                $jab = get_datas ("select * from skp_jabatan order by idjab");
-								foreach ($jab as $jab){
-								?>
-                                <option value="<?php echo $jab['kode_jabatan'];?>"><?php echo $jab['nama_jabatan'];?></option>
-                                <?php
-								}
-								?>
+                            <select name="jab" id="jab" onchange="jabatan()" onclick="jabatan()" >
                             </select>
                         </td>
                     </tr>
@@ -81,8 +86,8 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 								?>
                             </select>
                         </td>
-                    </tr>
                     <tr>
+                    </tr>
                         <td>Nama</td>
                         <td>:</td>
                         <td>
@@ -167,19 +172,25 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
     </div>
 </div>
 
+<div id="showDetail" class="modal hide fade" valign="midle" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <header class="modal-header">
+            <a href="#" class="close" data-dismiss="modal">x</a>
+                <h3>Mutasi</h3>
+            </header>
+        <div class="modal-body" id="modal_detailKeg">
+    </div>
+</div>
+
 <div class="box-content">
     <table class="table table-bordered geo-table table-hover" width="100%">
         <thead>
             <tr>
                 <th class="center" width="3%">No</th>
-                <th class="center" width="15%">Nama</th> 
-                <th class="center" width="10%">NIP</th>
+                <th class="center" width="10%">Nama</th> 
+                <th class="center" width="5%">NIP</th>
                 <th class="center" width="5%">Gol</th>
-                <th class="center" width="15%">Jabatan</th>
-                <th class="center" width="20%">Alamat</th>
-                <th class="center" width="10%">No.Telp</th>
-                <th class="center" width="15%">Kelahiran</th>
-                <th class="center" width="7%"></th>
+                <th class="center" width="6%">Jabatan</th>
+                <th class="center" width="8%"></th>
             </tr>
         </thead>
         <tbody id="tampil_pemangku">
@@ -209,11 +220,11 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
         </tbody>
     </table>    
 </div>
-
+<div id="misal"></div>
 <script>
-    var url = 'skpd/pemangku/aksi.php';
+    var url = 'admin/pemangku/aksi.php';
     var rslt = $('#result'); 
-	var sourcess = 'admin/jabatan/listSKPD.php';
+	var sourcess = 'admin/pemangku/listSKPD.php';
     
 	$('#skpd').change(function(){
 		var load = $('#loaderSKPD');
@@ -225,19 +236,49 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 			$('#tampil_pemangku').html(datt[2]);
 			$('#tabelSKPD').html(datt[1]); 
 		//	$('.btn-tambah').val()
-			init();
+		//	$('#misal').html(datt[2]);
+			replay();
 		});
 		load.removeClass();
 	});
 	
-	$('.jab').change(function(){
-		source ="skpd/pemangku/tools.php?code=jab&kdjab="+this.value;
+	$('.btn-tambah').click(function(){
+		var skpd = $('#skpd').val();
+		var tulis = $('td#tulisan');
+		$(this).attr('href','0');
+		if(skpd == 0){
+			tulis.html("<font color='red'>Pilih SKPD terlebih dahulu</font>");	
+		}else{
+			tulis.html(" ");
+			$(this).attr('href','#modalwin');
+			$('#id').val("0");
+			var idinduk = $('#id_skpd').val();
+			var post = $.post(url,{act:'get_induk',idindukk:idinduk});
+				post.done(function(data){
+					$('#jab').html(data);
+				});
+			$('#kode').val("");
+			$('#nama').val("");
+		}
+    });
+	
+	function jabatan(){
+		var jab = $('#jab').val();
+		source ="admin/pemangku/tools.php?code=jab&kdjab="+jab;
 		var tes = $.get(source);
 		tes.done(function(data){
 			$('#pem_no').val(data);
-		})
-	});
+		});
+	}
 	
+	function mutasion(k){
+		source = "admin/pemangku/det_mutasi?id_pns="+k;
+		var kegiatan = $.get(source);
+		kegiatan.done(function(datas){
+			$('#modal_detailKeg').html(datas);
+	 });
+	}
+		
     $('.btn-simpan-pemangku').click(function(){      
         var btn = $(this);
         var load = $('#loader');
@@ -258,7 +299,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                     var tbody = $('#tampil_pemangku');
 
                     tbody.html(result[2]);
-                    init();
+                    replay();
                     $("#id").val("0");
                     $("#jab").val("");
                     $("#gol").val("");
@@ -285,7 +326,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
     
     });
     
-    function init(){
+    function replay(){
         $('.bt-edit').click(function(){
             var id = this.name;
             var form = $('#form_pemangku');
@@ -295,8 +336,9 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                 $('#id_pns').val(value[0]);
                 form.find('input[name="nama"]').val(value[1]);
                 form.find('input[name="nip"]').val(value[2]);
-                form.find('select[name="jab"]').val(value[4]);
-                form.find('select[name="gol"]').val(value[3]);
+				$("#jab").val(value[4]);
+                form.find('select[name="jab"]').html(value[12]);
+				form.find('select[name="gol"]').val(value[3]);
                 form.find('input[name="telp"]').val(value[6]);
                 form.find('input[name="alamat"]').val(value[5]);
                 form.find('input[name="tempat"]').val(value[7]);
@@ -326,7 +368,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                                     }, 1500);
                                     var tbody = $('#tampil_pemangku');
                                     tbody.html(hasil[1]);
-                                    init();
+                                    replay();
                                     //btn.parent().parent().remove();
                                 }
                             }
@@ -340,12 +382,8 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
         });
         
     }
-    init();
+    replay();
     
-    $('.btn-tambah').click(function(){
-        $('#id').val("0");
-        $('#kode').val("");
-        $('#nama').val("");
-    })
+    
 	
 </script>
