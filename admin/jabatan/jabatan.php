@@ -30,8 +30,11 @@ include_once ('../../php/postgre.php');
 	</table>
 </div>
 <div class="position-relative" id="page-content">
-    <a href="#modalwin" data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
-    &nbsp;<span id="load" class="spinner"></span>
+    <table>
+	<tr><td><a href="#modalwin" data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
+		&nbsp;<span id="load" class="spinner"></span></td>
+		<td id="tulisan"></td>
+	</tr></table>
 </div>
 <div class="box-content">
 	<table>
@@ -248,17 +251,26 @@ include_once ('../../php/postgre.php');
     });
 	
 	$('.btn-tambah').click(function(){
-		$('#id').val('0');
-		var idinduk = $('#id_skpd').val();
-		var post = $.post(url,{act:'get_induk',idindukk:idinduk});
-			post.done(function(data){
-				$('#id_induk').html(data);
-			});
-      	document.getElementById('nama').value='';
-	//	document.getElementById('idindukk').selected=true;
-		document.getElementById('kodejab').value='';
-		document.getElementById('idjabatan').selected=true;
-              
+		var skpd = $('#skpd').val();
+		var tulis = $('td#tulisan');
+		$(this).attr('href','0');
+		if(skpd == 0){
+			tulis.html("<font color='red'>Pilih SKPD terlebih dahulu</font>");	
+		}else{ 
+			tulis.html(" ");
+			$(this).attr('href','#modalwin');
+			$('#id').val('0');
+			var idinduk = $('#id_skpd').val();
+			var post = $.post(url,{act:'get_induk',idindukk:idinduk});
+				post.done(function(data){
+					$('#id_induk').html(data);
+				});
+			document.getElementById('nama').value='';
+		//	document.getElementById('idindukk').selected=true;
+			document.getElementById('kodejab').value='';
+			document.getElementById('idjabatan').selected=true;
+		}
+
 	});
     
 	function getParent(){
