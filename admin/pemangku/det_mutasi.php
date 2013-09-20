@@ -1,13 +1,13 @@
 <?php
 include_once("../../php/include_all.php");
+
 $idpns = $_GET['id_pns'];
 
-$per = get_data("select p.id_pns, p.nama, p.nip, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir, p.id_golongan from skp_pns p, skp_jabatan j where j.kode_jabatan=p.kode_jabatan and p.id_pns=".$idpns);
+$per = get_data("select p.id_pns, p.kode_jabatan, p.nama, p.nip, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir, p.id_golongan from skp_pns p, skp_jabatan j where j.kode_jabatan=p.kode_jabatan and p.id_pns=".$idpns);
 
           
 
 echo "<table class='table-mut'>
-<input type='text id='id_pns' name='id_pns' value='$idpns'>
 		<tr>
 			<td>Nama</td><td>:</td><td>".$per['nama']."</td>
 		</tr>
@@ -43,8 +43,11 @@ echo "<table class='table-mut'>
  echo "	
 	
 	</table>
-	<table class='mut'>
 	<form id='mutasi'>
+	<table class='mut'>
+		 <input type='hidden' name='act' value='input_mutasi'>
+		 <input type='hidden' id='kode_jabAwl' name='kode_jabAwl' value='".$per['kode_jabatan']."'>
+		 <input type='hidden' id='id_pns' name='id_pns' value='$idpns'>
 		<tr><td><b>Mutasi</b></td><td></b>:</b></td></tr>
 		<tr>
 			<td><select name='mut' id='mut' onchange='mutasiskpd()' onclick='mutasiskpd()'>
@@ -62,8 +65,8 @@ echo "<table class='table-mut'>
 					 <option value='0' id='jabatankos'> Tidak ada </option> 
 			</select></td>
 		</tr>
+		</table>
 	</form>
-	</table>
 	<table align='right'>
                     <tr>
                         <td>
@@ -83,15 +86,17 @@ function mutasiskpd(){
 			$('#jabb').html(datas);
 		});
 }
- var sources ='admin/pemangku/mutasi.php';
+
+
+ var url ='admin/pemangku/mutasi.php';
 $('.btn-simpan-mutasi').click(function(){ 
-	var btn = $(this);
-    var load = $('#loader');
+	 var btn = $(this);
+	var load = $('#loader');
     load.addClass('icon-spinner icon-spin icon-2x white');
 	
 	var form = $('#mutasi');
     var data = form.serializeArray();
-	var post = $.post(sources, data);
+	var post = $.post(url, data);
 	post.done(function (res){
 		var result = res.split('__');
 		if(result.length==3){
@@ -101,13 +106,20 @@ $('.btn-simpan-mutasi').click(function(){
                         rslt.html('');
                         }, 1500);
                         
-                        
-                    }else{
+						var tbody = $('#tampil_pemangku');
+						tbody.html(result[6]);
+					//	init();
+                     //   alert(result[2]+'NIP'+result[3]+'telah dimutasi ke SKPD'+result[5]+'sebagai'+result[4]);
+					alert("kkkkk");	
+					}else{
                       rslt.html('<font color="red">'+res+'</font>');   
                     }
                 }else{
                    rslt.html('<font color="red">'+res+'</font>');   
                 }
+		load.removeClass();
+            btn.removeClass('btn-info').addClass('btn-primary');
+
 	});
 	
 });
