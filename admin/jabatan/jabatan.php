@@ -122,9 +122,10 @@ include_once ('../../php/postgre.php');
                     <tr>
                         <td>Unit Organisasi</td>
                         <td>:</td>
-                        <td id='unitOr' name="unitOr"></td><!--td id='eslon'></td>
+                        <td id='unitOr' name="unitOr"></td><!--td id='eslon'></td-->
                     </tr>
-
+				
+			 	
                     <!--tr>
     <td>Ikhtisar Jabatan</td>
     <td>:</td>
@@ -132,9 +133,7 @@ include_once ('../../php/postgre.php');
         <textarea class="input-xlarge" name="ikhtisar" id="ikhtisar"  />
     </td>
 </tr!-->
-
-
-
+			 
                     <tr>
                         <td></td>
                         <td></td>
@@ -210,7 +209,6 @@ include_once ('../../php/postgre.php');
             });            
         }
 	});
-	
 	
     $('.btn-simpan-jabatan').click(function(){      
         var btn = $(this);
