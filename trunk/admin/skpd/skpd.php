@@ -68,7 +68,7 @@ include_once('../../php/include_all.php');
         <tbody id="tampilSKPD">
             <?php
             $x = 1;
-            $pr = get_datas("select * from skp_skpd order by id");
+            $pr = get_datas("select * from skp_skpd where nama not like '%admin%' order by id");
             foreach ($pr as $pr) {
                 ?><tr>
                     <td><?php echo $x ?></td>
@@ -171,10 +171,10 @@ include_once('../../php/include_all.php');
                                 }
                             }
                         });
-                        load.html('<i class="icon-trash icon-white">');
+                        load.html('<i class="icon-trash icon-white"></i>&nbsp; Hapus');
                     }
                 }else{
-                    load.html('<i class="icon-trash icon-white">');
+                    load.html('<i class="icon-trash icon-white"></i>&nbsp; Hapus');
                 }
             });
         });
