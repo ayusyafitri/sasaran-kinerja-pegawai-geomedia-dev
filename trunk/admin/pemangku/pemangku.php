@@ -226,7 +226,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
     var rslt = $('#result'); 
 	var sourcess = 'admin/pemangku/listSKPD.php';
     
-	$('#skpd').change(function(){
+	$('#skpd').change(function(){								//skpd yg akan ditampilkan
 		var load = $('#loaderSKPD');
 		load.addClass('icon-spinner icon-spin white');
 		var l = $.post(sourcess,{act:'tampil_nam',sk:this.value});
@@ -238,6 +238,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 		//	$('.btn-tambah').val()
 		//	$('#misal').html(datt[2]);
 			replay();
+		//	mutasion(k);
 		});
 		load.removeClass();
 	});
@@ -262,7 +263,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 		}
     });
 	
-	function jabatan(){
+	function jabatan(){										//utk menghitung jmlah orang pada jabatan itu
 		var jab = $('#jab').val();
 		source ="admin/pemangku/tools.php?code=jab&kdjab="+jab;
 		var tes = $.get(source);
@@ -276,7 +277,9 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 		var kegiatan = $.get(source);
 		kegiatan.done(function(datas){
 			$('#modal_detailKeg').html(datas);
+			simpan_mut();
 	 });
+		
 	}
 		
     $('.btn-simpan-pemangku').click(function(){      
@@ -383,7 +386,9 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
         
     }
 	
-	 var url ='admin/pemangku/mutasi.php';
+
+function simpan_mut(){
+ var url ='admin/pemangku/mutasi.php';
 $('.btn-simpan-mutasi').click(function(){ 
 	 var btn = $(this);
 	var load = $('#loader');
@@ -405,7 +410,7 @@ $('.btn-simpan-mutasi').click(function(){
 						tbody.html(result[6]);
 					//	init();
                      //   alert(result[2]+'NIP'+result[3]+'telah dimutasi ke SKPD'+result[5]+'sebagai'+result[4]);
-					alert("kkkkk");	
+						alert("kkkkk");	
 					}else{
                       rslt.html('<font color="red">'+res+'</font>');   
                     }
@@ -418,6 +423,7 @@ $('.btn-simpan-mutasi').click(function(){
 	});
 	
 });
+}
 
 	
     replay();

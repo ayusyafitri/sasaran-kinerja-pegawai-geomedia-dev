@@ -87,7 +87,8 @@ function mutasiskpd(){
 		});
 }
 
-
+/*
+function simpan_mut(){
  var url ='admin/pemangku/mutasi.php';
 $('.btn-simpan-mutasi').click(function(){ 
 	 var btn = $(this);
@@ -123,5 +124,5 @@ $('.btn-simpan-mutasi').click(function(){
 	});
 	
 });
-
+} */
 </script>
