@@ -77,6 +77,7 @@ include_once('../../php/include_all.php');
 					<td><?php echo $pr['username']?></td>
 					<td><?php echo $pr['password']?></td>
                     <td class="center" >
+
                         <a href="#modalwin" data-toggle="modal"  class="btn btn-info bt-edit btn-small" name="<?php echo $pr['id']; ?>"><i class="icon-edit icon-white"></i> ubah</a>
                         <a class="btn btn-danger bt-hapus btn-small" name="<?php echo $pr['id']; ?>"><i class="icon-trash icon-white"></i> hapus</a>
 
