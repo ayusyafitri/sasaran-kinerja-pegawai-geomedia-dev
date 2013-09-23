@@ -362,8 +362,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                         var post = $.post(url,{act:"hapus_pemangku",id:pid});
                         post.done(function(res){
                             var hasil = res.split('__');
-                            //alert(hasil.length);
-                            if(hasil.length == 2){
+                              if(hasil.length == 2){
                                 if(hasil[0] == 'success'){
                                     rslt.html('<font color="green">Data Telah Dihapus...</font>');
                                     setTimeout(function(){
@@ -389,35 +388,39 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 
 function simpan_mut(){
  var url ='admin/pemangku/mutasi.php';
+ 
 $('.btn-simpan-mutasi').click(function(){ 
 	 var btn = $(this);
-	var load = $('#loader');
-    load.addClass('icon-spinner icon-spin icon-2x white');
+	var loadd = $('#loaderr');
+	var rslt = $('#result'); 
+    loadd.addClass('icon-spinner icon-spin icon-2x white');
 	
 	var form = $('#mutasi');
     var data = form.serializeArray();
 	var post = $.post(url, data);
-	post.done(function (res){
+	post.done(function(res){
 		var result = res.split('__');
-		if(result.length==3){
-                    if(result[0]=='success'){
-                        rslt.html('<font color="green">data tersimpan </font>');
-                        setTimeout(function(){
-                        rslt.html('');
-                        }, 1500);
-                        
+		if(result.length==8){ 						//result leng tdk terbaca
+			 
+		    if(result[0]=='success'||result[1]=='success'){
+					rslt.html('<font color="green">data tersimpan </font>');
+                      	setTimeout(function(){
+					     rslt.html('');
+				}, 1500);
+						
 						var tbody = $('#tampil_pemangku');
-						tbody.html(result[6]);
-					//	init();
-                     //   alert(result[2]+'NIP'+result[3]+'telah dimutasi ke SKPD'+result[5]+'sebagai'+result[4]);
-						alert("kkkkk");	
+						
+				 	    alert(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5]);
+				 		tbody.html(result[7]);
+				 		init();
+						$('#showDetail').modal('hide');
 					}else{
                       rslt.html('<font color="red">'+res+'</font>');   
                     }
                 }else{
                    rslt.html('<font color="red">'+res+'</font>');   
                 }
-		load.removeClass();
+		loadd.removeClass();
             btn.removeClass('btn-info').addClass('btn-primary');
 
 	});

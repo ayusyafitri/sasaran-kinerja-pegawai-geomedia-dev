@@ -70,7 +70,7 @@ echo "<table class='table-mut'>
 	<table align='right'>
                     <tr>
                         <td>
-                            <a class='btn btn-primary btn-small btn-simpan-mutasi'><div id='loader'></div>&nbsp;Simpan</a><span id='result'></span>
+                            <a class='btn btn-primary btn-small btn-simpan-mutasi'><div id='loaderr'></div>&nbsp;Simpan</a><span id='result'></span>
                         </td>
                     </tr>
             </table>
