@@ -9,6 +9,6 @@
     <li><a class="geo-link" href="#" lnk="jfu/profil/" name="profil_jfu.php"><i class="icon-user-md"></i><span>Profil</span></a></li>
     <?php if (SKP_JNSJAB == 'Jabatan Struktural') { ?>
         <li><a class="geo-link" href="#" lnk="jfu/penetapan_target_kerja/" name="penetapan.php"><i class="icon-user-md"></i><span>Penetapan Target</span></a></li>
-        <li><a class="geo-link" href="#" lnk="jfu/penilaian/" name="penilaian.php"><i class="icon-user-md"></i><span>Penilaian</span></a></li>
-                <?php } ?>
+        <li><a class="geo-link" href="#" lnk="jfu/penilaian/" name="penilaian.php"><i class="icon-tasks"></i><span>Penetapan Realisasi</span></a></li>
+    <?php } ?>
 </ul>

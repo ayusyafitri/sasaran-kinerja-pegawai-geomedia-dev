@@ -235,8 +235,7 @@ if (!empty($idSkp['id_skp'])) {
 <script type="text/javascript">
     var rls = "jfu/realisasi/realisasi_.php";
     
-    function edtRow(a){
-        //console.log('edtRow : '+a.id);    
+    function edtRow(a){        
         var d = a.id.split('_');            
         $('.row_edt').each(function(){
             var a = $(this).attr('id');
@@ -245,8 +244,7 @@ if (!empty($idSkp['id_skp'])) {
         });
         $('#uraian_'+d[1]+'_'+d[2]).replaceWith(function(){
             return $('<textarea />',{html:$(this).html(), id:$(this).attr('id'),name:$(this).attr('name'),style:$(this).attr('style')});
-        });
-        console.log('#id_'+d[1]+'_'+d[2]);
+        });        
         $('#id_'+d[1]+'_'+d[2]).replaceWith(function(){
             return $('<input />',{value:$(this).html(), type:'hidden',id:$(this).attr('id'),name:$(this).attr('name')});
         });
@@ -318,6 +316,7 @@ if (!empty($idSkp['id_skp'])) {
         var fTmbhn = $('#foTambahan');
         var dtTmbhn = fTmbhn.serializeArray();
         var pfTmbhn = $.post(rls, dtTmbhn);
+        console.log(dtTmbhn);
         $('#msgtm').html('Menyimpan data...&nbsp;&nbsp;');
         var ld = $('#loadtm');
         ld.addClass('icon-spin icon-spinner');

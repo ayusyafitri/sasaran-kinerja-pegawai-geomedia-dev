@@ -38,7 +38,7 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
         <button class="btn btn-primary btn-small" style='margin-top: -10px;'id="findPeg"><i class="icon-search"></i>&nbsp;Cari</button>&nbsp;&nbsp;<span id='loadSc' class=''></span>
         <div id='msgTbl' class='pull-right' ></div>
         <form id="foTargetKerja">
-            <input type='hidden' name='act' value ='confirmed' />
+            <input type='hidden' name='act' id="act" value ='confirmed' />
             <table class="table table-striped table-bordered table-hover geo-table" id='tblKerja'style="width:100%">
                 <thead >
                     <tr>
@@ -63,11 +63,12 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
     </div>
     <div class=" position-relative pull-right" id="page-content">
         <span id="loadSave"></span>&nbsp;&nbsp;<span id='msgAl'></span>
-        <button class="btn btn-small btn-primary no-radius" id="confirm"><i class="icon-save"></i>Konfirmasi Target</button>        
+        <button class="btn btn-small btn-primary no-radius btn-danger" id="reconfirm"><i class="icon-refresh"></i>Batal Konfirmasi</button>
+        <button class="btn btn-small btn-primary no-radius" id="confirm"><i class="icon-save"></i>Konfirmasi Target</button>
     </div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript">    
     var urls = 'jfu/penetapan_target_kerja/penetapan_.php';
     function edtRow(a) {
         var d = a.id.split('_');
@@ -171,45 +172,86 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
             msL.removeClass('icon-spinner icon-spin');
         }, 1650);
     }
-    
-    $('#confirm').click(function(){
+
+    $('#confirm').click(function() {
+        $('#act').val('confirmed');
         var f = $('#foTargetKerja');
         var d = f.serializeArray();
-        var pst = $.post(urls,d);
+        var thn = {'name': 'thn', 'value': $('#tahun').val()};
+        var peg = {'name': 'idPeg', 'value': $('#pilihPeg').val()};
+        d.push(thn);
+        d.push(peg);
+        console.log(d);
+        var pst = $.post(urls, d);
         var ld = $('#loadSave');
         var ms = $('#msgAl');
         ld.addClass('icon-spin icon-spinner');
-        pst.done(function(ser){
+        pst.done(function(ser) {
             var sp = ser.split('___');
-            if(sp[0] == '2' || sp[0] == '5'){
-                ms.html(sp[1]+"&nbsp;&nbsp;");
-            }else{
+            if (sp[0] == '2') {
+                ms.html(sp[1] + "&nbsp;&nbsp;");
+                $('#tblKerja').html(sp[2]);
+            } else if (sp[0] == '5') {
+                ms.html(sp[1] + "&nbsp;&nbsp;");
+            } else {
                 ms.html("<font color='red'>Error in parameter !!!</font>")
             }
-            
-            setTimeout(function(){
+
+            setTimeout(function() {
                 ld.removeClass('icon-spin icon-spinner');
                 ms.html('');
-            },1700);
+            }, 1700);
         });
     });
-    $('#findPeg').click(function(){
-       var ld = $('#loadSc');
-       var y = $('#tahun').val();
-       var peg = $('#pilihPeg').val();       
-       if(y !== '0' && peg !== '0'){
-           ld.addClass('icon-spin icon-spinner');
-           var pst = $.post(urls,{act:'ldTarget',th:y,pg : peg});
-           pst.done(function(sre){     
-               $('#tblKerja').html(sre);
-           });
-       }else{
-           ld.html("<font color='red'>Pilih Tahun dan Pegawai terlebih dahulu !!</font>");
-       }
-       setTimeout(function(){
-           ld.removeClass('icon-spin icon-spinner');
-           ld.html('');
-       }, 1300);
+
+    $('#reconfirm').click(function() {
+        $('#act').val('reconfirm');
+        var f = $('#foTargetKerja');
+        var dt = f.serializeArray();
+        var thn = {'name': 'thn', 'value': $('#tahun').val()};
+        var peg = {'name': 'idPeg', 'value': $('#pilihPeg').val()};
+        dt.push(thn);
+        dt.push(peg);
+        console.log(dt);
+        var pst = $.post(urls, dt);
+        var ld = $('#loadSave');
+        var ms = $('#msgAl');
+        ld.addClass('icon-spin icon-spinner');
+        pst.done(function(ser) {
+            var sp = ser.split('___');
+            if (sp[0] == '2') {
+                ms.html(sp[1] + "&nbsp;&nbsp;");
+                $('#tblKerja').html(sp[2]);
+            } else if (sp[0] == '5') {
+                ms.html(sp[1] + "&nbsp;&nbsp;");
+            } else {
+                ms.html("<font color='red'>Error in parameter !!!</font>")
+            }
+
+            setTimeout(function() {
+                ld.removeClass('icon-spin icon-spinner');
+                ms.html('');
+            }, 1700);
+        });
+    });
+
+    $('#findPeg').click(function() {
+        var ld = $('#loadSc');
+        var y = $('#tahun').val();
+        var peg = $('#pilihPeg').val();
+        if (y !== '0' && peg !== '0') {
+            ld.addClass('icon-spin icon-spinner');
+            var pst = $.post(urls, {act: 'ldTarget', th: y, pg: peg});
+            pst.done(function(sre) {
+                $('#tblKerja').html(sre);
+            });
+        } else {
+            ld.html("<font color='red'>Pilih Tahun dan Pegawai terlebih dahulu !!</font>");
+        }
+        setTimeout(function() {
+            ld.removeClass('icon-spin icon-spinner');
+            ld.html('');
+        }, 1300);
     });
     $('#loadUraian').click(function() {
         var ld = $('#load');
