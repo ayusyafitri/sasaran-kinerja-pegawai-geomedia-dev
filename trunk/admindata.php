@@ -64,11 +64,33 @@ if (!isset($_SESSION['_username'])) {
         <div class="container-fluid" id="main-container">
             <div id="sidebar" >
                 <?php
-                include 'php/menuadmin.php'
+                if ($_SESSION['_menu'] == '3') {
+                    include 'php/menu.php';
+                } else if ($_SESSION['_menu'] == '2') {
+                    include 'php/menuskpd.php';
+                } else if ($_SESSION['_menu'] == '1') {
+                    include 'php/menuadmin.php';
+                } else if (!isset($_SESSION['_menu'])){
+                    
+                } else{
+                    ?>
+                <script type="text/javascript">
+                    location.href = './';
+                </script>
+                    <?php
+                        session_destroy();
+                }
                 ?>
             </div>
 
             <div id="main-content"  >
+                <?php
+                foreach ($_SESSION as $key => $value) {
+                    if (is_string($key)) {
+                        echo "$key &nbsp;&nbsp;: &nbsp; $value<br />";
+                    }
+                }
+                ?>
                 Hello Admin!!
             </div>
         </div>

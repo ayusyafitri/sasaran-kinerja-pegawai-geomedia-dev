@@ -9,7 +9,7 @@ if (isset($_SESSION['_username'])) {
             <a title="Refresh" class="btn btn-primary btn-small pull-right btRefresh"><i class="icon-refresh"></i></a>
     </div>
     <div class="widget-body" style="padding:20px">
-        <div class="box center" style="width:250px; margin-bottom:80px; margin-top:70px">
+        <div class="box center" style="width:260px; margin-bottom:80px; margin-top:70px">
             <div class="box-content">
                 <div class="row-fluid" id="f0rm">
                     <span style="font-size:1.2em; font-weight:bold;">LOGIN SKP v1.0</span>
@@ -27,7 +27,12 @@ if (isset($_SESSION['_username'])) {
                     <i class="icon-lock"></i>
                         </span>
                     </label>
-
+                    <select name="part" id="part">                        
+                        <option value="0">--Pilih Level--</option>
+                        <option value="1">Admin</option>
+                        <option value="2">SKPD</option>
+                        <option value="3">PNS</option>
+                    </select>
                     <input type="button" class="btn btn-danger btn-small bt-cancel" value="Cancel">
                     <input type="button" class="btn btn-primary btn-small bt-login" value="Login">
                     <input type="hidden" value="hearme" name="what">
@@ -175,7 +180,7 @@ if (isset($_SESSION['$LEVEL'])) {
         $(btns[0]).addClass('active');
 
 
-        var url = 'inline/front_home.php';
+        var url = 'home/banner.php';
         var get = $.get(url);
         get.done(function(data) {
             $('#content').html(data);
@@ -192,7 +197,7 @@ if (isset($_SESSION['$LEVEL'])) {
         alerto.html('<div class="icon-spinner icon-spin pull-right"></div>&nbsp;Mohon tunggu...');
 
         var url = 'php/1nd3x.php';
-        var posting = $.post(url, {whoareyou: user, yoursecret: pass,what:'inn'});
+        var posting = $.post(url, {whoareyou: user, yoursecret: pass,part : $('#part').val(),what:'inn'});
         posting.done(function(data) {
             var dt = data.split('___');
             if (dt[0] == 'suk') {

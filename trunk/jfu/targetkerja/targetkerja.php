@@ -29,8 +29,8 @@ where s.id_tkerja = k.id_tkerja AND k.id_uraian = u.id_uraian and k.tahun = '" .
             <?php
             $kinerjaJfu_awal = get_datas("SELECT uraian_temp as uraian,no_uraian from skp_uraiantemp where kodejab_temp = '".SKP_KODEJAB."'");
         } else {
-            $kinerjaJfu_awal = get_datas("SELECT u.uraian, u.no_uraian,u.tupoksi FROM skp_bkn_uraian u, skp_bkn_jabatan j 
-   where j.nama_jabatan LIKE '%" . $nmJabatan['nama_jabatan'] . "%' and u.kode_jabatan = j.kode_jabatan order by u.no_uraian ASC");
+            $kinerjaJfu_awal = get_datas("SELECT u.uraian, u.no_uraian,u.tupoksi FROM skp_bkn_uraian u, skp_bkn_jabatan j, skp_pns p , skp_jabatan jj
+   where p.kode_jabatan = jj.kode_jabatan and j.kode_jabatan = jj.kode_bkn and u.kode_jabatan = j.kode_jabatan and p.id_pns = '".SKP_ID."' order by u.no_uraian ASC");
             
         }
     }
