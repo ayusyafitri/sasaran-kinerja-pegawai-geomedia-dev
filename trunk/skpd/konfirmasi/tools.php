@@ -11,7 +11,7 @@ $iduser = $_POST['iduser'];
 for ($i=0; $i<count($rows); $i++){
 	if ($con[$i] == '1'){
 		$maxid = get_maxid ('id_pns', 'skp_pns');
-		exec_query("insert into skp_pns (id_pns, nama, nip, username, password) values(".$maxid.", '".$nama[$i]."', '".$nip[$i]."', '".$user[$i]."', '".$pass[$i]."')");
+		exec_query("insert into skp_pns (id_pns, nama, nip, username, password, status_aktif) values(".$maxid.", '".$nama[$i]."', '".$nip[$i]."', '".$user[$i]."', '".$pass[$i]."', 1)");
 		exec_query("delete from skp_username where id_user=".$iduser[$i]);
 		$stored = get_data ('select id_pns from skp_pns where id_pns='.$maxid);
 		if ($stored['id_pns']==$maxid){
