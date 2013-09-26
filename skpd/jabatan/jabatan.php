@@ -230,12 +230,6 @@ session_start();
 
 	});
     
-	function getParent(){
-		var post = $.post(url,{act:'get_induk',idinduk:this.value});
-        post.done(function(data){
-            $('#id_induk').html(data);
-		});
-	}
 	
 	
     function init(){

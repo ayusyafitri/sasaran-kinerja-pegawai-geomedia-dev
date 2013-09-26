@@ -2,6 +2,7 @@
 if (@$_POST['open'] != 'please') {
     exit;
 }
+session_start();
 include_once('../../php/include_all.php');
 $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei", 
                     "Juni", "Juli", "Agustus", "September", 
@@ -25,6 +26,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
         <form id="form_pemangku">
             <input type="hidden" name="act" value="simpan_pemangku">
             <input type="hidden" id="id_pns" name="id_pns" value="0"> 
+            <input type="hidden" id="skpd" name="skpd" value="<? echo $_SESSION['_idSkpd']; ?>"> 
             <table class="table-form">
                 <tbody>
                     <tr>
@@ -34,7 +36,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                             <select name="jab" id="jab" onChange="jab()" class="jab">
                             	<option id="">-Pilih Jabatan-</option>
                                 <?php
-                                $jab = get_datas ("select * from skp_jabatan order by idjab");
+                                $jab = get_datas ("select * from skp_jabatan where unit_kerja=".$_SESSION['_idSkpd']." order by idjab");
 								foreach ($jab as $jab){
 								?>
                                 <option value="<?php echo $jab['kode_jabatan'];?>"><?php echo $jab['nama_jabatan'];?></option>
@@ -199,6 +201,14 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 		tes.done(function(data){
 			$('#pem_no').val(data);
 		})
+	});
+	
+	$('.btn-tambah').click(function(){
+		var skpd = $('#skpd').val();
+		var post = $.post(url,{act:'tab', skpd:skpd});
+			post.done (function(data){
+				$('#jab').html(data);
+			});
 	});
 	
     $('.btn-simpan-pemangku').click(function(){      
