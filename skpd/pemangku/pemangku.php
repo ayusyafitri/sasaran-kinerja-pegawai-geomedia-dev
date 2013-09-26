@@ -166,7 +166,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
         <tbody id="tampil_pemangku">
             <?php
             $x = 1;
-            $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan order by p.id_pns");
+            $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan and j.unit_kerja=".$_SESSION['_idSkpd']." order by p.id_pns");
             foreach ($pr as $pr) {
                 ?><tr>
                     <td><?php echo $x ?></td>
@@ -209,6 +209,10 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 			post.done (function(data){
 				$('#jab').html(data);
 			});
+		$('#id').val("0");
+        $('#kode').val("");
+        $('#nama').val("");
+
 	});
 	
     $('.btn-simpan-pemangku').click(function(){      
@@ -315,10 +319,5 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
     }
     init();
     
-    $('.btn-tambah').click(function(){
-        $('#id').val("0");
-        $('#kode').val("");
-        $('#nama').val("");
-    })
 	
 </script>
