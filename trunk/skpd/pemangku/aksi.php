@@ -53,17 +53,50 @@ if ($act == 'simpan_pemangku') {
 		$thn = $pecah[0];
 		$bln = $pecah[1];
 		$tgl = $pecah[2];
+	
+		if($bln[0] == '0'){
+			$t_bln=$bln[1];
+		}else{
+			$t_bln=$bln;
+		}
+		
+		if($tgl[0] == '0'){
+			$t_tgl=$tgl[1];
+		}else{
+			$t_tgl=$tgl;
+		}
+
         $ress = implode($data, '__');
         print_r($ress);
         echo "__";
-		echo $thn.'__'.$bln.'__'.$tgl.'__';
+		echo $thn.'__'.$t_bln.'__'.$t_tgl.'__';
     } else {
         echo 'error';
     }
 
     view_skpd();
 }
+else if ($act == 'tab'){
+	$skpd = $_POST['skpd'];
+	$parent = 0;
+	$iter = 1;
+	get_tab ($val = '', $parent, $iter=0, $skpd);
+} 
 
+function get_tab ($val='', $parent=0, $iter=1, $skpd){
+    $induk = get_datas("select nama_jabatan, idjab, unit_kerja from skp_jabatan where unit_kerja=".$skpd . " and parent=" . $parent . " order by idjab");
+   
+	if ($parent == 0)
+        echo "<option value='0'>Tidak Ada Induk</option>";
+    foreach ($induk as $induk) {
+        if ($val == $induk['idjab'])
+            $sel = "selected='selected'";
+        echo "<option $sel value='".$induk['idjab']."'>" . space($iter * 5, "&nbsp;", false) . "".$induk['nama_jabatan']."</option>\n";
+		$skpd = $induk['unit_kerja'];
+        echo get_tab($val, $induk['idjab'], ($iter + 1), $skpd);
+        $sel = '';
+    }
+}
 function view_skpd() {
 
     $x = 1;
