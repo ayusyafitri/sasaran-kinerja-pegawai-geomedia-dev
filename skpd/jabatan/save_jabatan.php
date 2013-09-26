@@ -15,6 +15,7 @@ if ($act == 'jabatan_simpan') {
 	$nameUnit = $_POST['unit'];
 	$golUnit = $_POST['eslon'];
 	$idunit=$_POST['unitorgnisasi'];
+	$id_unit=$_POST['id_unit'];
 	
     if (!is_numeric($id)) {
         echo "Err : invalid id. ";
@@ -22,7 +23,12 @@ if ($act == 'jabatan_simpan') {
     }
 
     if ($id > 0) {
-        exec_query("update skp_jabatan set unit_kerja=".$skpd.", nama_jabatan='".$nama."', parent=".$induk.", kode_jabatan='" . $kode . "', jabatan='".$jabatan."', unit_organisasi=".$unitorgnisasi." where idjab=" . $id . "");
+		if($jabatan=="Jabatan Struktural"){
+			exec_query("update skp_jabatan set unit_kerja=".$skpd.", nama_jabatan='".$nama."', parent=".$induk.", kode_jabatan='" . $kode . "', jabatan='".$jabatan."' where idjab=" . $id . "");
+			exec_query ("update skp_unit_eselon set nama_unit='".$nameUnit."', eselon='".$golUnit."' where id_unit=".$id_unit."");
+		}else{
+			exec_query("update skp_jabatan set unit_kerja=".$skpd.", nama_jabatan='".$nama."', parent=".$induk.", kode_jabatan='" . $kode . "', jabatan='".$jabatan."', unit_organisasi=".$unitorgnisasi." where idjab=" . $id . "");
+		}
         echo 'success__';
     } else {
 		if($jabatan=="Jabatan Struktural"){
@@ -82,7 +88,7 @@ else if ($act == 'ubah_jabatan') {
 		if ($data['jabatan'] == "Jabatan Struktural") {
 			$unit2 = get_data("select distinct (id_unit), nama_unit, eselon from skp_unit_eselon, skp_jabatan where id_unit=unit_organisasi and id_unit=".$data['unit_organisasi']);
 
-			$i.= "<td><input type='text' name='unit' id='unit' value='".$unit2['nama_unit']."' class='span3'/></td><td><input type='text' name='eslon' id='eslon' value='".$unit2['eselon']."' class='span1'/></td>";
+			$i.= "<td><input type='hidden' name='id_unit' id='id_unit' value='".$unit2[id_unit]."'><input type='text' name='unit' id='unit' value='".$unit2['nama_unit']."' class='span3'/></td><td><input type='text' name='eslon' id='eslon' value='".$unit2['eselon']."' class='span1'/></td>";
 			
 		}else{
 			$unit1 = get_datas("select distinct u.nama_unit, u.id_unit,  u.id_skpd, j.unit_organisasi from skp_unit_eselon u, skp_jabatan j where u.id_skpd=j.unit_kerja and u.id_unit=j.unit_organisasi and u.id_skpd=".$data['unit_kerja']);
