@@ -1,5 +1,7 @@
 <?php
 include_once ('../../php/postgre.php');
+include ('../../php/function_global.php');
+session_start();
 $act = '';
 if (isset($_POST['act']))
     $act = $_POST['act'];
@@ -84,14 +86,14 @@ else if ($act == 'tab'){
 } 
 
 function get_tab ($val='', $parent=0, $iter=1, $skpd){
-    $induk = get_datas("select nama_jabatan, idjab, unit_kerja from skp_jabatan where unit_kerja=".$skpd . " and parent=" . $parent . " order by idjab");
+    $induk = get_datas("select nama_jabatan, idjab, unit_kerja, kode_jabatan from skp_jabatan where unit_kerja=".$skpd . " and parent=" . $parent . " order by idjab");
    
 	if ($parent == 0)
-        echo "<option value='0'>Tidak Ada Induk</option>";
+        echo "<option value='0'>Pilih Jabatan</option>";
     foreach ($induk as $induk) {
-        if ($val == $induk['idjab'])
+        if ($val == $induk['kode_jabatan'])
             $sel = "selected='selected'";
-        echo "<option $sel value='".$induk['idjab']."'>" . space($iter * 5, "&nbsp;", false) . "".$induk['nama_jabatan']."</option>\n";
+        echo "<option $sel value='".$induk['kode_jabatan']."'>" . space($iter * 5, "&nbsp;", false) . "".$induk['nama_jabatan']."</option>\n";
 		$skpd = $induk['unit_kerja'];
         echo get_tab($val, $induk['idjab'], ($iter + 1), $skpd);
         $sel = '';
@@ -100,7 +102,7 @@ function get_tab ($val='', $parent=0, $iter=1, $skpd){
 function view_skpd() {
 
     $x = 1;
-    $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan order by p.id_pns");
+    $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan and j.unit_kerja=".$_SESSION['_idSkpd']." order by p.id_pns");
     foreach ($pr as $pr) {
                 ?><tr>
                     <td><?php echo $x ?></td>
