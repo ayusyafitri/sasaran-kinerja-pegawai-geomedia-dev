@@ -154,7 +154,7 @@ session_start();
         var td = $('#unitOr');  
 	//	var tde = $('td#eslon');
         if(jabatan == 'Jabatan Struktural'){
-            td.html("<td><input type='text' name='unit' id='unit'  class='span3'/></td><td><select name='eslon' id='eslon' class=span2><option value='0'>Pilih Golongan</option><option value='IIB'>IIB</option><option value='IIIA'>IIIA</option><option value='IIIB'>IIIB</option><option value='IVA'>IVA</option><option value=IVB>IVB</option></select></td>");
+            td.html("<td><input type='hidden' name='id_unit' id='id_unit' value='0'><input type='text' name='unit' id='unit'  class='span3'/></td><td><select name='eslon' id='eslon' class=span2><option value='0'>Pilih Golongan</option><option value='IIB'>IIB</option><option value='IIIA'>IIIA</option><option value='IIIB'>IIIB</option><option value='IVA'>IVA</option><option value=IVB>IVB</option></select></td>");
 			//tde.html("<select name='eslon' id='eslon' class=span2><option value='0'>Pilih sala satu</option><option value='IIB'>IIB</option><option value='IIIA'>IIIA</option><option value='IIIB'>IIIB</option><option value='IVA'>IVA</option><option value=IVB>IVB</option></select>");
         }else{
             var post = $.post('admin/jabatan/save_jabatan.php',{act :'rlJabatan', skp : skp});
