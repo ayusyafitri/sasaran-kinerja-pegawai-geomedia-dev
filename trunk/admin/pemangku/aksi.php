@@ -1,5 +1,6 @@
 <?php
 include_once ('../../php/postgre.php');
+
 $act = '';
 if (isset($_POST['act']))
     $act = $_POST['act'];
@@ -54,14 +55,14 @@ if ($act == 'simpan_pemangku') {
 	    $data = get_data("select id_pns, nama, nip, id_golongan, kode_jabatan, alamat, notelp, tempat_lahir, tanggal_lahir from skp_pns where id_pns=" . $id);
 	
 		$pecah = explode('-',$data['tanggal_lahir']);
-		//$pecah = $data['tanggal_lahir'].split('-');
 		$thn = $pecah[0];
 		$bln = $pecah[1];
 		$tgl = $pecah[2];
         $ress = implode($data, '__');
         print_r($ress);
         echo "__";
-		echo $thn.'__'.$bln.'__'.$tgl.'__';
+	 
+		 echo $thn.'__'.$bln.'__'.$tgl.'__';
 		
 		$sk = get_data("select unit_kerja from skp_jabatan where kode_jabatan='".$data['kode_jabatan']."'order by idjab");
 	//	echo $sk['unit_kerja']."__";
@@ -72,8 +73,8 @@ if ($act == 'simpan_pemangku') {
 				$dpro .= '<option value="'.$jab['kode_jabatan'].'">'.$jab['nama_jabatan'].'</option>';
 			}
 		}
-		
 		echo $dpro;
+		 
     } else {
         echo 'error';
     }

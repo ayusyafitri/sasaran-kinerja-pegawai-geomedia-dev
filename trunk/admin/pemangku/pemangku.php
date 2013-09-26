@@ -59,8 +59,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
             <input type="hidden" name="act" value="simpan_pemangku">
             <input type="hidden" id="id_pns" name="id_pns" value="0"> 
 			<input type="hidden" id="id_skpd" name="id_skpd" value="0">
-           
-            <table class="table-form">
+			<table class="table-form">
                 <tbody>
                     <tr>
                         <td>Jabatan</td>
@@ -121,7 +120,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                         <td>:</td>
                         <td>
                             <input type="text" name="tempat" id="tempat"  />
-                        </td>,
+                        </td>
                         <td>
                             <select name="tgl" class="span1">
                             	<option value="0"></option>
@@ -194,29 +193,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
             </tr>
         </thead>
         <tbody id="tampil_pemangku">
-            <?php /*
-            $x = 1;
-            $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan order by p.id_pns");
-            foreach ($pr as $pr) {
-                ?><tr>
-                    <td><?php echo $x ?></td>
-                    <td><?php echo $pr['nama'] ?></td>
-                    <td><?php echo $pr['nip'] ?></td>
-                    <td><?php echo $pr['nama_golongan']?> (<? echo $pr['keterangan'] ?>)</td>
-                    <td><?php echo $pr['nama_jabatan'] ?></td>
-                    <td><?php echo $pr['alamat'] ?></td>
-                    <td><?php echo $pr['notelp'] ?></td>
-                    <td><?php echo $pr['tempat_lahir'] ?>, <? echo $pr['tanggal_lahir']?></td>
-                    <td class="center" >
-                        <a href="#modalwin" data-toggle="modal"  class="btn btn-info bt-edit btn-small" name="<?php echo $pr['id_pns']; ?>"><i class="icon-edit icon-white"></i> ubah</a>
-                        <a class="btn btn-danger bt-hapus btn-small" name="<?php echo $pr['id_pns']; ?>"><i class="icon-trash icon-white"></i> hapus</a>
-
-                    </td>
-                </tr>
-                <?php
-                $x++; 
-            } */
-            ?>
+             
         </tbody>
     </table>    
 </div>
@@ -260,6 +237,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 				});
 			$('#kode').val("");
 			$('#nama').val("");
+			$('#nip').val("");
 		}
     });
 	
@@ -346,8 +324,9 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                 form.find('input[name="alamat"]').val(value[5]);
                 form.find('input[name="tempat"]').val(value[7]);
                 form.find('select[name="tgl"]').val(value[11]);
-                form.find('select[name="bln"]').val(value[10]);
+			    form.find('select[name="bln"]').val(value[10]);
                 form.find('select[name="thn"]').val(value[9]);
+				alert(value[10]);
             });
         });
         

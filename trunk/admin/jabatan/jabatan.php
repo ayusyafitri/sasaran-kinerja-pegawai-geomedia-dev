@@ -60,26 +60,6 @@ include_once ('../../php/postgre.php');
 			<input type="hidden" id="id_skpd" name="id_skpd" value="0">
             <table class="table-form">
                 <tbody>
-                    <!--tr>
-                        <td>Pilih SKPD</td>
-                        <td>:</td>
-                        <td  width="120px">
-                            <select  name="id_skpd" id="id_skpd" >
-                                <option value="0" id='idskpd'> pilih salah satu </option> 
-                                <?php
-                              /*  $skpd = get_datas("select * from skp_skpd where nama not like '%admin%' order by id");
-                                foreach ($skpd as $skpd) {
-                                    ?><option value="<?php echo $skpd['id'] ?>">
-                                    <?php echo $skpd['nama'] ?>
-                                    </option>	
-
-                                    <?php
-                                }*/
-                                ?>
-                            </select>
-                        </td>
-                    </tr-->
-
                     <tr>
                         <td>Nama Jabatan</td>
                         <td>:</td>
@@ -226,7 +206,8 @@ include_once ('../../php/postgre.php');
                     setTimeout(function(){
                         rslt.html('');
                     }, 1500);
-                
+					
+					alert(123);
                     var tbody = $('#tampilJabatan');
                     tbody.html(result[2]);
 					init();
@@ -234,7 +215,8 @@ include_once ('../../php/postgre.php');
                     document.getElementById('nama').value='';
 				//	document.getElementById('idindukk').selected=true;
 					document.getElementById('kodejab').value='';
-					document.getElementById('idjabatan').selected=true;                    $('#modalwin').modal('hide');
+					document.getElementById('idjabatan').selected=true;            
+					$('#modalwin').modal('hide');
                 }else{
                     rslt.html('<font color="red">'+res+'</font>');
                 }
