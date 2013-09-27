@@ -1,5 +1,6 @@
 <?php
 include_once ('../../php/postgre.php');
+include ('../../php/function_global.php');
 
 $act = '';
 if (isset($_POST['act']))
@@ -23,6 +24,7 @@ if ($act == 'simpan_pemangku') {
     }
 
     if ($id > 0) {
+		
         exec_query("update skp_pns set nama='" . $nama . "', nip='" . $nip . "',  id_golongan=".$idgol.", kode_jabatan='".$kdjab."', alamat='".$alamat."', notelp='".$telp."', tempat_lahir='".$tempat."', tanggal_lahir='".$tgl."' where id_pns=" . $id . "");
         echo 'success__';
     } else {
@@ -76,7 +78,7 @@ if ($act == 'simpan_pemangku') {
         echo "__";
 		echo $thn.'__'.$t_bln.'__'.$t_tgl.'__';
 		
-		// $sk = get_data("select unit_kerja from skp_jabatan where kode_jabatan='".$data['kode_jabatan']."'order by idjab");
+		 $sk = get_data("select idjab, unit_kerja from skp_jabatan where kode_jabatan='".$data['kode_jabatan']."'order by idjab");
 	// //	echo $sk['unit_kerja']."__";
 		// $jabatan = get_datas("select * from skp_jabatan where unit_kerja=".$sk['unit_kerja']."order by idjab");
 		// $jj .=$jabatan[0]['unit_kerja'];
@@ -86,23 +88,36 @@ if ($act == 'simpan_pemangku') {
 			// }
 		// }
 		// echo $dpro;
-		 
+		
+		echo $kk;
+		$skpd = $sk['unit_kerja'];
+		$parent = 0;
+		$kk = get_induk($parent, $iter=1, $skpd, $sk['idjab']);
     } else {
         echo 'error';
     }
 
- //   view_skpd($sk['unit_kerja']);
-} else if($act == 'get_induk'){
-	$pp = $_POST['idindukk'];
-	$jab = get_datas ("select * from skp_jabatan where unit_kerja=".$pp." order by idjab");
-	$i.= "<option value='0'>-Pilih Jabatan-</option>";
-	foreach ($jab as $jab){
-	    $i.= "<option value='".$jab['kode_jabatan']."'>".$jab['nama_jabatan']."</option>";
+ 
+} else if($act == 'piljabatan'){
+	$skpd = $_POST['skpd'];
+	$parent = 0;
+    $iter = 1;
+	echo $skpd;
+	get_induk($parent, $iter=0, $skpd);
+}
+
+function get_induk($parent=0, $iter=1, $skpd, $val = ''){
+   $induk = get_datas("select nama_jabatan, kode_jabatan, idjab, unit_kerja from skp_jabatan where unit_kerja=".$skpd . " and parent=" . $parent . " order by idjab");
+	if ($parent == 0)
+        echo "<option value='0'>Pilih Jabatan</option>";
+    foreach ($induk as $induk) {
+        if ($val == $induk['idjab'])
+            $sel = "selected='selected'";
+        echo "<option $sel value='$induk[kode_jabatan]'>" . space($iter * 5, "&nbsp;", false) . "$induk[nama_jabatan]</option>\n";
+		$skpd = $induk['unit_kerja'];
+        echo get_induk($induk['idjab'], ($iter + 1), $skpd, $val);
+        $sel = '';
     }
-	echo $i;
-	
-	
-	
 }
 
 function view_skpd($skpd) {
