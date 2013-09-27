@@ -15,15 +15,24 @@ if ($act == 'jabatan_simpan') {
 	$nameUnit = $_POST['unit'];
 	$golUnit = $_POST['eslon'];
 	$idunit=$_POST['unitorgnisasi'];
-	
+	 
     if (!is_numeric($id)) {
         echo "Err : invalid id. ";
         exit;
     }
 
-    if ($id > 0) {
-        exec_query("update skp_jabatan set unit_kerja=".$skpd."', nama_jabatan='".$nama."', parent=".$induk.", kode_jabatan='" . $kode . "', jabatan='".$jabatan."', unit_organisasi=".$unitorgnisasi." where idjab=" . $id . "");
-        echo 'success__';
+    if ($id > 0) {     
+		if($jabatan == "Jabatan Struktural"){
+			$dataunit = get_data("select * from skp_jabatan where idjab=".$id);
+			exec_query("update skp_unit_eselon set nama_unit='".$nameUnit."', eselon='".$golUnit."' where id_unit=".$dataunit['unit_organisasi']."");
+			exec_query("update skp_jabatan set unit_kerja=".$skpd.", nama_jabatan='".$nama."', parent=".$induk.", kode_jabatan='" . $kode . "', jabatan='".$jabatan."' where idjab=" . $id . "");
+			echo 'success__';
+		}
+		else {
+			exec_query("update skp_jabatan set unit_kerja=".$skpd.", nama_jabatan='".$nama."', parent=".$induk.", kode_jabatan='" . $kode . "', jabatan='".$jabatan."', unit_organisasi=".$idunit." where idjab=" . $id . "");
+			echo 'success__';
+		}
+		
     } else {
 		if($jabatan=="Jabatan Struktural"){
 				//simpan unit organisasi
@@ -84,22 +93,23 @@ else if ($act == 'ubah_jabatan') {
 		echo "__".$kk;
 		$idinduk = $data['unit_kerja'];
 		$parent = 0;
-		if ($val == $induk['idjab'])
-		$kk = get_induk($val='', $parent, $iter=1, $idinduk);
 		
-		$unit = get_datas("select distinct u.nama_unit, u.id_unit,  u.id_skpd, j.unit_organisasi from skp_unit_eselon u, skp_jabatan j where u.id_skpd=j.unit_kerja and u.id_unit=j.unit_organisasi and u.id_skpd=".$data['unit_kerja']);
-	//	$unit = get_datas("select * from skp_unit_eselon where id_skpd=".$data['unit_kerja']);
+		$kk = get_induk($parent, $iter=1, $idinduk,$data['parent']);
+		
 		$i = '__';
-		if($data=="Jabatan Struktural"){
-			$i.= '<input type="text" name="unit" id="unit" class="span3" value="'.$unit['nama_unit'].'" >
-				  <input type="text" name="eslon" id="eslon" class="span2" value="'.$unit['eselon'].'">';
+		if($data['jabatan']=="Jabatan Struktural"){
+			$unit2 = get_data("select distinct (id_unit), nama_unit, eselon from skp_unit_eselon, skp_jabatan where id_unit=unit_organisasi and id_unit=".$data['unit_organisasi']);
+			$i.= "<td><input type='text' name='unit' id='unit' value='".$unit2['nama_unit']."' class='span3'/></td>
+				  <td><input type='text' name='eslon' id='eslon' value='".$unit2['eselon']."' class='span1'/></td>";
 		}
 		else {
-		$i.= "<select name='unitorgnisasi' id='unitorgnisasi'>";
-			foreach ($unit as $unit){
-				$i.= '<option value="'. $unit["id_unit"].'">'.$unit["nama_unit"] . '</option>';
-			}
-		 $i.= '</select>';
+			$unit1 = get_datas("select distinct u.nama_unit, u.id_unit,  u.id_skpd, j.unit_organisasi from skp_unit_eselon u, skp_jabatan j where u.id_skpd=j.unit_kerja and u.id_unit=j.unit_organisasi and u.id_skpd=".$data['unit_kerja']);
+				$i.= "<select name='unitorgnisasi' id='unitorgnisasi'>";
+					foreach ($unit1 as $unit){
+						$s = ($unit["id_unit"] == $data['unit_organisasi']) ? 'selected':'';
+						$i.= '<option value="'. $unit["id_unit"].'" '.$s.'>'.$unit["nama_unit"] . '</option>';
+					}
+				 $i.= '</select>';
 		}
 		echo $i;
 	} else {
@@ -112,7 +122,7 @@ else if ($act == 'ubah_jabatan') {
     $parent = 0;
     $iter = 1;
 	echo $idinduk;
-    get_induk($val = '', $parent, $iter=0, $idinduk);
+    get_induk($parent, $iter=0, $idinduk);
 } 
 
 
@@ -163,7 +173,7 @@ else if ($act == 'get_kode') {
     echo $i;
 }
 
-function get_induk($val='', $parent=0, $iter=1, $idinduk) {
+function get_induk($parent=0, $iter=1, $idinduk,$val = ''){
    // $idinduk = $_POST['idindukk'];
 //	$parent =0;
 //	$iter=1;
@@ -178,7 +188,7 @@ function get_induk($val='', $parent=0, $iter=1, $idinduk) {
             $sel = "selected='selected'";
         echo "<option $sel value='$induk[idjab]'>" . space($iter * 5, "&nbsp;", false) . "$induk[nama_jabatan]</option>\n";
 		$idinduk = $induk['unit_kerja'];
-        echo get_induk($val, $induk['idjab'], ($iter + 1), $idinduk);
+        echo get_induk($induk['idjab'], ($iter + 1), $idinduk, $val);
         $sel = '';
     }
 }

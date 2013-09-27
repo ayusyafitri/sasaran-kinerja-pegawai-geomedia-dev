@@ -6,7 +6,7 @@ include_once('../../php/include_all.php');
 include_once ('../../php/postgre.php');
 ?>
 <div class="widget-header widget-header-flat ">
-    <h5><i class="icon-calendar"></i>Daftar SKPD</h5>
+    <h5><i class="icon-calendar"></i>Daftar Jabatan</h5>
 </div>
 <div class="box-content">
 	<table class="table-jabatan">
@@ -26,16 +26,15 @@ include_once ('../../php/postgre.php');
 					?>
 				</select>
 			</td>
+			<td>&nbsp;
+			</td>
+			<td><a href="#modalwin" data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
+				&nbsp;<span id="load" class="spinner"></span></td>
+			<td id="tulisan"></td>
 		</tr>
 	</table>
 </div>
-<div class="position-relative" id="page-content">
-    <table>
-	<tr><td><a href="#modalwin" data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
-		&nbsp;<span id="load" class="spinner"></span></td>
-		<td id="tulisan"></td>
-	</tr></table>
-</div>
+
 <div class="box-content">
 	<table>
 		<tr><b>
@@ -50,7 +49,7 @@ include_once ('../../php/postgre.php');
 
     <header class="modal-header"> 
         <a href="#" class="close geo-clear" data-dismiss="modal">x</a>
-        <h3>Data SKPD</h3>
+        <h3>Data Jabatan</h3>
     </header>
 
     <div class="modal-body">
@@ -207,8 +206,7 @@ include_once ('../../php/postgre.php');
                         rslt.html('');
                     }, 1500);
 					
-					alert(123);
-                    var tbody = $('#tampilJabatan');
+					var tbody = $('#tampilJabatan');
                     tbody.html(result[2]);
 					init();
                     $("#id").val("0");
@@ -249,16 +247,17 @@ include_once ('../../php/postgre.php');
 		//	document.getElementById('idindukk').selected=true;
 			document.getElementById('kodejab').value='';
 			document.getElementById('idjabatan').selected=true;
+			  
 		}
 
 	});
     
-	function getParent(){
+/*	function getParent(){
 		var post = $.post(url,{act:'get_induk',idinduk:this.value});
         post.done(function(data){
             $('#id_induk').html(data);
 		});
-	}
+	} */
 	
 	
     function init(){
@@ -275,8 +274,7 @@ include_once ('../../php/postgre.php');
 				form.find('select[name="id_skpd"]').val(value[4]);
 				form.find('select[name="id_jabatan"]').val(value[6]);
 				$("#unitOr").html(value[8]);
-				$("#unitOr").val(value[5]);
-				//form.find('select[name="eslon"]').html(value[8]);
+			
 			 });
         });
         
@@ -291,8 +289,7 @@ include_once ('../../php/postgre.php');
                         var post = $.post(url,{act:"hapus_skpd",id:pid});
                         post.done(function(res){
                             var hasil = res.split('__');
-                            //alert(hasil.length);
-                            if(hasil.length == 2){
+                             if(hasil.length == 2){
                                 if(hasil[0] == 'success'){
                                   //  rslt.html('<font color="green">Data Telah Dihapus...</font>');
                                   //  setTimeout(function(){

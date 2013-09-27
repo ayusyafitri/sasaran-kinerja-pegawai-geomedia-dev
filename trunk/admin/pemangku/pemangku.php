@@ -28,16 +28,14 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 					?>
 				</select>
 			</td>
+			<td>&nbsp;</td>
+			<td> <a href='#modalwin' data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
+				&nbsp;<span id="load" class="spinner"></span></td>
+			<td id="tulisan"></td>
 		</tr>
 	</table>
 </div>
-<div class="position-relative" id="page-content">
-   <table>
-	<tr><td> <a href='#modalwin' data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
-			&nbsp;<span id="load" class="spinner"></span></td>
-		<td id="tulisan"></td>
-	</tr></table>
-</div>
+
 <div class="box-content">
 	<table>
 		<tr><b>
@@ -324,9 +322,9 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                 form.find('input[name="alamat"]').val(value[5]);
                 form.find('input[name="tempat"]').val(value[7]);
                 form.find('select[name="tgl"]').val(value[11]);
-			    form.find('select[name="bln"]').val(value[10]);
+				form.find('select[name="bln"]').val(value[10]);
                 form.find('select[name="thn"]').val(value[9]);
-				alert(value[10]);
+				
             });
         });
         

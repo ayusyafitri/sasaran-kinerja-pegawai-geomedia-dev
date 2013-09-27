@@ -122,8 +122,9 @@ function tambah_uraian(){
 	var ccc = $('#kotak').find("input[name='rows[]']");
 	var xcounter = ccc.length+1;
 	counterNext = counter + 1 ;
-	document.getElementById("input"+counter).innerHTML="<table width='520px' cellspacing='0' cellpadding='0' border='0'><tr><td width='60px' align='center'><input type='hidden' name='id[]'><input type='text' style='width:40px;' name='no[]' value="+xcounter+"></td><td width='430px' align='left'><textarea style='width:420px'  rows='1' name='uraian_tugas_bkn[]' ></textarea></td><td width='30px' align='center'><i class='icon-remove icon-green'></i><input type='hidden' name='rows[]' value='"+xcounter+"'></td></tr></table><div id=\"input"+counterNext+"\"></div>";
+	document.getElementById("input"+counter).innerHTML="<table width='520px' cellspacing='0' cellpadding='0' border='0'><tr><td width='60px' align='center'><input type='hidden' name='id[]'><input type='text' style='width:40px;' name='no[]' value="+xcounter+"></td><td width='430px' align='left'><textarea style='width:420px'  rows='1' name='uraian_tugas_bkn[]' ></textarea></td><td width='30px' align='center'><a class='removeUraian'><i class='icon-remove icon-green'></i></a><input type='hidden' name='rows[]' value='"+xcounter+"'></td></tr></table><div id=\"input"+counterNext+"\"></div>";
 	counter++;
+	removeUr();
 }
 
 $('.btn-tambah').click(function(){
@@ -191,7 +192,7 @@ function init(){
 			$('#kode').val(value[2]);
 			$('#ikhtisar').val(value[3]);
 			$('#cobadt').html(value[4]);
-			 
+		
 		});
 	});
 	$('.bt-hapus').click(function() {
@@ -202,15 +203,13 @@ function init(){
          bootbox.confirm("Anda akan menghapus jabatan ini?", function(result){
 			if(result==true){
 				if(pid!=0){
-						alert(34);
 					var post = $.post(urls,{act:"hapus-bkn", idjab:pid});
 					post.done(function(data){
 						var hasil = data.split('__');
 						if(hasil.length==2){
 							if(hasil[0]=='success'){
 								var tbody = $('#tampilJabBKN');
-								tbody.html(result[1]);
-								
+								tbody.html(hasil[1]);
 								init();
 							}
 						}
@@ -223,6 +222,25 @@ function init(){
 		 }); 
 	
 	});
+}
+
+function removeUr() {
+	$('.removeUraian').click(function (){
+		var btn  = $(this);
+		var pid  = this.name;
+		var load = $(this);
+		load.html('<div class="icon-spinner icon-spin black"></div>');
+		  	var post = $.post(urls, {act:"hps_uraian", uraian:pid});
+					post.done(function (res){
+						var hasilur = res.split('__');
+						if(hasilur.length == 2){
+							if(hasilur[0] == 'success'){
+								
+							}
+						}
+					})
+	})
+
 }
 init();
 </script>
