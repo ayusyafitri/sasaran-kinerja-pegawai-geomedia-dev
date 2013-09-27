@@ -210,8 +210,6 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 			$('#id_skpd').val(datt[0]);
 			$('#tampil_pemangku').html(datt[2]);
 			$('#tabelSKPD').html(datt[1]); 
-		//	$('.btn-tambah').val()
-		//	$('#misal').html(datt[2]);
 			replay();
 		//	mutasion(k);
 		});
@@ -229,7 +227,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 			$(this).attr('href','#modalwin');
 			$('#id').val("0");
 			var idinduk = $('#id_skpd').val();
-			var post = $.post(url,{act:'get_induk',idindukk:idinduk});
+			var post = $.post(url,{act:'piljabatan',skpd:idinduk});
 				post.done(function(data){
 					$('#jab').html(data);
 				});
@@ -315,7 +313,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                 $('#id_pns').val(value[0]);
                 form.find('input[name="nama"]').val(value[1]);
                 form.find('input[name="nip"]').val(value[2]);
-				$("#jab").val(value[4]);
+				//$("#jab").val(value[4]);
                 form.find('select[name="jab"]').html(value[12]);
 				form.find('select[name="gol"]').val(value[3]);
                 form.find('input[name="telp"]').val(value[6]);

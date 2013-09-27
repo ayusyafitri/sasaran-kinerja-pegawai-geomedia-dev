@@ -211,8 +211,7 @@ include_once ('../../php/postgre.php');
 					init();
                     $("#id").val("0");
                     document.getElementById('nama').value='';
-				//	document.getElementById('idindukk').selected=true;
-					document.getElementById('kodejab').value='';
+				 	document.getElementById('kodejab').value='';
 					document.getElementById('idjabatan').selected=true;            
 					$('#modalwin').modal('hide');
                 }else{
@@ -251,15 +250,7 @@ include_once ('../../php/postgre.php');
 		}
 
 	});
-    
-/*	function getParent(){
-		var post = $.post(url,{act:'get_induk',idinduk:this.value});
-        post.done(function(data){
-            $('#id_induk').html(data);
-		});
-	} */
-	
-	
+ 	
     function init(){
         $('.bt-edit-jabatan').click(function(){
 			var id = this.name;

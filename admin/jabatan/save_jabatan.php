@@ -99,6 +99,7 @@ else if ($act == 'ubah_jabatan') {
 		$i = '__';
 		if($data['jabatan']=="Jabatan Struktural"){
 			$unit2 = get_data("select distinct (id_unit), nama_unit, eselon from skp_unit_eselon, skp_jabatan where id_unit=unit_organisasi and id_unit=".$data['unit_organisasi']);
+			$unitsd = get_datas("select * from skp_unit_eselon where id_skpd=".$data['unit_kerja']);
 			$i.= "<td><input type='text' name='unit' id='unit' value='".$unit2['nama_unit']."' class='span3'/></td>
 				  <td><input type='text' name='eslon' id='eslon' value='".$unit2['eselon']."' class='span1'/></td>";
 		}
@@ -149,18 +150,6 @@ else if ($act == 'get_kode') {
         $kode_jab = $idk . "." . $kdjab;
         echo $kode_jab;
     }
-
-    /* 	$kode = $_POST['kode'];
-      if(!is_numeric($kode)) exit();
-      $kodeindk = get_data("select * from skp_jabatan where idjab=".$kode);
-      $kdinduk = $kodeindk['parent'];
-
-      $kodejab = get_data("select count(idjab) as kode from skp_jabatan where parent=".$kdinduk);
-      $kdjab = $kodejab['kode']+1;
-      $kjb = ($kdjab <=9)? "0".$kdjab:$kdjab;
-      $kode_jab = $kodeindk['kode_jabatan'].".".$kjb;
-      echo $kode_jab;
-     */
 } else if ($act == 'rlJabatan') {
     $skp = $_POST['skp'];
 //	echo $skp;
@@ -174,13 +163,7 @@ else if ($act == 'get_kode') {
 }
 
 function get_induk($parent=0, $iter=1, $idinduk,$val = ''){
-   // $idinduk = $_POST['idindukk'];
-//	$parent =0;
-//	$iter=1;
-
-    $induk = get_datas("select nama_jabatan, idjab, unit_kerja from skp_jabatan where unit_kerja=".$idinduk . " and parent=" . $parent . " order by idjab");
-   
-//	echo $idinduk;
+   $induk = get_datas("select nama_jabatan, idjab, unit_kerja from skp_jabatan where unit_kerja=".$idinduk . " and parent=" . $parent . " order by idjab");
 	if ($parent == 0)
         echo "<option value='0'>Tidak Ada Induk</option>";
     foreach ($induk as $induk) {
