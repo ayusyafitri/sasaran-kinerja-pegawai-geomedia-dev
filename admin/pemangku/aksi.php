@@ -58,22 +58,34 @@ if ($act == 'simpan_pemangku') {
 		$thn = $pecah[0];
 		$bln = $pecah[1];
 		$tgl = $pecah[2];
+		
+		if($bln[0] == '0'){
+			$t_bln = $bln[1];
+		}else{
+			$t_bln = $bln;
+		}
+		
+		if($tgl[0] == '0'){
+			$t_tgl = $tgl[1];
+		}else{
+			$t_tgl = $tgl;
+		}
+		
         $ress = implode($data, '__');
         print_r($ress);
         echo "__";
-	 
-		 echo $thn.'__'.$bln.'__'.$tgl.'__';
+		echo $thn.'__'.$t_bln.'__'.$t_tgl.'__';
 		
-		$sk = get_data("select unit_kerja from skp_jabatan where kode_jabatan='".$data['kode_jabatan']."'order by idjab");
-	//	echo $sk['unit_kerja']."__";
-		$jabatan = get_datas("select * from skp_jabatan where unit_kerja=".$sk['unit_kerja']."order by idjab");
-		$jj .=$jabatan[0]['unit_kerja'];
-		if($data['kode_jabatan']=$jj){
-			foreach($jabatan as $jab){
-				$dpro .= '<option value="'.$jab['kode_jabatan'].'">'.$jab['nama_jabatan'].'</option>';
-			}
-		}
-		echo $dpro;
+		// $sk = get_data("select unit_kerja from skp_jabatan where kode_jabatan='".$data['kode_jabatan']."'order by idjab");
+	// //	echo $sk['unit_kerja']."__";
+		// $jabatan = get_datas("select * from skp_jabatan where unit_kerja=".$sk['unit_kerja']."order by idjab");
+		// $jj .=$jabatan[0]['unit_kerja'];
+		// if($data['kode_jabatan']=$jj){
+			// foreach($jabatan as $jab){
+				// $dpro .= '<option value="'.$jab['kode_jabatan'].'">'.$jab['nama_jabatan'].'</option>';
+			// }
+		// }
+		// echo $dpro;
 		 
     } else {
         echo 'error';
@@ -88,6 +100,9 @@ if ($act == 'simpan_pemangku') {
 	    $i.= "<option value='".$jab['kode_jabatan']."'>".$jab['nama_jabatan']."</option>";
     }
 	echo $i;
+	
+	
+	
 }
 
 function view_skpd($skpd) {

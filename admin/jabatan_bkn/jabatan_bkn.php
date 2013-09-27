@@ -32,8 +32,8 @@ include_once ('../../php/postgre.php');
                         <td>Nama Jabatan</td>
                         <td>:</td>
                         <td colspan="5">
-                            <select name="gol" id="gol">
-                            	<option id="">-Pilih Rumpun Jabatan-</option>
+                            <select name="gol" id="gol" value="0">
+                            	<option value="0" id="bb">-Pilih Rumpun Jabatan-</option>
                                 <?php
                                 $gol = get_datas ("select * from skp_bkn_jabatan order by idjab");
 								foreach ($gol as $gol){
@@ -100,6 +100,7 @@ include_once ('../../php/postgre.php');
 $('.btn-tambah').click(function(){
 	$('#id_jab_bkn').val("0");
  	$('#jabatan').val("");
+	document.getElementById('bb').selected=true;
 });
 
 var urls ='admin/jabatan_bkn/aksi_jabatanBKN.php';

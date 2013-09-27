@@ -22,7 +22,17 @@ if($act == 'jabBKN_simpan'){
 	if($id > 0){
 		exec_query("update skp_bkn_jabatan set nama_jabatan='".$nama."', kode_jabatan='".$kode."', ikhtisar_jabatan='".$ikhtisar."' where idjab=".$id);
 		for ($i=0;$i<count($rows); $i++){
-			exec_query("update skp_bkn_uraian set no_uraian=".$no[$i].", uraian='".$urtugas[$i]."' where id_uraian=".$idur[$i]);
+			if($idur[$i]==0){
+				$maxid1 = get_maxid('id_uraian','skp_bkn_uraian');
+				exec_query("insert into skp_bkn_uraian (id_uraian, kode_jabatan,no_uraian, uraian) values (".$maxid1.",'".$kode."', ".$no[$i].",'".$urtugas[$i]."')");
+				$stored1 = get_data("select id_uraian from skp_bkn_uraian where id_uraian=".$maxid1);
+				if($stored1['id_uraian']==$maxid1){
+					$idur = $maxid1;
+				}
+			}else {
+				exec_query("update skp_bkn_uraian set no_uraian=".$no[$i].", uraian='".$urtugas[$i]."' where id_uraian=".$idur[$i]);
+		
+			}
 		}
 		echo 'success__';
 	}else{
@@ -53,7 +63,6 @@ if($act == 'jabBKN_simpan'){
 		exec_query("delete from skp_bkn_jabatan where idjab=".$id);
 		exec_query("delete from skp_bkn_uraian where kode_jabatan='".$uraian['kode_jabatan']."'");
 		echo 'success__';
-		
 		view_jabatanBKN();
 	}else{
 		echo 'Error';
@@ -88,7 +97,12 @@ if($act == 'jabBKN_simpan'){
 	}else{
 		echo 'error';
 	}
+}else if($act =='hps_uraian'){
+	$rows = $_POST['rows'];
+	$jmlrows = $rows.length;
+	echo $jmlrows;
 }
+
 
 function view_jabatanBKN(){
 	    $x = 1;
