@@ -121,16 +121,10 @@ include_once ('../../php/postgre.php');
 <script>
 counter = 0;
 function tambah_uraian(){
-	// var ccc = $('#kotak').find("input[name='rows[]']");
-	// var xcounter = ccc.length+1;
-	// counterNext = counter + 1 ;
-	// document.getElementById("input"+counter).innerHTML="<table width='520px' cellspacing='0' cellpadding='0' border='0'><tr><td width='60px' align='center'><input type='hidden' name='id[]'><input type='text' style='width:40px;' name='no[]' value="+xcounter+"></td><td width='430px' align='left'><textarea style='width:420px'  rows='1' name='uraian_tugas_bkn[]' ></textarea></td><td width='30px' align='center'><a class='removeUraian' name='icon[]'><i class='icon-remove icon-green'></i></a><input type='hidden' name='rows[]' value='"+xcounter+"'></td></tr></table><div id=\"input"+counterNext+"\"></div>";
-	// counter++;
-	
 	var tbl = $('#uraianBKN');
 	var panjang = tbl.children().length;
 	panjang = panjang + 1;
-	tbl.append("<tr id='input_"+panjang+"'><td><input type='hidden' name='id[]'><input type='text' style='width:40px;' name='no[]' value="+panjang+"></td><td width='430px' align='left'><textarea style='width:420px'  rows='1' name='uraian_tugas_bkn[]' id='uraian_tugas_"+panjang+"'></textarea></td><td width='30px' align='center'><span class='badge badge-important removeUraian' name='icon_"+panjang+"' style='cursor:pointer;' title='Hapus'><i class='icon-remove'></i></span></td></tr>");
+	tbl.append("<tr id='input_"+panjang+"'><td><input type='hidden' name='id[]'><input type='text' style='width:40px;' name='no[]' value="+panjang+"></td><td width='430px' align='left'><textarea style='width:420px'  rows='1' name='uraian_tugas_bkn[]' id='uraian_tugas_"+panjang+"'></textarea></td><td width='30px' align='center'><span class='badge badge-important removeUraian' name='icon_"+panjang+"' style='cursor:pointer;' title='Hapus'><i class='icon-remove'></i></span><input type='hidden' name='rows[]' value='"+panjang+"'></td></tr>");
 	removeUr();
 }
 
@@ -139,9 +133,9 @@ $('.btn-tambah').click(function(){
 	$('#nama').val("");
 	$('#kode').val("");
 	$('#ikhtisar').val("");
-	// var ktk = $('#kotak');
-	// ktk.html("<div id='nyoba'></div><div id='input0'></div>");
 	
+   //     document.getElementById("uraianBKN").removeChild("input_");
+	removeUr();
 	// var nm = ($('#uraianBKN').attr('id'));
 	// nm.remove();
 });
@@ -202,7 +196,7 @@ function init(){
 			$('#kode').val(value[2]);
 			$('#ikhtisar').val(value[3]);
 			$('#uraianBKN').html(value[4]);
-		
+			removeUr();
 		});
 	});
 	$('.bt-hapus').click(function() {
@@ -238,11 +232,23 @@ function removeUr() {
 	$('.removeUraian').click(function (){
 		 var icon = ($(this).attr('name'));
 		 var di = icon.replace('icon_','');
-         // console.log(di);
+        console.log(di);
 		$('#input_'+di).remove();
-           
-	});
+		
+	sortnum('#uraianBKN');
+		
+     });
 
+}
+
+function sortnum(tbody){
+	var tb = $(tbody);
+	var ch = tb.children();
+	ch.each(function(){
+		var td = $(this).children();
+		var no = $(this).index()+1;
+		$(td[0]).html("<input type='text' style='width:40px;' name='no[]' value='"+no+"'>");
+	});
 }
 init();
 </script>

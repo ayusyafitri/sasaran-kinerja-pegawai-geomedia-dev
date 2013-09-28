@@ -69,6 +69,7 @@ if($act == 'jabBKN_simpan'){
 	}
 } else if($act =='edit-bkn'){
 	$id = $_POST['id_jab_bkn'];
+	
 	if(is_numeric($id)){
 		$datajab = get_data("select idjab, nama_jabatan, kode_jabatan, ikhtisar_jabatan from skp_bkn_jabatan where idjab=".$id);
 		$ress = implode($datajab,'__');
@@ -77,8 +78,9 @@ if($act == 'jabBKN_simpan'){
 		$dataur = get_datas ("select * from skp_bkn_uraian where kode_jabatan='".$datajab['kode_jabatan']."'");
 		echo "__";
 	 	$counter = 0; 
+		
 		foreach ($dataur as $dataur){
-			echo "<tr>
+			echo "<tr id='input_".$dataur['no_uraian']."'>
 				<td width='60px' align='center'>
 				 	<input type='hidden' name='id[]' value=".$dataur['id_uraian'].">
 					<input type='text' style='width:40px;' name='no[]' value=".$dataur['no_uraian'].">
@@ -88,21 +90,19 @@ if($act == 'jabBKN_simpan'){
 					
 				</td>
 				<td width='30px' align='center'>
-					<a class='removeUraian' name='icon[]'>
-                                        <i class='icon-remove icon-green'></i>
-					<input type='hidden' name='rows[]' value='".$counter."'>
+					<span class='badge badge-important removeUraian' name='icon_".$dataur['no_uraian']."' style='cursor:pointer;' title='Hapus'>
+					    <i class='icon-remove icon-green'></i></span>
+					<input type='hidden' name='rows[]' value='".$dataur['no_uraian']."'>
                                         </a>
                                 </td>
 			</tr>";
 		}
-		
 	}else{
 		echo 'error';
 	}
 }else if($act =='hps_uraian'){
-	$rows = $_POST['rows'];
-	$jmlrows = $rows.length;
-	echo $jmlrows;
+	$id = $_POST['idur'];
+	
 }
 
 
