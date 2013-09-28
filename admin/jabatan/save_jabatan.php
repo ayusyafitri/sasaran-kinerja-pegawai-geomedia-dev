@@ -15,7 +15,8 @@ if ($act == 'jabatan_simpan') {
 	$nameUnit = $_POST['unit'];
 	$golUnit = $_POST['eslon'];
 	$idunit=$_POST['unitorgnisasi'];
-	 
+	$jab_bkn= $_POST['rumpun'].' '.$_POST['embel'];
+	
     if (!is_numeric($id)) {
         echo "Err : invalid id. ";
         exit;
@@ -29,7 +30,7 @@ if ($act == 'jabatan_simpan') {
 			echo 'success__';
 		}
 		else {
-			exec_query("update skp_jabatan set unit_kerja=".$skpd.", nama_jabatan='".$nama."', parent=".$induk.", kode_jabatan='" . $kode . "', jabatan='".$jabatan."', unit_organisasi=".$idunit." where idjab=" . $id . "");
+			exec_query("update skp_jabatan set unit_kerja=".$skpd.", nama_jabatan='".$jab_bkn."', parent=".$induk.", kode_jabatan='" . $kode . "', jabatan='".$jabatan."', unit_organisasi=".$idunit." where idjab=" . $id . "");
 			echo 'success__';
 		}
 		
@@ -52,7 +53,7 @@ if ($act == 'jabatan_simpan') {
 			}
 		}else{
 			$maxid = get_maxid('idjab', 'skp_jabatan');
-			exec_query("insert into skp_jabatan (idjab, nama_jabatan, kode_jabatan, parent, unit_kerja, unit_organisasi, jabatan) values(" . $maxid . ",'". $nama."','". $kode."',".$induk.", ".$skpd.",".$idunit.",'".$jabatan."')");
+			exec_query("insert into skp_jabatan (idjab, nama_jabatan, kode_jabatan, parent, unit_kerja, unit_organisasi, jabatan) values(" . $maxid . ",'". $jab_bkn."','". $kode."',".$induk.", ".$skpd.",".$idunit.",'".$jabatan."')");
 			$store = get_data("select idjab from skp_jabatan where idjab=".$maxid);
 						
 			if($store['idjab']==$maxid){
@@ -102,6 +103,7 @@ else if ($act == 'ubah_jabatan') {
 			$unitsd = get_datas("select * from skp_unit_eselon where id_skpd=".$data['unit_kerja']);
 			$i.= "<td><input type='text' name='unit' id='unit' value='".$unit2['nama_unit']."' class='span3'/></td>
 				  <td><input type='text' name='eslon' id='eslon' value='".$unit2['eselon']."' class='span1'/></td>";
+			$nmjab.="<input type='text' name='nama' id='nama'  value ='".$data['nama_jabatan']."'/>" ;
 		}
 		else {
 			$unit1 = get_datas("select distinct u.nama_unit, u.id_unit,  u.id_skpd, j.unit_organisasi from skp_unit_eselon u, skp_jabatan j where u.id_skpd=j.unit_kerja and u.id_unit=j.unit_organisasi and u.id_skpd=".$data['unit_kerja']);
@@ -111,8 +113,26 @@ else if ($act == 'ubah_jabatan') {
 						$i.= '<option value="'. $unit["id_unit"].'" '.$s.'>'.$unit["nama_unit"] . '</option>';
 					}
 				 $i.= '</select>';
+			
+			$pecah = explode(' ', $data['nama_jabatan']);
+			 $rumpun = get_datas ("select * from skp_bkn_jabatan order by kode_jabatan");
+				$nmjab = "<td><select name='rumpun' id='rumpun' onchange='emb(this.value);'> ";
+				foreach ($rumpun as $rumpun){
+					$se = ($rumpun['nama_jabatan'] == $pecah[0])?'selected':'';
+					$nmjab.="<option value='".$rumpun['nama_jabatan']."' ".$se.">".$rumpun['nama_jabatan']."</option>";
+				}
+			$nmjab.="</select></td><td><select id='embel' name='embel'>";
+			
+			$t_embel = get_datas ("select r.id_rumpun, r.kode_jabatann, r.keterangan from skp_rumpun_jab r, skp_bkn_jabatan j where j.kode_jabatan=r.kode_jabatann and j.nama_jabatan='".$pecah[0]."'");
+			//print_r($pecah[1]);
+			foreach ($t_embel as $t_embel){
+				$sel = ($t_embel['keterangan'] == $pecah[1])?'selected':'';
+				$nmjab .= "<option value='".$t_embel['keterangan']."' ".$sel.">".$t_embel['keterangan']."</option>";
+			}
+			$nmjab.="</select></td>";
+			
 		}
-		echo $i;
+		echo $i.'__'.$nmjab.'__'.$pecah[0].'__'.$pecah[1];
 	} else {
         echo 'error';
     }
@@ -159,8 +179,26 @@ else if ($act == 'get_kode') {
         $i.= "<option value='" . $unitor["id_unit"] . "'>" . $unitor["nama_unit"] . "</option>";
     }
     $i.= '</select>';
-    echo $i;
-}
+
+	//rumpun jabatan:
+	$tamRumpun = get_datas("select * from skp_bkn_jabatan order by kode_jabatan");
+	$rum = "<td><select name='rumpun' id='rumpun' onchange='emb(this.value);'> 
+				<option value=''>-Pilih Nama Rumpun-</option>";
+	foreach ($tamRumpun as $rumpun){
+		$rum.="<option value='".$rumpun['nama_jabatan']."'>".$rumpun['nama_jabatan']."</option>";
+	}
+	$rum.="</select></td><td><select id='embel' name='embel'><option value=''>-Spesifik-</option></select></td>";
+
+   echo $i.'__'.$rum;
+} else if($act == 'pil_rum'){
+	$rumput = addslashes($_POST['rump']);
+	$embel = get_datas ("select r.id_rumpun, r.kode_jabatann, r.keterangan from skp_rumpun_jab r, skp_bkn_jabatan j where j.kode_jabatan=r.kode_jabatann and j.nama_jabatan='".$rumput."'");
+	foreach ($embel as $embel){
+		$embelshow .= "<option value='".$embel['keterangan']."'>".$embel['keterangan']."</option>";
+	}
+	echo $embelshow ;
+
+} 
 
 function get_induk($parent=0, $iter=1, $idinduk,$val = ''){
    $induk = get_datas("select nama_jabatan, idjab, unit_kerja from skp_jabatan where unit_kerja=".$idinduk . " and parent=" . $parent . " order by idjab");
