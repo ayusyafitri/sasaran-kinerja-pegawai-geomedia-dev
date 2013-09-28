@@ -59,15 +59,7 @@ include_once ('../../php/postgre.php');
 			<input type="hidden" id="id_skpd" name="id_skpd" value="0">
             <table class="table-form">
                 <tbody>
-                    <tr>
-                        <td>Nama Jabatan</td>
-                        <td>:</td>
-                        <td>
-                            <input type="text" name="nama" id="nama"  />
-                        </td>
-                    </tr>
-
-                    <tr>
+					<tr>
                         <td>Induk Jabatan</td>
                         <td>:</td>
                         <td>
@@ -77,14 +69,7 @@ include_once ('../../php/postgre.php');
                         </td>
                     </tr>
 
-                    <tr>
-                        <td>Kode Jabatan</td>
-                        <td>:</td>
-                        <td>
-                            <input type="text" name="kodejab" id="kodejab"  />
-                        </td>
-                    </tr>
-
+                             
                     <tr>
                         <td>Jabatan</td>
                         <td>:</td>
@@ -98,6 +83,21 @@ include_once ('../../php/postgre.php');
                         </td>
                     </tr>
 
+					 <tr>
+                        <td>Nama Jabatan</td>
+                        <td>:</td>
+                        <td id='jabBKN' name="jabBKN">
+                            <!--input type="text" name="nama" id="nama"  /-->
+                        </td>
+                    </tr>
+					<tr>
+                        <td>Kode Jabatan</td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" name="kodejab" id="kodejab"  />
+                        </td>
+                    </tr>
+					
                     <tr>
                         <td>Unit Organisasi</td>
                         <td>:</td>
@@ -173,20 +173,32 @@ include_once ('../../php/postgre.php');
         });
 	}	
 
+	function emb(a){
+		var rump = a;
+		var post = $.post(url,{act:'pil_rum', rump:rump});
+		post.done(function(data){
+			$('#embel').html(data);
+		})
+	}
+	
     $('#id_jabatan').change(function(){
         var jabatan = $('#id_jabatan').val();
         var skp = $('#id_skpd').val();
         var td = $('td#unitOr');  
 	//	var tde = $('td#eslon');
+		var tdNam  = $('td#jabBKN');
         if(jabatan == 'Jabatan Struktural'){
             td.html("<td><input type='text' name='unit' id='unit'  class='span3'/></td><td><select name='eslon' id='eslon' class=span2><option value='0'>Pilih Golongan</option><option value='IIB'>IIB</option><option value='IIIA'>IIIA</option><option value='IIIB'>IIIB</option><option value='IVA'>IVA</option><option value=IVB>IVB</option></select></td>");
 			//tde.html("<select name='eslon' id='eslon' class=span2><option value='0'>Pilih sala satu</option><option value='IIB'>IIB</option><option value='IIIA'>IIIA</option><option value='IIIB'>IIIB</option><option value='IVA'>IVA</option><option value=IVB>IVB</option></select>");
-        }else{
+			tdNam.html("<input type='text' name='nama' id='nama'  />")
+		}else{
             var post = $.post('admin/jabatan/save_jabatan.php',{act :'rlJabatan', skp : skp});
             post.done(function(rse){
-                td.html(rse); 
-            });            
-        }
+			var data = rse.split('__');
+                td.html(data[0]);
+				tdNam.html(data[1]);
+            }); 
+		}
 	});
 	
     $('.btn-simpan-jabatan').click(function(){      
@@ -210,9 +222,11 @@ include_once ('../../php/postgre.php');
                     tbody.html(result[2]);
 					init();
                     $("#id").val("0");
-                    document.getElementById('nama').value='';
-				 	document.getElementById('kodejab').value='';
+                 	document.getElementById('kodejab').value='';
 					document.getElementById('idjabatan').selected=true;            
+					$('#id_induk').val('0');
+					$('#jabBKN').html('');
+					$('#unitOr').html('');
 					$('#modalwin').modal('hide');
                 }else{
                     rslt.html('<font color="red">'+res+'</font>');
@@ -242,11 +256,17 @@ include_once ('../../php/postgre.php');
 				post.done(function(data){
 					$('#id_induk').html(data);
 				});
-			document.getElementById('nama').value='';
+		//	document.getElementById('nama').value='';
 		//	document.getElementById('idindukk').selected=true;
 			document.getElementById('kodejab').value='';
 			document.getElementById('idjabatan').selected=true;
-			  
+			$('#jabBKN').val("");  
+			document.getElementById('kodejab').value='';
+			document.getElementById('idjabatan').selected=true;            
+			//		$('#id_induk').val('0');
+			$('#jabBKN').html('');
+			$('#unitOr').html('');
+
 		}
 
 	});
@@ -259,13 +279,15 @@ include_once ('../../php/postgre.php');
             post.done(function(res){
                 var value = res.split('__');
                 $('#id').val(value[0]);
-                form.find('input[name="nama"]').val(value[1]);
+              //  form.find('input[name="nama"]').val(value[1]);
                 form.find('input[name="kodejab"]').val(value[2]);
 				form.find('select[name="id_induk"]').html(value[7]);
 				form.find('select[name="id_skpd"]').val(value[4]);
 				form.find('select[name="id_jabatan"]').val(value[6]);
 				$("#unitOr").html(value[8]);
-			
+				form.find('select[name="embel"]').val(value[11]);
+				form.find('select[name="rumpun"]').val(value[10]);
+				$('#jabBKN').html(value[9]);
 			 });
         });
         
