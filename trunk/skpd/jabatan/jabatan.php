@@ -48,21 +48,6 @@ session_start();
                         </td>
                     </tr>
                     <tr>
-                        <td>Nama Jabatan</td>
-                        <td>:</td>
-                        <td>
-                            <input type="text" name="nama" id="nama"  />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Kode Jabatan</td>
-                        <td>:</td>
-                        <td>
-                            <input type="text" name="kodejab" id="kodejab"  />
-                        </td>
-                    </tr>
-
-                    <tr>
                         <td>Jabatan</td>
                         <td>:</td>
                         <td>
@@ -72,6 +57,19 @@ session_start();
                                 <option value="Jabatan Fungsional Umum"> Jabatan Fungsional Umum </option> 
                                 <option value="Jabatan Fungsional Tertentu"> Jabatan Fungsional Tertentu</option> 
                             </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nama Jabatan</td>
+                        <td>:</td>
+                        <td><div id="nmjab" name='nmjab'></div><td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Kode Jabatan</td>
+                        <td>:</td>
+                        <td>
+                            <input type="text" name="kodejab" id="kodejab"  />
                         </td>
                     </tr>
 
@@ -147,19 +145,30 @@ session_start();
             document.getElementById('kodejab').value=data;
         });
 	}	
-
+	
+	function emb(a){
+		var rum = a;
+		console.log(a);
+		var post = $.post('skpd/jabatan/embel.php',{rum:rum});
+		post.done(function(data){
+			$('#embel').html(data);
+		});
+	}
+	
     $('#id_jabatan').change(function(){
         var jabatan = $('#id_jabatan').val();
         var skp = $('#id_skpd').val();
         var td = $('#unitOr');  
-	//	var tde = $('td#eslon');
+		var namajab = $('#nmjab');
         if(jabatan == 'Jabatan Struktural'){
             td.html("<td><input type='hidden' name='id_unit' id='id_unit' value='0'><input type='text' name='unit' id='unit'  class='span3'/></td><td><select name='eslon' id='eslon' class=span2><option value='0'>Pilih Golongan</option><option value='IIB'>IIB</option><option value='IIIA'>IIIA</option><option value='IIIB'>IIIB</option><option value='IVA'>IVA</option><option value=IVB>IVB</option></select></td>");
-			//tde.html("<select name='eslon' id='eslon' class=span2><option value='0'>Pilih sala satu</option><option value='IIB'>IIB</option><option value='IIIA'>IIIA</option><option value='IIIB'>IIIB</option><option value='IVA'>IVA</option><option value=IVB>IVB</option></select>");
+			namajab.html("<input type='text' name='nama' id='nama'  />");
         }else{
-            var post = $.post('admin/jabatan/save_jabatan.php',{act :'rlJabatan', skp : skp});
+            var post = $.post(url,{act :'rlJabatan', skp : skp});
             post.done(function(rse){
-                td.html(rse); 
+				var data = rse.split('__');
+                td.html(data[0]); 
+				namajab.html(data[1]);
             });            
         }
 	});
@@ -168,7 +177,7 @@ session_start();
         var btn = $(this);
         var load = $('#loader');
         load.addClass('icon-spinner icon-spin icon-2x white');
-       
+        
         var form = $('#formjabatan');
         var data = form.serializeArray();
         var post = $.post(url,data);
@@ -180,19 +189,19 @@ session_start();
                     setTimeout(function(){
                         rslt.html('');
                     }, 1500);
+					
+					
                 
                     var tbody = $('#tampilJabatan');
                     tbody.html(result[2]);
 					init();
                     $("#id").val("0");
-                    document.getElementById('nama').value='';
 					document.getElementById('id_induk').value='0';
 					document.getElementById('kodejab').value='';
-					document.getElementById('idjabatan').value='0';                    
-					document.getElementById('unitOr').value='';                    
-					//document.getElementById('unit').value='';                    
-					//document.getElementById('eslon').value='0'; 
-					                   
+					document.getElementById('id_jabatan').value='0'; 
+					$('#nmjab').html('');
+					$('#unitOr').html('');     
+					load.removeClass('icon-spinner icon-spin icon-2x white');         
 					$('#modalwin').modal('hide');
                 }else{
                     rslt.html('<font color="red">'+res+'</font>');
@@ -200,7 +209,7 @@ session_start();
             }else{
                 rslt.html('<font color="red">'+res+'</font>');
             }
-            load.removeClass();
+            
             btn.removeClass('btn-info').addClass('btn-primary');
            
         });
@@ -223,7 +232,6 @@ session_start();
 					$('#id_induk').html(data);
 				});
 			document.getElementById('nama').value='';
-		//	document.getElementById('idindukk').selected=true;
 			document.getElementById('kodejab').value='';
 			document.getElementById('idjabatan').selected=true;
 		}
@@ -240,7 +248,9 @@ session_start();
             post.done(function(res){
                 var value = res.split('__');
                 $('#id').val(value[0]);
-                form.find('input[name="nama"]').val(value[1]);
+                $('#nmjab').html(value[8]);
+				form.find('select[name="embel"]').val(value[10]);
+				form.find('select[name="rumpun"]').val(value[9]);
                 form.find('input[name="kodejab"]').val(value[2]);
 				form.find('select[name="id_induk"]').val(value[3]);
 				form.find('select[name="id_skpd"]').val(value[4]);
