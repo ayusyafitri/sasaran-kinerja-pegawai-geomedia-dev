@@ -6,8 +6,12 @@ include_once 'php/include_all.php';
 if (!isset($_SESSION['_username'])) {
     header("Location:./");
 }
-$dtPeg = getDataPNS(SKP_ID);
-$imgSrc = (empty($dtPeg['imgProfil'])) ? 'themes/img/no-profile.gif' : 'imgPns/' . $dtPeg['imgProfil'];
+if ($_SESSION['_menu'] == 3) {
+    $dtPeg = getDataPNS(SKP_ID);
+    $imgSrc = (empty($dtPeg['imgProfil'])) ? 'themes/img/no-profile.gif' : 'imgPns/' . $dtPeg['imgProfil'];
+} else {
+    $imgSrc = 'themes/img/no-profile.gif';
+}
 ?>
 <!DOCTIYPE html>
 <html>
@@ -27,6 +31,11 @@ $imgSrc = (empty($dtPeg['imgProfil'])) ? 'themes/img/no-profile.gif' : 'imgPns/'
         <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
         <link rel="stylesheet" href="themes/css/w8-skins.min.css" />                
 
+        <script src="themes/js/jquery.min.js"></script>
+        <script src="themes/js/bootbox.min.js"></script>
+        <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
+        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/DT_bootstrap.js"></script>
     </head>
     <body style=" font-family:'Open Sans' ;" >
         <div class="navbar">
@@ -41,7 +50,7 @@ $imgSrc = (empty($dtPeg['imgProfil'])) ? 'themes/img/no-profile.gif' : 'imgPns/'
                     <ul class="nav ace-nav pull-right">
                         <li class="light-blue user-profile">
                             <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
-                                <img class="nav-user-photo" id="icon-corner" src="<?php echo $imgSrc;?>" alt="<?php echo $dtPeg['nama'];?>" />
+                                <img class="nav-user-photo" id="icon-corner" src="<?php echo $imgSrc; ?>" alt="<?php echo $dtPeg['nama']; ?>" />
                                 <span id="user_info">
                                     <small>Welcome,</small><?php echo SKP_NAMA; ?>
                                 </span>
@@ -70,15 +79,15 @@ $imgSrc = (empty($dtPeg['imgProfil'])) ? 'themes/img/no-profile.gif' : 'imgPns/'
                     include 'php/menuskpd.php';
                 } else if ($_SESSION['_menu'] == '1') {
                     include 'php/menuadmin.php';
-                } else if (!isset($_SESSION['_menu'])){
+                } else if (!isset($_SESSION['_menu'])) {
                     
-                } else{
+                } else {
                     ?>
-                <script type="text/javascript">
-                    location.href = './';
-                </script>
+                    <script type="text/javascript">
+                        location.href = './';
+                    </script>
                     <?php
-                        session_destroy();
+                    session_destroy();
                 }
                 ?>
             </div>
@@ -93,10 +102,7 @@ $imgSrc = (empty($dtPeg['imgProfil'])) ? 'themes/img/no-profile.gif' : 'imgPns/'
                 ?>
                 Hello Admin!!
             </div>
-        </div>
-        <script src="themes/js/jquery.min.js"></script>
-        <script src="themes/js/bootbox.min.js"></script>
-        <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
+        </div>        
         <script src="themes/js/jquery.ui.touch-punch.min.js"></script>        
         <script src="themes/js/jquery.slimscroll.min.js"></script>
         <script src="themes/js/jquery.easy-pie-chart.min.js"></script>
@@ -109,8 +115,7 @@ $imgSrc = (empty($dtPeg['imgProfil'])) ? 'themes/img/no-profile.gif' : 'imgPns/'
         <script src="themes/js/jquery.tools.min.js"></script>
         <script src="themes/js/bootstrap.min.js"></script>        
         <script src="themes/js/bootstrap-datepicker.js"></script> 
-        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/DT_bootstrap.js"></script>
+
         <!--w8 scripts-->
 
         <script src="themes/js/w8-elements.min.js"></script>

@@ -23,7 +23,7 @@ where s.id_tkerja = k.id_tkerja AND k.id_uraian = u.id_uraian and k.tahun = '" .
             <?php            
         }
     } else {
-        if (SKP_JNSJAB == 'Jabatan Struktural') {
+        if (SKP_JNSJAB == 'Jabatan Struktural') {            
             ?>
             <button class="btn btn-small btn-info no-radius" id="plusUraian"><i class="icon-plus-sign"></i>Tambah Uraian</button>
             <?php
@@ -33,7 +33,7 @@ where s.id_tkerja = k.id_tkerja AND k.id_uraian = u.id_uraian and k.tahun = '" .
    where p.kode_jabatan = jj.kode_jabatan and j.kode_jabatan = jj.kode_bkn and u.kode_jabatan = j.kode_jabatan and p.id_pns = '".SKP_ID."' order by u.no_uraian ASC");
             
         }
-    }
+    }    
     ?>
     &nbsp;<span id="load">&nbsp;</span>
 </div>
@@ -306,7 +306,7 @@ where s.id_tkerja = k.id_tkerja AND k.id_uraian = u.id_uraian and k.tahun = '" .
         var form = $('#foTargetKerja');
         $('#loadS').addClass("icon-spinner icon-spin");
         ms.html("&nbsp;&nbsp;<font color='green'>Meyimpan...</font>&nbsp;&nbsp;");
-        var dt = form.serializeArray();        
+        var dt = form.serializeArray();              
         var post = $.post(urls, dt);
         var scn = 2000;
         post.done(function(srr) {

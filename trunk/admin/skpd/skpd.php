@@ -90,8 +90,8 @@ include_once('../../php/include_all.php');
         </tbody>
     </table>    
 </div>
-<script src="js/jquery.dataTables.js"></script>
-<script src="js/DT_bootstrap.js"></script>	
+<script src="themes/js/jquery.dataTables.js"></script>
+<script src="themes/js/DT_bootstrap.js"></script>	
 
 <script>
     var url = 'admin/skpd/skpd_save.php';

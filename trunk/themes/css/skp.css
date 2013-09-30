@@ -533,4 +533,48 @@ box-shadow: 0 0 10px #BDBDBD;
 min-height:297px;
 }
 
+.tabel{
+    font-family: 'Open Sans';
+    font-size: 13px;
+    margin-bottom:20px;
+}
+.tabel th, .tabel td {
+    font-family: 'Open Sans';
 
+    line-height: 15px;
+    padding: 5px;
+    text-align: left;
+    vertical-align: top;
+}
+th, td, .tabel-bordered {
+    border-radius: 0 0 0 0 !important;
+}
+.tabl{
+    font-family: 'Open Sans';
+    font-size: 13px;
+    border:1px solid #000;
+    margin-bottom:20px;
+}
+.tabl th, .tabl td {
+    font-family: 'Open Sans';
+    
+    line-height: 23px;
+    padding: 7px;
+    text-align: left;
+    vertical-align: top;
+}
+th, td, .tabl-bordered {
+    border-radius: 0 0 0 0 !important;
+}
+.tabl-bord{
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: #ddd;
+}
+.tabl-bo{
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+
+}

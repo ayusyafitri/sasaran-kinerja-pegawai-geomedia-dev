@@ -8,7 +8,7 @@ if($act == 'jabBKN_simpan'){
 	$nama = $_POST['nama'];
 	$kode = $_POST['kode'];
 	$ikhtisar= $_POST['ikhtisar'];
-	$idur = $_POST['id'];
+	//$idur = $_POST['id'];
 	$no = $_POST['no'];
 	$urtugas = $_POST['uraian_tugas_bkn'];
 	$rows = $_POST['rows'];
@@ -21,19 +21,32 @@ if($act == 'jabBKN_simpan'){
 	
 	if($id > 0){
 		exec_query("update skp_bkn_jabatan set nama_jabatan='".$nama."', kode_jabatan='".$kode."', ikhtisar_jabatan='".$ikhtisar."' where idjab=".$id);
-		for ($i=0;$i<count($rows); $i++){
-			if($idur[$i]==0){
-				$maxid1 = get_maxid('id_uraian','skp_bkn_uraian');
-				exec_query("insert into skp_bkn_uraian (id_uraian, kode_jabatan,no_uraian, uraian) values (".$maxid1.",'".$kode."', ".$no[$i].",'".$urtugas[$i]."')");
-				$stored1 = get_data("select id_uraian from skp_bkn_uraian where id_uraian=".$maxid1);
-				if($stored1['id_uraian']==$maxid1){
-					$idur = $maxid1;
-				}
-			}else {
-				exec_query("update skp_bkn_uraian set no_uraian=".$no[$i].", uraian='".$urtugas[$i]."' where id_uraian=".$idur[$i]);
-		
-			}
-		}
+				
+		 
+			 
+				$dataUraianBKN = get_datas("SELECT * FROM skp_bkn_uraian where kode_jabatan = '$kode'");
+				$n = 0;
+				foreach($idur as $iduraian){
+					$search = array_search($iduraian, $dataUraianBKN);
+					if($search >= 0){
+						exec_query("update skp_bkn_uraian set no_uraian=".$no[$n].", uraian='".$urtugas[$n]."' where id_uraian=".$iduraian);
+					}else{
+						$cek = get_data("SELECT * FROM skp_bkn_uraian where id_uraian = '$iduraian'");
+						if($cek['id_uraian'] > 0){
+							exec_query("DELETE FROM skp_bkn_uraian where id_uraian = '$iduraian'");
+						}else{
+							$maxid1 = get_maxid('id_uraian','skp_bkn_uraian');
+							exec_query("insert into skp_bkn_uraian (id_uraian, kode_jabatan,no_uraian, uraian) values (".$maxid1.",'".$kode."', ".$no[$n].",'".$urtugas[$n]."')");
+							$stored1 = get_data("select id_uraian from skp_bkn_uraian where id_uraian=".$maxid1);
+							if($stored1['id_uraian']==$maxid1){
+								$idur = $maxid1;
+							}
+						}
+					}
+					$n++;
+				}		
+			 
+	 
 		echo 'success__';
 	}else{
 		$maxid = get_maxid('idjab','skp_bkn_jabatan');
@@ -112,8 +125,8 @@ function view_jabatanBKN(){
             foreach ($pr as $pr) {
                 ?><tr>
                     <td><?php echo $x ?></td>
-                    <td><?php echo $pr['nama_jabatan'] ?></td>
-					<td><?php echo $pr['ikhtisar_jabatan']?></td>
+                    <td><?php echo stripIfEmpty($pr['nama_jabatan']); ?></td>
+                    <td><?php echo stripIfEmpty($pr['ikhtisar_jabatan']);?></td>
 					<td class="center" >
                         <a href="#modalwin" data-toggle="modal"  class="btn btn-info bt-edit btn-small" name="<?php echo $pr['idjab']; ?>"><i class="icon-edit icon-white"></i> ubah</a>
                         <a class="btn btn-danger bt-hapus btn-small" name="<?php echo $pr['idjab']; ?>"><i class="icon-trash icon-white"></i> hapus</a>

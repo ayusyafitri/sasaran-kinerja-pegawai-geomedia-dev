@@ -12,11 +12,11 @@ include_once 'php/postgre.php';
         <meta name="description" content="Sistem Informasi Manajemen Kepegawaian">
         <meta name="author" content="haripinter">
 
-        <link href="css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="css/bootstrap-responsive.min.css" rel="stylesheet" />
+        <link href="themes/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="themes/css/bootstrap-responsive.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="themes/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="themes/css/prettify.css"/>
-        <link rel="stylesheet" href="css/skp.css"/>
+        <link rel="stylesheet" href="themes/css/skp.css"/>
         <link rel="stylesheet" href="themes/css/w8.min.css" />
         <link rel="stylesheet" href="themes/css/css.css" />
         <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
@@ -99,8 +99,8 @@ include_once 'php/postgre.php';
             </marquee>
         </div>
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <script src="themes/js/jquery.min.js"></script>
+        <script src="themes/js/bootstrap.min.js"></script>
         <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
         <script src="themes/js/jquery.ui.touch-punch.min.js"></script>
 

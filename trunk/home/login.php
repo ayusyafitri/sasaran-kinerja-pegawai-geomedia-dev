@@ -26,13 +26,7 @@ if (isset($_SESSION['_username'])) {
                     <input name="yoursecret" type="password" placeholder="Password">
                     <i class="icon-lock"></i>
                         </span>
-                    </label>
-                    <select name="part" id="part">                        
-                        <option value="0">--Pilih Level--</option>
-                        <option value="1">Admin</option>
-                        <option value="2">SKPD</option>
-                        <option value="3">PNS</option>
-                    </select>
+                    </label>                    
                     <input type="button" class="btn btn-danger btn-small bt-cancel" value="Cancel">
                     <input type="button" class="btn btn-primary btn-small bt-login" value="Login">
                     <input type="hidden" value="hearme" name="what">
@@ -80,7 +74,7 @@ if (isset($_SESSION['_username'])) {
                     	<td>Email</td><td><input name="email" type="text" id="email" placeholder="Alamat Email"></td>
                     </tr>
                 	<tr>
-                    	<td>Username</td><td><input name="username" type="text" id="username" placeholder="Username" onchange="user(this.value)"></td><td><font color="#FF0000"><span id="conf"></span></font></td>
+                    	<td>Username</td><td><input name="username" type="text" id="username" placeholder="Username"></td>
                     </tr>
                     <tr>
                     	<td>Password</td><td><input name="pass" type="password" id="pass" placeholder="Password"></td>
@@ -114,77 +108,64 @@ if (isset($_SESSION['$LEVEL'])) {
 <script type='text/javascript'>
 	var urls= 'home/aksi_daftar.php';
 	
-	function user(){
-		var us = $('#username').val();
-		var post = $.post(urls,{act:'cek_user', user:us});
-			post.done(function(data){
-				var con = $('#conf');
-				con.html(data);
-				if (data == 'Username telah terpakai'){
-					document.getElementById('username').value='';
-				}
-			});
-	}
-	
 	$('.bt-simpan-daftar').click(function(){
-		var btn = $(this);
-		var load = $('#loader');
-		var rslt = $('#result');
-		load.addClass('spinner pull-left');
-		btn.removeClass('btn-primary').addClass('btn-info');
-		
-		var pass = $('#pass').val();
-		var copass = $('#co_pass').val();
-		
-		if (pass != copass){
-			var co = $('#confirm');
-			co.html ('<font color="red">Password salah</font>');
-					document.getElementById('username').value='';
-					document.getElementById('pass').value='';
-					document.getElementById('skpd').value='';
-					document.getElementById('nama').value='';
-					document.getElementById('nip').value='';
-					document.getElementById('email').value='';
-					document.getElementById('id_user').value='0';
-					document.getElementById('co_pass').value='';
+	var btn = $(this);
+	var load = $('#loader');
+	var rslt = $('#result');
+	load.addClass('spinner pull-left');
+	btn.removeClass('btn-primary').addClass('btn-info');
 	
-		}
-		else{
-		var form =$('#form_pendaftaran');
-		var data = form.serializeArray();
-		var post = $.post(urls,data);
-		post.done(function(res){
-			console.log(res);
-			var result = res.split('__');
-			if(result.length==2){
-				
-				if(result[0]=='success'){
-					rslt.html('<font color="green">Tersimpan</font>');
-					setTimeout(function(){
-						rslt.html('');
-					},1500);
-					document.getElementById('username').value='';
-					document.getElementById('co_pass').value='';
-					document.getElementById('skpd').value='';
-					document.getElementById('pass').value='';
-					document.getElementById('nama').value='';
-					document.getElementById('nip').value='';
-					document.getElementById('email').value='';
-					document.getElementById('id_user').value='0';
-					document.getElementById('confirm').value='';
-					$('#modalwin').modal('hide');
-				}else{
-					rslt.html('<font color="red">'+res+'</font>');
-				}
+	var pass = $('#pass').val();
+	var copass = $('#co_pass').val();
+	
+	if (pass != copass){
+		var co = $('#confirm');
+		co.html ('<font color="red">Password salah</font>');
+				document.getElementById('username').value='';
+				document.getElementById('pass').value='';
+				document.getElementById('skpd').value='';
+				document.getElementById('nama').value='';
+				document.getElementById('nip').value='';
+				document.getElementById('email').value='';
+				document.getElementById('id_user').value='0';
+				document.getElementById('co_pass').value='';
+
+	}
+	else{
+	var form =$('#form_pendaftaran');
+	var data = form.serializeArray();
+	var post = $.post(urls,data);
+	post.done(function(res){
+		console.log(res);
+		var result = res.split('__');
+		if(result.length==2){
+		 	
+			if(result[0]=='success'){
+				rslt.html('<font color="green">Tersimpan</font>');
+				setTimeout(function(){
+					rslt.html('');
+				},1500);
+				document.getElementById('username').value='';
+				document.getElementById('co_pass').value='';
+				document.getElementById('skpd').value='';
+				document.getElementById('pass').value='';
+				document.getElementById('nama').value='';
+				document.getElementById('nip').value='';
+				document.getElementById('email').value='';
+				document.getElementById('id_user').value='0';
+				$('#modalwin').modal('hide');
 			}else{
 				rslt.html('<font color="red">'+res+'</font>');
 			}
-		
-			load.removeClass();
-			btn.removeClass('btn-info').addClass('btn-primary');
+		}else{
+			rslt.html('<font color="red">'+res+'</font>');
+		}
 	
-			});
-			}
+		load.removeClass();
+		btn.removeClass('btn-info').addClass('btn-primary');
+
+		});
+		}
 	});
     $('.bt-cancel').click(function(x) {
         var btns = $('#toprightmenu').children('.btn');

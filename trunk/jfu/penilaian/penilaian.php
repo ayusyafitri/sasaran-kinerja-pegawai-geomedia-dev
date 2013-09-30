@@ -32,6 +32,7 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
             }
             ?>
         </select>
+
         <button class="btn btn-primary btn-small" style='margin-top: -10px;' id="findP"><i class="icon-search"></i>&nbsp;Cari</button>&nbsp;&nbsp;<span id='loadSc' class=''></span>
     </div>
     <div class="page-header position-relative" id="page-content">
@@ -43,13 +44,13 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
             <table class="table table-bordered geo-table table-hover" width="100%">
                 <thead>
                     <tr>
-                        <th class="center"  valign="middle"rowspan="2" width="3%">No</th>
-                        <th class="center" rowspan="2" width="48%">Uraian</th> 
-                        <th class="center" rowspan="2" width="4%">AK</th>
-                        <th colspan="4" class="center"  width="40%">Realisasi</th>
-                        <th rowspan="2" class="center" width="4%">Perhitungan</th>
-                        <th rowspan="2" class="center" width="4%">Nilai Capaian</th>
-                        <th class="center" rowspan="2" width="8%">Aksi</th>
+                        <th class="center" width="2%" valign="middle" rowspan="2">No</th>
+                        <th class="center" width="40%" rowspan="2">Uraian</th>
+                        <th class="center" width="5%" rowspan="2">AK</th>
+                        <th class="center" width="25%" colspan="4">Realisasi</th>
+                        <th class="center" width="9%" rowspan="2">Perhitungan</th>
+                        <th class="center" width="9%" rowspan="2">Nilai Capaian</th>
+                        <th class="center" width="10%" rowspan="2">Aksi</th>
                     </tr>
                     <tr>
                         <th class="center">Output</th>
@@ -63,17 +64,16 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
                 </tbody>
             </table>                
         </form>
-        <div class="position-relative pull-right">
-            <span id="loadtgs" class=""></span>&nbsp;&nbsp;&nbsp;<span id="msgtgs"></span>&nbsp;&nbsp;
-            <button class="btn btn-small btn-primary no-radius" id="b-smpantgs"><i class="icon-save"></i>Simpan</button>
-        </div>
+        <!--        <div class="position-relative pull-right">
+                    <span id="loadtgs" class=""></span>&nbsp;&nbsp;&nbsp;<span id="msgtgs"></span>&nbsp;&nbsp;
+                    <button class="btn btn-small btn-primary no-radius" id="b-smpantgs"><i class="icon-save"></i>Simpan</button>
+                </div>-->
     </div><br />
 
     <!--tugas tambahan-->
-    <div class="page-header position-relative" id="page-content">
-        <div class="span12"> II. Tugas Tambahan</div>
-
-    </div>
+    <div class="page-header position-relative" id="page-content">       
+        <div class="span7"> II. Tugas Tambahan</div><div class="span5" id="msgtm" style="text-align:right"></div>
+    </div>   
     <div id="page-content">
         <form id="foTambahan">
             <input type="hidden" name="act" value="tmbhn" />
@@ -92,16 +92,16 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
                 </tbody>
             </table>
         </form>
-<!--        <div class="position-relative pull-right">
-            <span id="loadtm" class=""></span>&nbsp;&nbsp;&nbsp;<span id="msgtm"></span>&nbsp;&nbsp;
-            <button class="btn btn-small btn-primary no-radius" id="b-smpantm"><i class="icon-save"></i>Simpan</button>
-        </div>-->
+        <!--        <div class="position-relative pull-right">
+                    <span id="loadtm" class=""></span>&nbsp;&nbsp;&nbsp;<span id="msgtm"></span>&nbsp;&nbsp;
+                    <button class="btn btn-small btn-primary no-radius" id="b-smpantm"><i class="icon-save"></i>Simpan</button>
+                </div>-->
     </div><br />
     <!--kreatifitas-->
     <div class="page-header position-relative" id="page-content">
-        <div class="span12"> III. KREATIVITAS</div>
-<!--        <button class="btn btn-small btn-primary no-radius" id="btn-tgsKreatf"><i class="icon-plus-sign-alt"></i>Tambah Kreatifitas</button>
-        &nbsp;<span id="loadT" class="spinner"></span>-->
+        <div class="span7"> III. KREATIVITAS</div><div class="span5" style="text-align:right">
+            <div id="msgkre" style="display: inline;"></div><a data-placement="bottom" title="" class="help" href="#"><i class="icon-question-sign icon-large pull-right" style="color: blue;cursor:default;" ></i></a>
+        </div>
     </div>
     <div id="page-content">
         <form id="foKreativitas">
@@ -111,8 +111,8 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
                 <thead >
                     <tr>
                         <th class="center" valign="middle" style="width:4%;">No</th>
-                        <th class="center" style="width:76%">URAIAN KREATIFITAS</th> 
-
+                        <th class="center" style="width:61%">URAIAN KREATIFITAS</th> 
+                        <th class="center" style="width:15%">Nilai</th> 
                         <th class="center" style="width:20%">AKSI</th> 
                     </tr>
                 </thead>
@@ -122,11 +122,36 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
             </table>
         </form>
     </div>   
-    <div class=" position-relative pull-right" id="page-content">
-        <span id="loadkre" class=""></span>&nbsp;&nbsp;&nbsp;<span id="msgkre"></span>&nbsp;&nbsp;
-        <button class="btn btn-small btn-primary no-radius" id="b-smpankre"><i class="icon-save"></i>Simpan</button>       
+    <div class="position-relative pull-right btnKonfirm hide" id="page-content">
+        <span id="loadkre" class=""></span>&nbsp;
+        <button class="btn btn-small btn-primary no-radius btn-danger btn-confirm" id="reconfirm"><i class="icon-refresh"></i>Batal Konfirmasi</button>     
+        <button class="btn btn-small btn-primary no-radius btn-confirm"  id="confirm"><i class="icon-save"></i>Konfirmasi</button>       
     </div>
 </div>
+
+<div class="tooltip" style="display: none;">
+    <table style="margin:0">
+        <tr>
+            <th>No</th>
+            <th>Kreativitas</th>
+            <th>Nilai</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Apabila hasil yang ditemukan merupakan sesuatu yang baru dan bermanfaat bagi unit kerjanya dan dibuktikan dengan surat keterangan yang ditandatangani oleh kepala unit kerja setingkat eselon II.</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Apabila hasil yang ditemukan merupakan sesuatu yang baru dan bermanfaat bagi organisasinya serta dibuktikan dengan surat keterangan yang ditandatangani oleh PPK.</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Apabila hasil yang ditemukan merupakan sesuatu yang baru dan bermanfaat bagi Negara dengan penghargaan yang diberikan oleh Presiden.</td>
+            <td>12</td>
+        </tr>
+    </table></div>
 <script  type="text/javascript">
     (function($) {
         $.fn.attributesToArray = function(attrs) {
@@ -155,7 +180,8 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
         };
     })(jQuery);
     var rls = 'jfu/penilaian/penilaian_.php';
-
+    var nKreatif = [3, 6, 12];
+    $('.help').tooltip();
     function sveTP(a) {
         var ar = {};
         ar['out'] = $('#outputTP_' + a).val(), ar['mut'] = $('#mutuTP_' + a).val();
@@ -170,21 +196,25 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
             var spt = rs.split('___');
             if (spt[0] === '5') {
                 var nl = spt[1].split('|||');
-                ms.removeClass('icon-spin icon-spinner');
-                ms.html("<i class='icon-ok'></i>");
-                setTimeout(function(){cancelTP (a);
-                $('#ouputTP_' + a).html(nl[0]);
-                $('#mutuTP_' + a).html(nl[1]);
-                $('#waktuTP_' + a).html(nl[2]);
-                $('#biayaTP_' + a).html(nl[3]);},1200);
+                setTimeout(function() {
+                    ms.removeClass('icon-spin icon-spinner');
+                    ms.html("<i class='icon-ok'></i>");
+                }, 2000);
+                setTimeout(function() {
+                    cancelTP(a);
+                    $('#ouputTP_' + a).html(nl[0]);
+                    $('#mutuTP_' + a).html(nl[1]);
+                    $('#waktuTP_' + a).html(nl[2]);
+                    $('#biayaTP_' + a).html(nl[3]);
+                }, 1200);
             } else if (spt[0] === '2') {
                 ms.removeClass('icon-spin icon-spinner');
                 ms.html("<i class='icon-exclamation'></i>'");
             }
             setTimeout(function() {
                 ms.removeClass('');
-                ms.html('');               
-            },1700);
+                ms.html('');
+            }, 2000);
         });
     }
 
@@ -252,6 +282,90 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
         }
     }
 
+    function edtRow(a) {
+        var d = a.id.split('_');
+        $('.row_edt').each(function() {
+            var a = $(this).attr('id');
+            var on = a.split('_');
+            cancel(on[2], on[1]);
+        });
+        $('#uraian_' + d[1] + '_' + d[2]).replaceWith(function() {
+            return $('<textarea />', {html: $(this).html(), id: $(this).attr('id'), name: $(this).attr('name'), style: $(this).attr('style')});
+        });
+        $('#id_' + d[1] + '_' + d[2]).replaceWith(function() {
+            return $('<input />', {value: $(this).html(), type: 'hidden', id: $(this).attr('id'), name: $(this).attr('name')});
+        });
+
+        $('#nilai_' + d[1] + '_' + d[2]).replaceWith(function() {
+            var nilai = $(this).html();
+            var opt = "<option value='0'>--Pilih Nilai--</option>";
+            $.each(nKreatif, function(indeks, nama) {
+                var se = (nama === nilai) ? 'selected' : '';
+                opt += "<option value='" + nama + "' " + se + ">" + nama + "</option>";
+            });
+            return $('<select />', {html: opt, class: 'input-medium', title: nilai, id: $(this).attr('id'), name: $(this).attr('name')});
+        });
+        $('#btn_' + d[1] + '_' + d[2]).addClass('hide');
+        $('#btnh_' + d[1] + '_' + d[2]).removeClass('hide');
+        $('#r_' + d[1] + '_' + d[2]).addClass('row_edt');
+    }
+
+    function cancel(a, on) {   //nomer, on =  text
+        $('#uraian_' + on + '_' + a).replaceWith(function() {
+            return $('<label />', {html: $(this).val(), id: $(this).attr('id'), name: $(this).attr('name'), style: $(this).attr('style')});
+        });
+        $('#id_' + on + '_' + a).replaceWith(function() {
+            return $('<label />', {html: $(this).val(), class: 'hide', id: $(this).attr('id'), name: $(this).attr('name')});
+        });
+
+        $('#nilai_' + on + '_' + a).replaceWith(function() {
+            return $('<label />', {html: $(this).attr('title'), class: $(this).attr('class'), id: $(this).attr('id'), name: $(this).attr('name')});
+        });
+        $("#btn_" + on + '_' + a).removeClass('hide');
+        $('#btnh_' + on + '_' + a).addClass('hide');
+        $('#r_' + on + '_' + a).removeClass('row_edt');
+        console.log('cancel :' + a + '_' + on);
+    }
+
+    function simpan(a, on) { //nomer, on =  text
+        var d = $('#id_' + on + '_' + a).val();
+        var ur = $('#uraian_' + on + '_' + a).val();
+        var ld = $('#msgh_' + on + '_' + a);
+        var nilai = '';
+        if (on === 'kre'){
+            nilai = $('#nilai_' + on + '_' + a);
+        }
+        console.log('#msg_' + on + '_' + a);
+        var msg = (on === 'tam') ? $('#msgtm') : $('#msgkre');
+        ld.addClass('icon-spin icon-spinner');
+        msg.html("<font color='#BFBF07'>Wating response...</font>")
+        var dt = {act: 'edtRow', bgian: on, uraian: ur, id: d};
+        if(on === 'kre'){
+            dt['nlai'] = nilai.val();            
+        }
+        console.log(dt);
+        var pst = $.post(rls, dt);
+        pst.done(function(sr) {
+            var d = sr.split('___');
+            if (d[0] == '4') {
+                msg.html(d[1]);                
+                setTimeout(function() {
+                    cancel(a, on);
+                    msg.html('');
+                    ld.removeClass('icon-spin icon-spinner');
+                    $('#nilai_' + on + '_' + a).html(d[2]);
+                }, 1230);
+            } else if (d[0] == '1') {
+                msg.html(d[1]);
+                setTimeout(function() {
+                    msg.html('');
+                    ld.removeClass('icon-spin icon-spinner');
+                }, 1230);
+            }
+            
+        });
+    }
+
     $('#findP').click(function() {
         var p = $('#pilihPeg').val();
         var y = $('#tahun').val();
@@ -267,12 +381,22 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
                     $('#tblRealisasi').html(dt[1]);
                     $('#isitgsTmbhn').html(dt[2]);
                     $('#isikreatif').html(dt[3]);
+                    $('.btnKonfirm').removeClass('hide');
+                    if (dt[4] === '0') {
+                        $('#confirm').removeClass('disabled');
+                        $('#reconfirm').addClass('disabled');
+                    } else {
+                        $('#confirm').addClass('disabled');
+                        $('#reconfirm').removeClass('disabled');
+                    }
                 } else if (dt[0] === '5') {
                     ld.removeClass('icon-spin icon-spinner');
                     ld.html(dt[1]);
+                    $('.btnKonfirm').addClass('hide');
                 } else {
                     ld.removeClass('icon-spin icon-spinner');
                     ld.html("<font color='red'>Error In Paramater !!</font>");
+                    $('.btnKonfirm').addClass('hide');
                 }
             });
         }
@@ -280,5 +404,63 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
             ld.removeClass('icon-spin icon-spinner');
             ld.html('');
         }, 1500);
+    });
+    $('.btn-confirm').click(function() {
+        if (!$(this).hasClass('disabled')) {
+            var ld = $('#loadkre');
+            var doi = ($(this).attr('id') === 'confirm') ? '1' : '0';
+            ld.addClass('icon-spin icon-spinner');
+            ld.after("&nbsp;&nbsp;<span class='alert' id='tempMsg' style=padding-top:3px;'>Please wait...</span>");
+            var peg = $('#pilihPeg');
+            var thn = $('#tahun');
+            var msg = $('#tempMsg');
+            var arryId = new Array();
+            $("input[name='realssid[]']").each(function() {
+                arryId.push({'name': $(this).attr('name'), 'value': $(this).val()});
+            });
+            var act = {'name': 'act', 'value': 'sveStatus'}, doii = {'name': 'do', 'value': doi}, peg = {'name': 'Peg', 'value': peg.val()}, th = {'name': 'y', 'value': thn.val()};
+            arryId.push(act);
+            arryId.push(doii);
+            arryId.push(peg);
+            arryId.push(th);
+            var pst = $.post(rls, arryId);
+            pst.done(function(rss) {
+                msg.removeClass('alert');
+                var news = rss.split('___');
+                if (news[0] === '2') {
+                    msg.html(news[1]);
+                    $('#tblRealisasi').html(news[2]);
+                    $('#isitgsTmbhn').html(news[3]);
+                    $('#isikreatif').html(news[4]);
+                    if (doi == '1') {
+                        $('#confirm').addClass('disabled');
+                        $('#reconfirm').removeClass('disabled');
+                    } else {
+                        $('#confirm').removeClass('disabled');
+                        $('#reconfirm').addClass('disabled');
+                    }
+                    setTimeout(function() {
+                        ld.removeClass('icon-spin icon-spinner')
+                    }, 1200);
+                } else if (news[0] === '5') {
+                    msg.html(news[1]);
+                    $('#confirm').removeClass('disabled');
+                    $('#reconfirm').addClass('disabled');
+                    setTimeout(function() {
+                        ld.removeClass('icon-spin icon-spinner')
+                    }, 1200);
+                } else {
+                    $('#confirm').removeClass('disabled');
+                    $('#reconfirm').addClass('disabled');
+                    msg.html('Error Paramater in System !!!');
+                    setTimeout(function() {
+                        ld.removeClass('icon-spin icon-spinner')
+                    }, 1200);
+                }
+                setTimeout(function() {
+                    msg.remove();
+                }, 1500);
+            });
+        }
     });
 </script>

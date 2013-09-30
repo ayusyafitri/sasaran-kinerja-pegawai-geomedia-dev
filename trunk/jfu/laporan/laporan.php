@@ -5,7 +5,7 @@ if (@$_POST['open'] != 'please') {
 include_once('../../php/include_all.php');
 ?>
 <div class="widget-header widget-header-flat ">
-    <h5><i class="icon-calendar"></i>Laporan Hasil Perhitungan</h5>
+    <h5><i class="icon-calendar"></i>Laporan</h5>
 </div>
 <div class=" position-relative" id="page-content">
     <button class="btn btn-small btn-primary no-radius" id=""><i class="icon-print"></i>Cetak</button>
@@ -18,234 +18,48 @@ include_once('../../php/include_all.php');
             <table class="table table-striped table-bordered table-hover geo-table" style="width:100%">
                 <thead >
                     <tr>
-                        <th class="center" valign="middle" rowspan="2" style="width:2%;">No</th>
-                        <th class="center" rowspan="2" style="width:30%">Uraian</th> 
-                        <th class="center" rowspan="2" style="width:6%">AK</th>
-                        <th class="center" colspan="4" style="width:28%">Target</th>
-                        <th class="center" rowspan="2" style="width:6%">AK</th>
-                        <th class="center" colspan="4" style="width:28%">Realisasi</th>
-                    </tr>
-                    <tr>
-                        <th style="width:7%">Output</th>
-                        <th style="width:7%">Mutu</th>
-                        <th style="width:7%">Waktu</th>
-                        <th style="width:7%">Biaya</th> 
-                        <th style="width:7%">Output</th>
-                        <th style="width:7%">Mutu</th>
-                        <th style="width:7%">Biaya</th> 
-                        <th style="width:7%">Waktu</th>
+                        <th class="center" valign="middle" style="width:2%;">NO</th>
+                        <th class="center" valign="middle" style="width:20%;">NAMA</th>
+                        <th class="center" valign="middle" style="width:60%;">KETERANGAN</th>
+                        <th class="center" valign="middle" style="width:18%;">AKSI</th>
                     </tr>
                 </thead>
-                <tbody id="rlTabel">
+                <tbody>
                     <tr>
-                        <td valign="middle" align="center">1 </td>
-                        <td align="center">Membantu instansi lain untuk teknis pertanian, perkebunan dan kehutanan</td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
+                        <td valign="middle" align="center">1</td>
+                        <td align="center">Lampiran I-a</td>
+                        <td>Formulir Sasaran Kinerja Pegawai Negeri Sipil</td>
+                        <td class="center"><a href="jfu/laporan/Ia.php" target="_blank" class="btn btn-small btn-primary"><i class="icon-print"></i>Lihat Laporan</a></td>
                     </tr>
                     <tr>
-                        <td valign="middle" align="center">2 </td>
-                        <td align="center">Merekap hasil perkembangan data dalam bentuk laporan.</td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
+                        <td valign="middle" align="center">2</td>
+                        <td align="center">Lampiran I-c</td>
+                        <td>Formulir Surat Keterangan Melaksanakan Tugas Tambahan</td>
+                        <td class="center"><a href="jfu/laporan/Ic.php" target="_blank" class="btn btn-small btn-primary"><i class="icon-print"></i>Lihat Laporan</a></td>
                     </tr>
                     <tr>
-                        <td valign="middle" align="center">3 </td>
-                        <td align="center">Melakukan pembinaan teknis ke petani</td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
+                        <td valign="middle" align="center">3</td>
+                        <td align="center">Lampiran I-d</td>
+                        <td>Formulir Surat Keterangan Melakukan Sesuatu Yang Baru</td>
+                        <td class="center"><a href="jfu/laporan/Id.php" target="_blank" class="btn btn-small btn-primary"><i class="icon-print"></i>Lihat Laporan</a></td>
                     </tr>
                     <tr>
-                        <td valign="middle" align="center">4 </td>
-                        <td align="center">Mendata perkembangan luas tanam, luas panen, produktvitas,produksi, harga jual petani untuk komoditi tanaman pangan dan holtikultura</td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-
+                        <td valign="middle" align="center">4</td>
+                        <td align="center">Lampiran I-e</td>
+                        <td>Formulir Penilaian Sasaran Kinerja Pegawai Negeri Sipil</td>
+                       <td class="center"><a href="jfu/laporan/Ie.php" target="_blank" class="btn btn-small btn-primary"><i class="icon-print"></i>Lihat Laporan</a></td>
                     </tr>
                     <tr>
-                        <td valign="middle" align="center">-</td>
-                        <td align="center" >II. Tugas Tambahan dan Kreativitas/Unsur Penunjang :</td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-                        <td>
-                            -
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td valign="middle" align="center" >10.00</td>
-                        <td align="center" >Tugas Tambahan</td>
-                        <td>
-                            -
-                        </td>
-                        <td colspan="4" class="center">
-                            -
-                        </td>
-                        
-                        <td>
-                            -
-                        </td>
-                        <td colspan="4" class="center">
-                            -
-                        </td>
-                        
-
+                        <td valign="middle" align="center">4</td>
+                        <td align="center">Lampiran I-g</td>
+                        <td>Formulir Penilaian Prestasi Kerja Pegawai Negeri Sipil</td>
+                        <td class="center"><a href="jfu/laporan/Ig.php" target="_blank" class="btn btn-small btn-primary"><i class="icon-print"></i>Lihat Laporan</a></td>
                     </tr>
                      <tr>
-                        <td valign="middle" align="center" >30.00</td>
-                        <td align="center" >Kreativitas</td>
-                        <td>
-                            -
-                        </td>
-                        <td colspan="4" class="center">
-                            -
-                        </td>
-                        
-                        <td>
-                            -
-                        </td>
-                        <td colspan="4" class="center">
-                            -
-                        </td>
-                        
-
+                        <td valign="middle" align="center">5</td>
+                        <td align="center">Lampiran I-i</td>
+                        <td>Buku Penilaian Perilaku Kerja Pegawai Negeri Sipil</td>
+                        <td class="center"><a href="jfu/laporan/Ii.php" target="_blank" class="btn btn-small btn-primary"><i class="icon-print"></i>Lihat Laporan</a></td>
                     </tr>
                 </tbody>
             </table>

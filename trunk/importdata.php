@@ -30,32 +30,29 @@ function exec_query_noconnect($query) {
     return $q;
 }
 
-//$db1 = opendb('samarinda');
-//$dataBefore = get_datas("SELECT kode_jabatan, uraian, volume_kerja, no_uraian from uraian order by id_uraian asc", 'samarinda');
-//pg_close($db1);
 
 $db2 = opendb('eskape');
-$kdeJabatan = get_datas("SELECT distinct(kode_jabatan), id_pns from skp_pns order by id_pns");
-$idMax = 1;
-$sb = "";
-$sb1 = '';
-foreach ($kdeJabatan as $value) {
-    $dt = get_datas("SELECT * from skp_pns where kode_jabatan = '" . $value['kode_jabatan'] . "' order by id_pns ASC");
-    foreach ($dt as $dta) {
-        if ($sb1 != $dta['kode_jabatan']) {
-            $sb1 = $dta['kode_jabatan'];
-            echo "other <br />";
-        } else {
-            $query = exec_query_noconnect("DELETE FROM skp_pns where id_pns = " . $dta['id_pns']);
-            echo "DELETE FROM skp_pns where id_pns = " . $dta['id_pns'] . "<br/>";
-            if (!$query) {
-                break 1;
-                echo "eror in delete value : " . $dta['id_pns'];
-                exit();
-            }
-            echo " Del ".$value['kode_jabatan']." id : ".$dta['id_pns']."<br/>";
-        }
-    }    
+$no = 1;
+$dataBefore = get_datas("(SELECT distinct(nip) FROM skp_pns)",'eskape');
+foreach ($dataBefore as $value) {
+      $delData = get_datas("SELECT * FROM skp_pns where nip = '".$value['nip']."' order by id_pns ASC");      
+      $no = 1;
+      foreach ($delData as $delVa) {
+          if($no > 1){
+            echo $no.". ".$delVa['id_pns']." / ".$delVa['nama'];
+            exec_query_noconnect("DELETE FROM skp_pns WHERE id_pns = '".$delVa['id_pns']."'");
+          }
+          $no++;
+      }
+//    $pas = substr($value['nip'], (strlen($value['nip']) - 3));    
+//    $rs = exec_query_noconnect("UPDATE skp_skpd SET username = '$user',password = '$pas' where id = '$id'");
+//    if(!$rs){
+//        print_r(error_get_last());
+//        break 1;
+//    }else{        
+//        echo "$no. ".$user." : $pass<br/>";
+////    }
+//    $no++;
 }
 pg_close($db2);
 ?>
