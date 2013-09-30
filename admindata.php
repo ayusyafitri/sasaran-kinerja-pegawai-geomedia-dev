@@ -6,6 +6,8 @@ include_once 'php/include_all.php';
 if (!isset($_SESSION['_username'])) {
     header("Location:./");
 }
+$dtPeg = getDataPNS(SKP_ID);
+$imgSrc = (empty($dtPeg['imgProfil'])) ? 'themes/img/no-profile.gif' : 'imgPns/' . $dtPeg['imgProfil'];
 ?>
 <!DOCTIYPE html>
 <html>
@@ -14,18 +16,16 @@ if (!isset($_SESSION['_username'])) {
         <title>Admin Data</title>
         <meta name="descritption" content="This is page header(.page-header &gt; h1)"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="css/bootstrap-responsive.min.css" rel="stylesheet" />
+        <link href="themes/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="themes/css/bootstrap-responsive.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="themes/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="themes/css/prettify.css"/>
-        <link rel="stylesheet" href="css/skp.css"/>
+        <link rel="stylesheet" href="themes/css/skp.css"/>
         <link rel="stylesheet" href="themes/css/w8.min.css" />
         <link rel="stylesheet" href="themes/css/css.css" />
+        <link rel="stylesheet" href="themes/css/datepicker.css" />
         <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
-        <link rel="stylesheet" href="themes/css/w8-skins.min.css" />
-        <script src="js/jquery.js"></script>
-        <script type="text/javascript" charset="utf-8" language="javascript" src="js/jquery.dataTables.js"></script>
-        <script type="text/javascript" charset="utf-8" language="javascript" src="js/DT_bootstrap.js"></script>
+        <link rel="stylesheet" href="themes/css/w8-skins.min.css" />                
 
     </head>
     <body style=" font-family:'Open Sans' ;" >
@@ -41,9 +41,9 @@ if (!isset($_SESSION['_username'])) {
                     <ul class="nav ace-nav pull-right">
                         <li class="light-blue user-profile">
                             <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
-                                <img class="nav-user-photo" src="img/16.jpg" alt="Shinta Re" />
+                                <img class="nav-user-photo" id="icon-corner" src="<?php echo $imgSrc;?>" alt="<?php echo $dtPeg['nama'];?>" />
                                 <span id="user_info">
-                                    <small>Welcome,</small><?php echo SKP_USER; ?>
+                                    <small>Welcome,</small><?php echo SKP_NAMA; ?>
                                 </span>
                                 <i class="icon-caret-down"></i>
                             </a>
@@ -94,11 +94,10 @@ if (!isset($_SESSION['_username'])) {
                 Hello Admin!!
             </div>
         </div>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootbox.min.js"></script>
+        <script src="themes/js/jquery.min.js"></script>
+        <script src="themes/js/bootbox.min.js"></script>
         <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
-        <script src="themes/js/jquery.ui.touch-punch.min.js"></script>
-
+        <script src="themes/js/jquery.ui.touch-punch.min.js"></script>        
         <script src="themes/js/jquery.slimscroll.min.js"></script>
         <script src="themes/js/jquery.easy-pie-chart.min.js"></script>
         <script src="themes/js/jquery.sparkline.min.js"></script>
@@ -106,8 +105,12 @@ if (!isset($_SESSION['_username'])) {
         <script src="themes/js/w8-editable.min.js"></script>
         <script src="themes/js/jquery.flot.min.js"></script>
         <script src="themes/js/jquery.flot.pie.min.js"></script>
-        <script src="themes/js/jquery.flot.resize.min.js"></script>        
-        <script src="js/bootstrap.min.js"></script>
+        <script src="themes/js/jquery.flot.resize.min.js"></script>
+        <script src="themes/js/jquery.tools.min.js"></script>
+        <script src="themes/js/bootstrap.min.js"></script>        
+        <script src="themes/js/bootstrap-datepicker.js"></script> 
+        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/DT_bootstrap.js"></script>
         <!--w8 scripts-->
 
         <script src="themes/js/w8-elements.min.js"></script>
