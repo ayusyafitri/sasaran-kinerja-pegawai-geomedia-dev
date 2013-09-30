@@ -1,10 +1,10 @@
 <?php
+session_start();
 if (@$_POST['open'] != 'please') {
     exit;
 }
 include_once('../../php/include_all.php');
-include_once ('../../php/postgre.php');
-session_start();
+//include_once ('../../php/postgre.php');
 ?>
 <div class="widget-header widget-header-flat ">
     <h5><i class="icon-calendar"></i>Daftar Jabatan</h5>
@@ -27,7 +27,7 @@ session_start();
         <form id="formjabatan">
             <input type="hidden" name="act" value="jabatan_simpan">
             <input type="hidden" id="id" name="id" value="0"> 
-			<input type="hidden" id="id_skpd" name="id_skpd" value="<? echo $_SESSION['_idSkpd']; ?>">
+			<input type="hidden" id="id_skpd" name="id_skpd" value="<? echo SKP_ID; ?>">
             <table class="table-form">
                 <tbody>
                     <tr>
@@ -37,7 +37,7 @@ session_start();
                             <select  name="id_induk" id="id_induk" onchange="data()">
                                 <option value="0" id="idindukk">-Pilih Induk-</option> 
                                 <?php
-                                $induk = get_datas ("select * from skp_jabatan where unit_kerja=".$_SESSION['_idSkpd']." order by kode_jabatan");
+                                $induk = get_datas ("select * from skp_jabatan where unit_kerja='".SKP_ID."' order by kode_jabatan");
 								foreach ($induk as $induk){
 								?>
                                 <option value="<? echo $induk['idjab']?>"><? echo $induk['nama_jabatan']?></option>
@@ -113,7 +113,7 @@ session_start();
         <tbody id="tampilJabatan">
         <?php 
 		$no=1;
-		$t_jab = get_datas ("select * from skp_jabatan where unit_kerja=".$_SESSION['_idSkpd']." order by kode_jabatan");
+		$t_jab = get_datas ("select * from skp_jabatan where unit_kerja=".SKP_ID." order by kode_jabatan");
 		foreach ($t_jab as $jab){
 		?>
         	<tr>

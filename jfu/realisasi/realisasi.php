@@ -290,7 +290,8 @@ if (!empty($idSkp['id_skp'])) {
     
     $('#b-smpantgs').click(function() {
         var fReal = $('#foRealisasi');        
-        var dtReal = fReal.serializeArray();        
+        var dtReal = fReal.serializeArray();  
+        console.log(dtReal);
         var pFreal = $.post(rls, dtReal);
         var ld = $('#loadtgs');
         $('#msgtgs').html('Menyimpan data...&nbsp;&nbsp;');
@@ -314,7 +315,7 @@ if (!empty($idSkp['id_skp'])) {
 
     $('#b-smpantm').click(function() {
         var fTmbhn = $('#foTambahan');
-        var dtTmbhn = fTmbhn.serializeArray();
+        var dtTmbhn = fTmbhn.serializeArray();       
         var pfTmbhn = $.post(rls, dtTmbhn);
         console.log(dtTmbhn);
         $('#msgtm').html('Menyimpan data...&nbsp;&nbsp;');
@@ -390,7 +391,8 @@ if (!empty($idSkp['id_skp'])) {
             var nm = ($(this).attr('name'));
             var di = nm.replace('rm_', '');
             console.log(di);
-            $('#rtm_' + di).remove();
+            var parent = $('#rtm_' + di).parent();
+            $('#rtm_' + di).remove();            
         });
         $('.remR-Kreatvts').click(function() {
             var nm = ($(this).attr('name'));

@@ -1,0 +1,5 @@
+status 
+PNS => 	0 : Aktif
+	1 : Pensiun
+	2 : Cuti
+

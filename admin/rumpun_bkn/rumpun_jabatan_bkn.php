@@ -90,8 +90,8 @@ include_once ('../../php/postgre.php');
         <thead>
             <tr>
                 <th class="center" width="3%">No</th>
-                <th class="center" width="33%">Jabatan</th> 
-                <th class="center" width="33%">Ikhtisar</th>
+                <th class="center" width="20%">Jabatan</th> 
+                <th class="center" width="57%">Ikhtisar</th>
 				<th class="center" width="20%">aksi</th>
 			</tr>
         </thead>
@@ -102,8 +102,8 @@ include_once ('../../php/postgre.php');
             foreach ($pr as $pr) {
                 ?><tr>
                     <td><?php echo $x ?></td>
-                    <td><?php echo $pr['nama_jabatan'] ?></td>
-					<td><?php echo $pr['ikhtisar_jabatan']?></td>
+                    <td><?php echo stripIfEmpty($pr['nama_jabatan']); ?></td>
+                    <td><?php echo stripIfEmpty($pr['ikhtisar_jabatan']);?></td>
 					<td class="center" >
                         <a href="#modalwin" data-toggle="modal"  class="btn btn-info bt-edit btn-small" name="<?php echo $pr['idjab']; ?>"><i class="icon-edit icon-white"></i> ubah</a>
                         <a class="btn btn-danger bt-hapus btn-small" name="<?php echo $pr['idjab']; ?>"><i class="icon-trash icon-white"></i> hapus</a>
@@ -124,7 +124,7 @@ function tambah_uraian(){
 	var tbl = $('#uraianBKN');
 	var panjang = tbl.children().length;
 	panjang = panjang + 1;
-	tbl.append("<tr id='input_"+panjang+"'><td><input type='hidden' name='id[]'><input type='text' style='width:40px;' name='no[]' value="+panjang+"></td><td width='430px' align='left'><textarea style='width:420px'  rows='1' name='uraian_tugas_bkn[]' id='uraian_tugas_"+panjang+"'></textarea></td><td width='30px' align='center'><span class='badge badge-important removeUraian' name='icon_"+panjang+"' style='cursor:pointer;' title='Hapus'><i class='icon-remove'></i></span><input type='hidden' name='rows[]' value='"+panjang+"'></td></tr>");
+	tbl.append("<tr id='input_"+panjang+"'><td><input type='hidden' name='id[]' value='0'><input type='text' style='width:40px;' name='no[]' value="+panjang+"></td><td width='430px' align='left'><textarea style='width:420px'  rows='1' name='uraian_tugas_bkn[]' id='uraian_tugas_"+panjang+"'></textarea></td><td width='30px' align='center'><span class='badge badge-important removeUraian' name='icon_"+panjang+"' style='cursor:pointer;' title='Hapus'><i class='icon-remove'></i></span><input type='hidden' name='rows[]' value='"+panjang+"'></td></tr>");
 	removeUr();
 }
 
@@ -135,7 +135,7 @@ $('.btn-tambah').click(function(){
 	$('#ikhtisar').val("");
 	
    //     document.getElementById("uraianBKN").removeChild("input_");
-	removeUr();
+//	removeUr();
 	// var nm = ($('#uraianBKN').attr('id'));
 	// nm.remove();
 });

@@ -1,12 +1,12 @@
 <?php
+session_start();
 if (@$_POST['open'] != 'please') {
     exit;
 }
-session_start();
-include_once('../../php/include_all.php');
-$nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei", 
-                    "Juni", "Juli", "Agustus", "September", 
-                    "Oktober", "November", "Desember");
+include('../../php/include_all.php');
+$nama_bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei",
+    "Juni", "Juli", "Agustus", "September",
+    "Oktober", "November", "Desember");
 ?>
 <div class="widget-header widget-header-flat ">
     <h5><i class="icon-calendar"></i>Daftar Pemangku</h5>
@@ -26,7 +26,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
         <form id="form_pemangku">
             <input type="hidden" name="act" value="simpan_pemangku">
             <input type="hidden" id="id_pns" name="id_pns" value="0"> 
-            <input type="hidden" id="skpd" name="skpd" value="<? echo $_SESSION['_idSkpd']; ?>"> 
+            <input type="hidden" id="skpd" name="skpd" value="<? echo SKP_ID; ?>"> 
             <table class="table-form">
                 <tbody>
                     <tr>
@@ -34,15 +34,15 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                         <td>:</td>
                         <td>
                             <select name="jab" id="jab" onChange="jab()" class="jab">
-                            	<option id="">-Pilih Jabatan-</option>
+                                <option id="">-Pilih Jabatan-</option>
                                 <?php
-                                $jab = get_datas ("select * from skp_jabatan where unit_kerja=".$_SESSION['_idSkpd']." order by idjab");
-								foreach ($jab as $jab){
-								?>
-                                <option value="<?php echo $jab['kode_jabatan'];?>"><?php echo $jab['nama_jabatan'];?></option>
-                                <?php
-								}
-								?>
+                                $jabb = get_datas("select * from skp_jabatan where unit_kerja='" . SKP_ID . "' order by idjab");
+                                foreach ($jabb as $jab) {
+                                    ?>
+                                    <option value="<?php echo $jab['kode_jabatan']; ?>"><?php echo $jab['nama_jabatan']; ?></option>
+                                    <?php
+                                }
+                                ?>
                             </select>
                         </td>
                     </tr>
@@ -51,15 +51,15 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                         <td>:</td>
                         <td>
                             <select name="gol" id="gol">
-                            	<option id="">-Pilih Golongan-</option>
+                                <option id="">-Pilih Golongan-</option>
                                 <?php
-                                $gol = get_datas ("select * from skp_golongan order by id_gol");
-								foreach ($gol as $gol){
-								?>
-                                <option value="<?php echo $gol['id_gol'];?>"><?php echo $gol['nama_golongan'];?></option>
-                                <?php
-								}
-								?>
+                                $gol = get_datas("select * from skp_golongan order by id_gol");
+                                foreach ($gol as $gol) {
+                                    ?>
+                                    <option value="<?php echo $gol['id_gol']; ?>"><?php echo $gol['nama_golongan']; ?></option>
+                                    <?php
+                                }
+                                ?>
                             </select>
                         </td>
                     </tr>
@@ -93,56 +93,24 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
                         </td>
                     </tr>
                     <tr>
-                        <td>Tempat, Tanggal Lahir</td>
+                        <td>Tempat/Tanggal Lahir</td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="tempat" id="tempat"  />
-                        </td>,
+                            <input type="text" name="tempat" id="tempat"  />&nbsp;/
+                        </td>
                         <td>
-                            <select name="tgl" class="span1">
-                            	<option value="0"></option>
-                                <?php
-                                for ($tgl=1; $tgl<=31; $tgl++){
-								?>
-                                <option value="<? echo $tgl;?>"><? echo $tgl;?></option>
-                                <?php
-								}
-								?>
-                            </select>
-                         </td><td>
-                            <select name="bln" class="span2">
-                            	<option value="0"></option>
-                                <?php
-                                for ($bln=1; $bln<=12; $bln++){
-								?>
-                                <option value="<? echo $bln;?>"><? echo $nama_bln[$bln];?></option>
-                                <?php
-								}
-								?>
-                            </select>
-                         </td><td>
-                            <select name="thn" class="span1">
-                            	<option value="0"></option>
-                                <?php
-								$t=date('Y');
-                                for ($thn=1900; $thn<=$t; $thn++){
-								?>
-                                <option value="<? echo $thn;?>"><? echo $thn;?></option>
-                                <?php
-								}
-								?>
-                            </select>
+                            <input type="text" name="tglLahir" id="tglLahir" readonly=""  />&nbsp;/
                         </td>
                     </tr>
-                    <input type="hidden" name="pem_no" id="pem_no"  />
+                <input type="hidden" name="pem_no" id="pem_no"  />
                 </tbody>
             </table>
             <table align="right">
-                    <tr>
-                        <td>
-                            <a class="btn btn-primary btn-small btn-simpan-pemangku "><div id="loader"></div>&nbsp;Simpan</a><span id="result"></span>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        <a class="btn btn-primary btn-small btn-simpan-pemangku "><div id="loader"></div>&nbsp;Simpan</a><span id="result"></span>
+                    </td>
+                </tr>
             </table>
         </form>
     </div>
@@ -166,17 +134,17 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
         <tbody id="tampil_pemangku">
             <?php
             $x = 1;
-            $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan and j.unit_kerja=".$_SESSION['_idSkpd']." order by p.id_pns");
+            $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan and j.unit_kerja='" . SKP_ID . "' order by p.id_pns");
             foreach ($pr as $pr) {
                 ?><tr>
                     <td><?php echo $x ?></td>
                     <td><?php echo $pr['nama'] ?></td>
                     <td><?php echo $pr['nip'] ?></td>
-                    <td><?php echo $pr['nama_golongan']?> (<? echo $pr['keterangan'] ?>)</td>
+                    <td><?php echo $pr['nama_golongan'] ?> (<? echo $pr['keterangan'] ?>)</td>
                     <td><?php echo $pr['nama_jabatan'] ?></td>
                     <td><?php echo $pr['alamat'] ?></td>
                     <td><?php echo $pr['notelp'] ?></td>
-                    <td><?php echo $pr['tempat_lahir'] ?>, <? echo $pr['tanggal_lahir']?></td>
+                    <td><?php echo $pr['tempat_lahir'] ?>, <? echo $pr['tanggal_lahir'] ?></td>
                     <td class="center" >
                         <a href="#modalwin" data-toggle="modal"  class="btn btn-info bt-edit btn-small" name="<?php echo $pr['id_pns']; ?>"><i class="icon-edit icon-white"></i> ubah</a>
                         <a class="btn btn-danger bt-hapus btn-small" name="<?php echo $pr['id_pns']; ?>"><i class="icon-trash icon-white"></i> hapus</a>
@@ -192,132 +160,134 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 </div>
 
 <script>
-    var url = 'skpd/pemangku/aksi.php';
-    var rslt = $('#result'); 
-    
-	$('.jab').change(function(){
-		source ="skpd/pemangku/tools.php?code=jab&kdjab="+this.value;
-		var tes = $.get(source);
-		tes.done(function(data){
-			$('#pem_no').val(data);
-		})
-	});
-	
-	$('.btn-tambah').click(function(){
-		var skpd = $('#skpd').val();
-		var post = $.post(url,{act:'tab', skpd:skpd});
-			post.done (function(data){
-				$('#jab').html(data);
-			});
-		$('#id').val("0");
-        $('#kode').val("");
-        $('#nama').val("");
+                                var url = 'skpd/pemangku/aksi.php';
+                                var rslt = $('#result');
+                                $("#tglLahir").datepicker({
+                                    format: 'dd/mm/yyyy'
+                                });
+                                $('.jab').change(function() {
+                                    source = "skpd/pemangku/tools.php?code=jab&kdjab=" + this.value;
+                                    var tes = $.get(source);
+                                    tes.done(function(data) {
+                                        $('#pem_no').val(data);
+                                    })
+                                });
 
-	});
-	
-    $('.btn-simpan-pemangku').click(function(){      
-        var btn = $(this);
-        var load = $('#loader');
-        load.addClass('icon-spinner icon-spin icon-2x white');
-       
-        var form = $('#form_pemangku');
-        var data = form.serializeArray();
-        var post = $.post(url,data);
-        post.done(function(res){
-            var result = res.split('__');
-            if(result.length==3){
-                if(result[0]=='success'){
-                    rslt.html('<font color="green">data tersimpan </font>');
-                    setTimeout(function(){
-                        rslt.html('');
-                    }, 1500);
-                
-                    var tbody = $('#tampil_pemangku');
+                                $('.btn-tambah').click(function() {
+                                    var skpd = $('#skpd').val();
+                                    var post = $.post(url, {act: 'tab', skpd: skpd});
+                                    post.done(function(data) {
+                                        $('#jab').html(data);
+                                    });
+                                    $('#id').val("0");
+                                    $('#kode').val("");
+                                    $('#nama').val("");
 
-                    tbody.html(result[2]);
-                    init();
-                    $("#id").val("0");
-                    $("#jab").val("");
-                    $("#gol").val("");
-                    $("#nama").val("");
-                    $("#nip").val("");
-                    $("#telp").val("");
-                    $("#alamat").val("");
-                    $("#tempat").val("");
-                    $("#tgl").val("0");
-                    $("#bln").val("0");
-                    $("#thn").val("0");
-                    $("#pem_no").val("");
-                    $('#modalwin').modal('hide');
-                }else{
-                    rslt.html('<font color="red">'+res+'</font>');
-                }
-            }else{
-                rslt.html('<font color="red">'+res+'</font>');
-            }
-            load.removeClass();
-            btn.removeClass('btn-info').addClass('btn-primary');
-           
-        });
-    
-    });
-    
-    function init(){
-        $('.bt-edit').click(function(){
-            var id = this.name;
-            var form = $('#form_pemangku');
-            var post = $.post(url,{act:'ubah_pemangku',id:id});            
-            post.done(function(res){
-                var value = res.split('__');
-                $('#id_pns').val(value[0]);
-                form.find('input[name="nama"]').val(value[1]);
-                form.find('input[name="nip"]').val(value[2]);
-                form.find('select[name="jab"]').val(value[4]);
-                form.find('select[name="gol"]').val(value[3]);
-                form.find('input[name="telp"]').val(value[6]);
-                form.find('input[name="alamat"]').val(value[5]);
-                form.find('input[name="tempat"]').val(value[7]);
-                form.find('select[name="tgl"]').val(value[11]);
-                form.find('select[name="bln"]').val(value[10]);
-                form.find('select[name="thn"]').val(value[9]);
-            });
-        });
-        
-        $('.bt-hapus').click(function(){
-            var btn = $(this);
-            var pid = this.name;
-            var load = $(this);
-            load.html('<div class="icon-spinner icon-spin icon-2x white"></div>');
-            bootbox.confirm("sumpe lu mau ngehapus item ini?", function(hsl){
-                if(hsl==true){
-                    if(pid!=0){
-                        var post = $.post(url,{act:"hapus_pemangku",id:pid});
-                        post.done(function(res){
-                            var hasil = res.split('__');
-                            //alert(hasil.length);
-                            if(hasil.length == 2){
-                                if(hasil[0] == 'success'){
-                                    rslt.html('<font color="green">Data Telah Dihapus...</font>');
-                                    setTimeout(function(){
-                                        rslt.html('');
-                                    }, 1500);
-                                    var tbody = $('#tampil_pemangku');
-                                    tbody.html(hasil[1]);
-                                    init();
-                                    //btn.parent().parent().remove();
+                                });
+
+                                $('.btn-simpan-pemangku').click(function() {
+                                    var btn = $(this);
+                                    var load = $('#loader');
+                                    load.addClass('icon-spinner icon-spin icon-2x white');
+
+                                    var form = $('#form_pemangku');
+                                    var data = form.serializeArray();
+                                    var post = $.post(url, data);
+                                    post.done(function(res) {
+                                        var result = res.split('__');
+                                        if (result.length == 3) {
+                                            if (result[0] == 'success') {
+                                                rslt.html('<font color="green">data tersimpan </font>');
+                                                setTimeout(function() {
+                                                    rslt.html('');
+                                                }, 1500);
+
+                                                var tbody = $('#tampil_pemangku');
+
+                                                tbody.html(result[2]);
+                                                init();
+                                                $("#id").val("0");
+                                                $("#jab").val("");
+                                                $("#gol").val("");
+                                                $("#nama").val("");
+                                                $("#nip").val("");
+                                                $("#telp").val("");
+                                                $("#alamat").val("");
+                                                $("#tempat").val("");
+                                                $("#tgl").val("0");
+                                                $("#bln").val("0");
+                                                $("#thn").val("0");
+                                                $("#pem_no").val("");
+                                                $('#modalwin').modal('hide');
+                                            } else {
+                                                rslt.html('<font color="red">' + res + '</font>');
+                                            }
+                                        } else {
+                                            rslt.html('<font color="red">' + res + '</font>');
+                                        }
+                                        load.removeClass();
+                                        btn.removeClass('btn-info').addClass('btn-primary');
+
+                                    });
+
+                                });
+
+                                function init() {
+                                    $('.bt-edit').click(function() {
+                                        var id = this.name;
+                                        var form = $('#form_pemangku');
+                                        var post = $.post(url, {act: 'ubah_pemangku', id: id});
+                                        post.done(function(res) {
+                                            var value = res.split('__');
+                                            $('#id_pns').val(value[0]);
+                                            form.find('input[name="nama"]').val(value[1]);
+                                            form.find('input[name="nip"]').val(value[2]);
+                                            form.find('select[name="jab"]').val(value[4]);
+                                            form.find('select[name="gol"]').val(value[3]);
+                                            form.find('input[name="telp"]').val(value[6]);
+                                            form.find('input[name="alamat"]').val(value[5]);
+                                            form.find('input[name="tempat"]').val(value[7]);
+                                            form.find('select[name="tgl"]').val(value[11]);
+                                            form.find('select[name="bln"]').val(value[10]);
+                                            form.find('select[name="thn"]').val(value[9]);
+                                        });
+                                    });
+
+                                    $('.bt-hapus').click(function() {
+                                        var btn = $(this);
+                                        var pid = this.name;
+                                        var load = $(this);
+                                        load.html('<div class="icon-spinner icon-spin icon-2x white"></div>');
+                                        bootbox.confirm("sumpe lu mau ngehapus item ini?", function(hsl) {
+                                            if (hsl == true) {
+                                                if (pid != 0) {
+                                                    var post = $.post(url, {act: "hapus_pemangku", id: pid});
+                                                    post.done(function(res) {
+                                                        var hasil = res.split('__');
+                                                        //alert(hasil.length);
+                                                        if (hasil.length == 2) {
+                                                            if (hasil[0] == 'success') {
+                                                                rslt.html('<font color="green">Data Telah Dihapus...</font>');
+                                                                setTimeout(function() {
+                                                                    rslt.html('');
+                                                                }, 1500);
+                                                                var tbody = $('#tampil_pemangku');
+                                                                tbody.html(hasil[1]);
+                                                                init();
+                                                                //btn.parent().parent().remove();
+                                                            }
+                                                        }
+                                                    });
+                                                    load.html('<i class="icon-trash icon-white">');
+                                                }
+                                            } else {
+                                                load.html('<i class="icon-trash icon-white">');
+                                            }
+                                        });
+                                    });
+
                                 }
-                            }
-                        });
-                        load.html('<i class="icon-trash icon-white">');
-                    }
-                }else{
-                    load.html('<i class="icon-trash icon-white">');
-                }
-            });
-        });
-        
-    }
-    init();
-    
-	
+                                init();
+
+
 </script>
