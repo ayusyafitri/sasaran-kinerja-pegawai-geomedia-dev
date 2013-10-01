@@ -6,7 +6,7 @@ if (@$_POST['open'] != 'please') {
 include_once('../../php/include_all.php');
 ?>
 <div class="widget-header widget-header-flat ">
-    <h5><i class="icon-calendar"></i>Laporan Daftar Target</h5>
+    <h5><i class="icon-calendar"></i>Laporan Kinerja Pemangku <?php echo SKP_NAMA ?></h5>
 </div>
 <div class="box-content">
 	<table class="table table-bordered geo-table table-hover" width="100%">
