@@ -1,19 +1,20 @@
 <?php
 session_start();
 include_once('../../php/include_all.php');
-if (!isset($_SESSION['_idpns'])) {
+if (!isset($_SESSION['_id'])) {
     echo "<h2>Page Not Found</h2>";
     exit();
 }
-$dtaAtasan = getDataAtasan(SKP_ID);
-$dtPeg = getDataPNS(SKP_ID);
+$idPns = (isset($_GET['d']))?abs($_GET['d']):SKP_ID;
+$dtaAtasan = getDataAtasan($idPns);
+$dtPeg = getDataPNS($idPns);
 $dtpalingAtas = getDataAtasan($dtaAtasan['id']);
 ?>
 <!DOCTIYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>Formulir SKP PNS <?php echo SKP_NIP; ?></title>
+        <title>Formulir SKP PNS <?php echo $dtPeg['nip']; ?></title>
         <meta name="descritption" content="This is page header(.page-header &gt; h1)"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="../../themes/css/bootstrap.min.css" rel="stylesheet"/>
@@ -60,9 +61,9 @@ $dtpalingAtas = getDataAtasan($dtaAtasan['id']);
         </tr>
         <?php
 //        $target = get_datas("SELECT t.id_skp,t.id_tkerja,t.output, t.mutu, t.waktu, t.biaya, u.id_uraian, u.uraian, t.angka_kredit, r.id_realisasi, r.r_output ,r.r_mutu,r.r_waktu,r.r_biaya FROM skp_t_kerja t 
-//INNER JOIN skp_uraian u  ON t.id_uraian = u.id_uraian and t.tahun = '" . date('Y') . "' and t.id_pns = '" . SKP_ID . "' and t.kode_jabatan = '" . SKP_KODEJAB . "'
+//INNER JOIN skp_uraian u  ON t.id_uraian = u.id_uraian and t.tahun = '" . date('Y') . "' and t.id_pns = '" . $idPns . "' and t.kode_jabatan = '" . SKP_KODEJAB . "'
 //LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja");
-        $DataSKP = hitungSkp(SKP_ID, date('Y'), date('n'));     
+        $DataSKP = hitungSkp($idPns, date('Y'), date('n'));     
         $skpData = $DataSKP['dataSKP'];
         if (count($skpData) > 0) {
             $no = 1;
@@ -123,7 +124,7 @@ $dtpalingAtas = getDataAtasan($dtaAtasan['id']);
             <td class="tabl-bord" align="center" >Kreativitas</td>
             <td class="tabl-bo" colspan="10">
                 <?php
-                $target = get_data("SELECT k.id_skp FROM skp_t_kerja k where k.tahun = '" . date('Y') . "' and k.id_pns = '" . SKP_ID . "' and k.kode_jabatan = '" . SKP_KODEJAB . "' limit 1");
+                $target = get_data("SELECT k.id_skp FROM skp_t_kerja k where k.tahun = '" . date('Y') . "' and k.id_pns = '" . $idPns . "' and k.kode_jabatan = '" . $dtPeg['kodejab'] . "' limit 1");
                 $tgstambah = get_datas("select * from skp_r_kreatifitas where idskp =" . $target['id_skp']);
                 $no = 1;
                 foreach ($tgstambah as $value) {

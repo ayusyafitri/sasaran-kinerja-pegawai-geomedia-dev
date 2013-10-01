@@ -95,10 +95,10 @@ if (!empty($idSkp['id_skp'])) {
                                     <input type="text" class="input-small " name="biaya[]" id="biaya_<?php echo $no ?>" value="<?php echo $r_biaya; ?>" <?php if($t_biaya == '0') echo "title='Tidak Ada Target' readonly";?> />
                                 </td>
                                 <td class="center">
-                                    <?php echo number_format($prhtungan, 2); ?>
+                                    <?php echo (number_format($prhtungan, 2) + 0); ?>
                                 </td>
                                 <td class="center">
-                                    <?php echo number_format($nCapaianSKP, 2); ?>
+                                    <?php echo (number_format($nCapaianSKP, 2) + 0); ?>
                                 </td>
                             </tr>
                             <?php

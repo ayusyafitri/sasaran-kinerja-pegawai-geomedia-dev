@@ -1,19 +1,20 @@
 <?php
 session_start();
 include_once('../../php/include_all.php');
-if (!isset($_SESSION['_idpns'])) {
+if (!isset($_SESSION['_id'])) {
     echo "<h2>Page Not Found</h2>";
     exit();
 }
-$dtaAtasan = getDataAtasan(SKP_ID);
-$dtPeg = getDataPNS(SKP_ID);
+$idPns = (isset($_GET['d']))?abs($_GET['d']):SKP_ID;
+$dtaAtasan = getDataAtasan($idPns);
+$dtPeg = getDataPNS($idPns);
 $dtpalingAtas = getDataAtasan($dtaAtasan['id']);
 ?>
 <!DOCTIYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>Formulir SKP PNS <?php echo SKP_NIP; ?></title>
+        <title>Formulir SKP PNS <?php echo $dtPeg['nip']; ?></title>
         <meta name="descritption" content="This is page header(.page-header &gt; h1)"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="../../themes/css/bootstrap.min.css" rel="stylesheet"/>
@@ -49,10 +50,10 @@ $dtpalingAtas = getDataAtasan($dtaAtasan['id']);
     </thead>
     <tbody>
         <tr>
-            <td class='center tabl-bo'>1</td><td class="tabl-bo" style="width: 15%;">Nama</td><td class="tabl-bo"> <?php echo stripIfEmpty($dtaAtasan['nama']); ?> </td><td class='center tabl-bo'>1</td><td class="tabl-bo" style="width: 15%" colspan="2">Nama</td><td class="tabl-bo" style="" colspan="2"><?php echo SKP_NAMA; ?></td> 
+            <td class='center tabl-bo'>1</td><td class="tabl-bo" style="width: 15%;">Nama</td><td class="tabl-bo"> <?php echo stripIfEmpty($dtaAtasan['nama']); ?> </td><td class='center tabl-bo'>1</td><td class="tabl-bo" style="width: 15%" colspan="2">Nama</td><td class="tabl-bo" style="" colspan="2"><?php echo ucfirst($dtPeg['nama']); ?></td> 
         </tr>
         <tr>
-            <td class='center tabl-bo'>2</td><td class="tabl-bo">NIP</td><td class="tabl-bo"> <?php echo stripIfEmpty($dtaAtasan['nip']); ?> </td><td class='center tabl-bo'>2</td><td class="tabl-bo" colspan="2">NIP</td><td class="tabl-bo" colspan="2"><?php echo SKP_NIP; ?></td> 
+            <td class='center tabl-bo'>2</td><td class="tabl-bo">NIP</td><td class="tabl-bo"> <?php echo stripIfEmpty($dtaAtasan['nip']); ?> </td><td class='center tabl-bo'>2</td><td class="tabl-bo" colspan="2">NIP</td><td class="tabl-bo" colspan="2"><?php echo $dtPeg['nip']; ?></td> 
         </tr>
         <tr>
             <td class='center tabl-bo'>3</td><td class="tabl-bo">Pangkat/Gol. Ruang</td><td class="tabl-bo"> <?php echo stripIfEmpty($dtaAtasan['pangkatGol']); ?> </td><td class='center tabl-bo'>3</td><td class="tabl-bo" colspan="2">Pangkat/Gol. Ruang</td><td class="tabl-bo" colspan="2"><?php echo stripIfEmpty($dtPeg['pangkatGol']) ?></td> 
@@ -80,14 +81,14 @@ $dtpalingAtas = getDataAtasan($dtaAtasan['id']);
         </tr>
 
         <?php
-        $target = getDataTarget(SKP_ID, date('Y'), SKP_KODEJAB);
+        $target = getDataTarget($idPns, date('Y'), $dtPeg['kodejab']);
         $no = 1;
         foreach ($target as $value) {
             ?>
             <tr>
                 <td valign="middle" class="center tabl-bo" ><?php echo $no; ?></td>
                 <td class="tabl-bo" style="text-align: justify; width: 200px;" colspan="2" ><?php echo ucfirst($value['uraian']); ?></td>
-                <td class="center tabl-bo"> <?php echo stripIfEmpty($value['angka_kredit']); ?> </td> 
+                <td class="center tabl-bo"> <?php echo stripIfEmpty($value['ak']); ?> </td> 
                 <td class="center tabl-bo"> <?php echo stripIfEmpty($value['output']); ?> </td> 
                 <td class="center tabl-bo"> <?php echo stripIfEmpty($value['mutu']); ?> </td> 
                 <td class="center tabl-bo"> <?php echo stripIfEmpty($value['waktu']); ?> </td> 
@@ -107,7 +108,7 @@ $dtpalingAtas = getDataAtasan($dtaAtasan['id']);
                 <br/>
                 <br/>
                 <br/>
-                <u><?php echo dotIfEmpty($dtaAtasan['nama']); ?> </u><br/>
+                <u><?php echo dotIfEmpty(ucwords($dtaAtasan['nama'])); ?> </u><br/>
                 NIP. <?php echo dotIfEmpty($dtaAtasan['nip']); ?> <br/>
             </div></td>
         <td></td>
@@ -117,8 +118,8 @@ $dtpalingAtas = getDataAtasan($dtaAtasan['id']);
                 <br/>
                 <br/>
                 <br/>
-                <u><?php echo SKP_NAMA; ?></u><br/>
-                NIP. <?php echo SKP_NIP; ?><br/>
+                <u><?php echo dotIfEmpty(ucwords($dtPeg['nama'])); ?></u><br/>
+                NIP. <?php echo dotIfEmpty($dtPeg['nip']); ?><br/>
             </div></td>
     </tr>
     <tr>

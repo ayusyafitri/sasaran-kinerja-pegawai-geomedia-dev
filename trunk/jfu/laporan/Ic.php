@@ -1,18 +1,19 @@
 <?php
 session_start();
 include_once('../../php/include_all.php');
-if (!isset($_SESSION['_idpns'])) {
+if (!isset($_SESSION['_id'])) {
     echo "<h2>Page Not Found</h2>";
     exit();
 }
-$dtaAtasan = getDataAtasan(SKP_ID);
-$dtPeg = getDataPNS(SKP_ID);
+$idPns = (isset($_GET['d']))?abs($_GET['d']):SKP_ID;
+$dtaAtasan = getDataAtasan($idPns);
+$dtPeg = getDataPNS($idPns);
 ?>
 <!DOCTIYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>Lampiran Ic <?php echo SKP_NIP; ?></title>
+        <title>Lampiran Ic <?php echo $dtPeg['nip']; ?></title>
         <meta name="descritption" content="This is page header(.page-header &gt; h1)"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="../../themes/css/bootstrap.min.css" rel="stylesheet"/>
@@ -95,14 +96,14 @@ $dtPeg = getDataPNS(SKP_ID);
                     <td style="width:1px;">a.</td>
                     <td style="width:28px;">Nama</td>
                     <td style="width:1px;">:</td>
-                    <td style="width:70px;"><?php echo SKP_NAMA; ?></td>
+                    <td style="width:70px;"><?php echo ucfirst($dtPeg['nama']); ?></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="width:1px;">b.</td>
                     <td style="width:28px;">NIP</td>
                     <td style="width:1px;">:</td>
-                    <td style="width:70px;"><?php echo SKP_NIP; ?></td>
+                    <td style="width:70px;"><?php echo $dtPeg['nip']; ?></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -137,7 +138,7 @@ $dtPeg = getDataPNS(SKP_ID);
                     <td style="width:1px;">g.</td>
                     <td style="width:28px;">Jangka waktu penilaian</td>
                     <td style="width:1px;">:</td>
-                    <td style="width:70px;"><?php echo SKP_NAMA; ?></td>
+                    <td style="width:70px;"><?php echo dotIfEmpty('') ?></td>
                 </tr>
                 <tr>
                     <td style="width:1px;">3.</td>
@@ -150,7 +151,7 @@ $dtPeg = getDataPNS(SKP_ID);
                     <td colspan="4">Tugas tambahan sebagai:</td>
                 </tr>
                 <?php                
-                $target = get_data("SELECT k.id_skp FROM skp_t_kerja k where k.tahun = '" . date('Y') . "' and k.id_pns = '" . SKP_ID . "' and k.kode_jabatan = '" . SKP_KODEJAB . "' limit 1");
+                $target = get_data("SELECT k.id_skp FROM skp_t_kerja k where k.tahun = '" . date('Y') . "' and k.id_pns = '" . $idPns . "' and k.kode_jabatan = '" . SKP_KODEJAB . "' limit 1");
                 $tgstambah = hitungTgsTambahan($target['id_skp']);
                 $no = 1;
                 foreach ($tgstambah['uraians'] as $tambahan) {

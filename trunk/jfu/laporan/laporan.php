@@ -8,7 +8,7 @@ include_once('../../php/include_all.php');
     <h5><i class="icon-calendar"></i>Laporan</h5>
 </div>
 <div class=" position-relative" id="page-content">
-    <button class="btn btn-small btn-primary no-radius" id=""><i class="icon-print"></i>Cetak</button>
+    <!--<button class="btn btn-small btn-primary no-radius" id=""><i class="icon-print"></i>Cetak</button>-->
     <button class="btn btn-small btn-danger no-radius" id=""><i class="icon-eject"></i>Pengajuan Keberatan Penilaian</button>
     &nbsp;<span id="load" class="spinner"></span>
 </div>

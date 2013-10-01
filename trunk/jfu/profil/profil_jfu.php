@@ -4,7 +4,7 @@ if (@$_POST['open'] != 'please') {
     exit;
 }
 include_once('../../php/include_all.php');
-echo SKP_ID;
+
 $dtaAtasan = getDataAtasan(SKP_ID);
 $dtPeg = getDataPNS(SKP_ID);
 $imgSrc = (empty($dtPeg['imgProfil'])) ? 'themes/img/no-profile.gif' : 'imgPns/' . $dtPeg['imgProfil'];

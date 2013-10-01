@@ -31,11 +31,9 @@ if ($_SESSION['_menu'] == 3) {
         <link rel="stylesheet" href="themes/css/w8-responsive.min.css" />
         <link rel="stylesheet" href="themes/css/w8-skins.min.css" />                
 
-        <script src="themes/js/jquery.min.js"></script>
-        <script src="themes/js/bootbox.min.js"></script>
-        <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>
-        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/DT_bootstrap.js"></script>
+        <script src="themes/js/jquery.min.js"></script>        
+        <script src="themes/js/jquery-ui-1.10.3.custom.min.js"></script>                
+
     </head>
     <body style=" font-family:'Open Sans' ;" >
         <div class="navbar">
@@ -92,16 +90,17 @@ if ($_SESSION['_menu'] == 3) {
                 ?>
             </div>
 
-            <div id="main-content"  >
-                <?php
-                foreach ($_SESSION as $key => $value) {
-                    if (is_string($key)) {
-                        echo "$key &nbsp;&nbsp;: &nbsp; $value<br />";
-                    }
-                }
-                ?>
-                Hello Admin!!
+            <div id="main-content">    
+                <?php if ($_SESSION['_menu'] == 3) { ?>
+                    <script type='text/javascript'>
+                        var pst = $.post('jfu/overview/overview.php', {open: 'please'});
+                        pst.done(function(e) {
+                            $('#main-content').html(e);
+                        });
+                <?php } ?>
+                </script>
             </div>
+
         </div>        
         <script src="themes/js/jquery.ui.touch-punch.min.js"></script>        
         <script src="themes/js/jquery.slimscroll.min.js"></script>
@@ -114,8 +113,10 @@ if ($_SESSION['_menu'] == 3) {
         <script src="themes/js/jquery.flot.resize.min.js"></script>
         <script src="themes/js/jquery.tools.min.js"></script>
         <script src="themes/js/bootstrap.min.js"></script>        
-        <script src="themes/js/bootstrap-datepicker.js"></script> 
-
+        <script src="themes/js/bootstrap-datepicker.js"></script>          
+        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf-8" language="javascript" src="themes/js/DT_bootstrap.js"></script>
+        <script src="themes/js/bootbox.min.js"></script>
         <!--w8 scripts-->
 
         <script src="themes/js/w8-elements.min.js"></script>
