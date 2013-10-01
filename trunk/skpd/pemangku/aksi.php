@@ -1,7 +1,7 @@
 <?php
+session_start();
 include_once ('../../php/postgre.php');
 include ('../../php/function_global.php');
-session_start();
 $act = '';
 if (isset($_POST['act']))
     $act = $_POST['act'];
@@ -14,7 +14,7 @@ if ($act == 'simpan_pemangku') {
     $telp = $_POST['telp'];
     $alamat = $_POST['alamat'];
     $tempat = $_POST['tempat'];
-	$tgl = sprintf("%02d%02d%02d",$_POST[thn],$_POST[bln],$_POST[tgl]);
+	$tgl = $_POST['tglLahir'];
 	$pemno = $_POST['pem_no'];
 
     if (!is_numeric($id)) {
@@ -55,7 +55,7 @@ if ($act == 'simpan_pemangku') {
 		$thn = $pecah[0];
 		$bln = $pecah[1];
 		$tgl = $pecah[2];
-	
+	/*
 		if($bln[0] == '0'){
 			$t_bln=$bln[1];
 		}else{
@@ -67,11 +67,12 @@ if ($act == 'simpan_pemangku') {
 		}else{
 			$t_tgl=$tgl;
 		}
-
-        $ress = implode($data, '__');
+*/
+        $tgl_lahir=$tgl.'/'.$bln.'/'.$thn;
+		$ress = implode($data, '__');
         print_r($ress);
         echo "__";
-		echo $thn.'__'.$t_bln.'__'.$t_tgl.'__';
+		echo $tgl_lahir.'__';
     } else {
         echo 'error';
     }
@@ -102,7 +103,7 @@ function get_tab ($val='', $parent=0, $iter=1, $skpd){
 function view_skpd() {
 
     $x = 1;
-    $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan and j.unit_kerja=".$_SESSION['_idSkpd']." order by p.id_pns");
+    $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan and j.unit_kerja=" . SKP_ID . " order by p.id_pns");
     foreach ($pr as $pr) {
                 ?><tr>
                     <td><?php echo $x ?></td>

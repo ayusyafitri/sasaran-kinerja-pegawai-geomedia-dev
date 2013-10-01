@@ -36,6 +36,7 @@ $nama_bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei",
                             <select name="jab" id="jab" onChange="jab()" class="jab">
                                 <option id="">-Pilih Jabatan-</option>
                                 <?php
+								echo "select * from skp_jabatan where unit_kerja='" . SKP_ID . "' order by idjab";
                                 $jabb = get_datas("select * from skp_jabatan where unit_kerja='" . SKP_ID . "' order by idjab");
                                 foreach ($jabb as $jab) {
                                     ?>
@@ -99,7 +100,7 @@ $nama_bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei",
                             <input type="text" name="tempat" id="tempat"  />&nbsp;/
                         </td>
                         <td>
-                            <input type="text" name="tglLahir" id="tglLahir" readonly=""  />&nbsp;/
+                            <input type="text" name="tglLahir" id="tglLahir" readonly="" />&nbsp;/
                         </td>
                     </tr>
                 <input type="hidden" name="pem_no" id="pem_no"  />
@@ -134,7 +135,7 @@ $nama_bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei",
         <tbody id="tampil_pemangku">
             <?php
             $x = 1;
-            $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan and j.unit_kerja='" . SKP_ID . "' order by p.id_pns");
+            $pr = get_datas("select p.id_pns, p.nama, p.nip, g.nama_golongan, g.keterangan, j.nama_jabatan, p.alamat, p.notelp, p.tempat_lahir, p.tanggal_lahir from skp_pns p, skp_jabatan j, skp_golongan g where g.id_gol=p.id_golongan and j.kode_jabatan=p.kode_jabatan and j.unit_kerja=" . SKP_ID . " order by p.id_pns");
             foreach ($pr as $pr) {
                 ?><tr>
                     <td><?php echo $x ?></td>
@@ -247,9 +248,9 @@ $nama_bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei",
                                             form.find('input[name="telp"]').val(value[6]);
                                             form.find('input[name="alamat"]').val(value[5]);
                                             form.find('input[name="tempat"]').val(value[7]);
-                                            form.find('select[name="tgl"]').val(value[11]);
-                                            form.find('select[name="bln"]').val(value[10]);
-                                            form.find('select[name="thn"]').val(value[9]);
+                                            //form.find('select[name="tgl"]').val(value[11]);
+                                            //form.find('select[name="bln"]').val(value[10]);										
+                                            $("#tglLahir").val(value[9]);
                                         });
                                     });
 
