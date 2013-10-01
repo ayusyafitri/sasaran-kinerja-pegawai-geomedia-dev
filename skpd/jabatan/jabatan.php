@@ -9,13 +9,6 @@ include_once('../../php/include_all.php');
 <div class="widget-header widget-header-flat ">
     <h5><i class="icon-calendar"></i>Daftar Jabatan</h5>
 </div>
-<div class="position-relative" id="page-content">
-    <table>
-	<tr><td><a href="#modalwin" data-toggle="modal" class="btn btn-small btn-primary no-radius btn-tambah"><i class="icon-plus"></i>&nbsp;Tambah Data</a>
-		&nbsp;<span id="load" class="spinner"></span></td>
-		<td id="tulisan"></td>
-	</tr></table>
-</div>
 <div id="modalwin" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     <header class="modal-header"> 
@@ -107,23 +100,20 @@ include_once('../../php/include_all.php');
                 <th class="center" width="3%">No</th>
                 <th class="center" width="12%">Kode Jabatan</th> 
                 <th class="center" width="33%">Nama Jabatan</th>
-                <th class="center" width="20%">aksi</th>
+                <th class="center" width="20%">Unit Organisasi</th>
             </tr>
         </thead>
         <tbody id="tampilJabatan">
         <?php 
 		$no=1;
-		$t_jab = get_datas ("select * from skp_jabatan where unit_kerja=".SKP_ID." order by kode_jabatan");
+		$t_jab = get_datas ("select j.kode_jabatan, j.nama_jabatan, u.nama_unit from skp_jabatan j, skp_unit_eselon u where u.id_unit=j.unit_organisasi and j.unit_kerja=".SKP_ID." order by j.kode_jabatan");
 		foreach ($t_jab as $jab){
 		?>
         	<tr>
             	<td><?php echo $no;?></td>
-                <td class="center"><?php echo $jab['kode_jabatan'];?></td>
+                <td><?php echo $jab['kode_jabatan'];?></td>
                 <td><?php echo $jab['nama_jabatan'];?></td>
-                <td class="center">
-                	<a href="#modalwin" data-toggle="modal"  class="btn btn-info btn-small bt-edit-jabatan" name="<?php echo $jab['idjab']; ?>"><i class="icon-edit icon-white"></i> ubah</a>
-			   		<a class="btn btn-danger btn-small bt-hapus-jabatan" name="<?php echo $jab['idjab']; ?>"><i class="icon-trash icon-white"></i> hapus</a>
-                </td>
+                <td><?php echo $jab['nama_unit'];?></td>
             </tr>
         <?php
 		$no++;
