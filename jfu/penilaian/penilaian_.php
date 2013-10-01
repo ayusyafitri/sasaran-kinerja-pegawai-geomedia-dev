@@ -39,8 +39,9 @@ if ($act == 'ldUraian') {
     $ak = (isset($_POST['ak'])) ? abs($_POST['ak']) : '0';
     if (!empty($idReals) AND !empty($mutu) AND !empty($output)) {
         $exec = exec_query("UPDATE skp_r_kerja SET r_output = '$output', r_mutu = '$mutu', r_waktu = '$wkt', r_biaya = '$biaya' WHERE id_realisasi = '$idReals'");
+        $dtaRealisasi = hitungRealisasiOneRow($idTrget);
         if ($exec) {
-            echo "5___$output|||$mutu|||$wkt|||$biaya";
+            echo "5___".$dtaRealisasi['r_output']."|||".$dtaRealisasi['r_mutu']."|||".$dtaRealisasi['r_waktu']."|||".$dtaRealisasi['r_biaya']."|||".$dtaRealisasi['perhitungan']."|||".$dtaRealisasi['capaian'];
         } else {
             echo "2___<font color='red'>Gagal menyimpan data !!!</font>";
         }
@@ -101,7 +102,7 @@ if ($act == 'ldUraian') {
             }
         }
         if ($cek) {
-            $msg = ($doing == '1')?"Data Telah Dikonfirmasi":"Pembatalan Konfirmasi sukses !!";
+            $msg = ($doing == '1') ? "Data Telah Dikonfirmasi" : "Pembatalan Konfirmasi sukses !!";
             echo "2___<font color='Green'>$msg</font>___";
             $count = get_data("SELECT id_tkerja,id_skp FROM skp_t_kerja where id_pns = '$idPeg' and tahun = '$thn' LIMIT 1");
             viewTblRealisasi($idPeg, $thn);
@@ -125,6 +126,38 @@ function rollBack($arStatus, $st) {
         exec_query("UPDATE skp_r_kerja SET r_status = $st where id_realisasi = '" . $arStatus[$ur] . "'");
     }
 }
+/**
+ * indeks : r_output, r_mutu, r_waktu, r_biaya, capaian, perhitungan
+ * @param type $idtarget
+ */
+function hitungRealisasiOneRow($idtarget) {
+    $dataTarget = get_data("SELECT t.output, t.mutu, t.waktu,t.biaya, r.r_output, r.r_mutu,r.r_waktu,r.r_biaya FROM skp_t_kerja t, skp_r_kerja r where t.id_tkerja = r.id_tkerja and t.id_tkerja = '$idtarget'");
+    $pembagi = 2;
+    $nOutput = (empty($dataTarget['output']) OR ($dataTarget['output'] <= 0)) ? 0 : ($dataTarget['r_output'] / $dataTarget['output']) * 100;
+    $nMutu = (empty($dataTarget['mutu']) OR ($dataTarget['mutu'] <= 0)) ? 0 : ($dataTarget['r_mutu'] / $dataTarget['mutu']) * 100;
+    $asWaktu = (empty($dataTarget['waktu']) OR ($dataTarget['waktu'] <= 0)) ? 0 : 100 - ($dataTarget['r_waktu'] / $dataTarget['waktu'] * 100);
+    if ($asWaktu > 0) {
+        $nWaktu = ($asWaktu <= 24) ? ((1.76 * $dataTarget['waktu'] - $dataTarget['r_waktu']) / $dataTarget['waktu']) * 100 : 76 - (((1.76 * $dataTarget['waktu'] - $dataTarget['r_waktu']) / $dataTarget['waktu'] * 100) - 100);
+        $pembagi++;
+    } else {
+        $nWaktu = 0;
+    }
+    $asBiaya = (empty($dataTarget['biaya']) OR ($dataTarget['biaya'] <= 0)) ? 0 : 100 - ($dataTarget['r_biaya'] / $dataTarget['biaya'] * 100);
+    if ($asBiaya > 0) {
+        $nBiaya = ($asBiaya <= 24) ? ((1.76 * $dataTarget['biaya'] - $dataTarget['r_biaya']) / $dataTarget['biaya']) * 100 : 76 - (((1.76 * $dataTarget['biaya'] - $dataTarget['r_biaya']) / $dataTarget['biaya'] * 100) - 100);
+        $pembagi++;
+    } else {
+        $nBiaya = 0;
+    }
+    $target['r_output'] = $dataTarget['r_output'];
+    $target['r_mutu'] = $dataTarget['r_mutu'];
+    $target['r_waktu'] = $dataTarget['r_waktu'];
+    $target['r_biaya'] = $dataTarget['r_biaya'];    
+    $prhtungan = $nOutput + $nMutu + $nWaktu + $nBiaya;
+    $target['capaian'] = number_format(($prhtungan / $pembagi),2) + 0;
+    $target['perhitungan'] = number_format(($prhtungan),2) + 0;
+    return $target;    
+}
 
 function viewTblRealisasi($idPns, $year) {
     $dtPns = get_data("SELECT p.nip, p.id_pns, p.kode_jabatan, j.jabatan FROM skp_pns p, skp_jabatan j where p.kode_jabatan = j.kode_jabatan and id_pns = " . $idPns);
@@ -146,13 +179,26 @@ LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja ORDER BY u.no_uraian 
             $r_waktu = $isiRealisasi['r_waktu'];
             $r_biaya = $isiRealisasi['r_biaya'];
 
-            $nOutput = (empty($r_output) OR ($r_output < 0)) ? 0 : ($r_output / $t_output) * 100;
-            $nMutu = (empty($r_mutu) OR ($r_mutu < 0)) ? 0 : ($r_mutu / $t_mutu) * 100;
-            $nWaktu = (empty($r_biaya) OR ($r_waktu < 0)) ? 0 : ((1.76 * $t_waktu - $r_waktu) / $t_waktu) * 100;
-            $nBiaya = (empty($r_biaya) OR ($r_biaya < 0)) ? 0 : ((1.76 * $t_biaya - $r_biaya) / $t_biaya) * 100;
-
+            $pembagi = 2;
+            $nOutput = (empty($t_output) OR ($t_output <= 0)) ? 0 : ($r_output / $t_output) * 100;
+            $nMutu = (empty($t_mutu) OR ($t_mutu <= 0)) ? 0 : ($r_mutu / $t_mutu) * 100;
+            $asWaktu = (empty($t_waktu) OR ($t_waktu <= 0)) ? 0 : 100 - ($r_waktu / $t_waktu * 100);
+            if ($asWaktu > 0) {
+                $nWaktu = ($asWaktu <= 24) ? ((1.76 * $t_waktu - $r_waktu) / $t_waktu) * 100 : 76 - (((1.76 * $t_waktu - $r_waktu) / $t_waktu * 100) - 100);
+                $pembagi++;
+            } else {
+                $nWaktu = 0;
+            }
+            $asBiaya = (empty($t_biaya) OR ($t_biaya <= 0)) ? 0 : 100 - ($r_biaya / $t_biaya * 100);
+            if ($asBiaya > 0) {
+                $nBiaya = ($asBiaya <= 24) ? ((1.76 * $t_biaya - $r_biaya) / $t_biaya) * 100 : 76 - (((1.76 * $t_biaya - $r_biaya) / $t_biaya * 100) - 100);
+                $pembagi++;
+            } else {
+                $nBiaya = 0;
+            }
             $prhtungan = $nOutput + $nMutu + $nWaktu + $nBiaya;
-            $nCapaianSKP = $prhtungan / 4;
+            $nCapaianSKP = number_format(($prhtungan / $pembagi),2) + 0;
+            $prhtungan = number_format($prhtungan, 2) + 0;
             ?>
             <tr id="rTP_<?php echo $no; ?>">
                 <td class="center" style=""><?php echo $no; ?></td>
@@ -175,10 +221,10 @@ LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja ORDER BY u.no_uraian 
                     <label style="cursor:default;" class="input-small" name="biaya[]" id="biayaTP_<?php echo $no; ?>"><?php echo $r_biaya; ?></label>
                 </td>
                 <td class="center">
-                    <label style="cursor:default;" id="pr_<?php echo $no; ?>"><?php echo number_format($prhtungan, 2); ?></label>
+                    <label style="cursor:default;" id="pr_<?php echo $no; ?>"><?php echo $prhtungan; ?></label>
                 </td>
                 <td class="center">
-                    <label style="cursor:default;" id="cap_<?php echo $no; ?>"><?php echo number_format($nCapaianSKP, 2); ?></label>
+                    <label style="cursor:default;" id="cap_<?php echo $no; ?>"><?php echo $nCapaianSKP; ?></label>
                 </td>
                 <td class="center">
                     <?php if ($isiRealisasi['r_status'] == '1') { ?>
@@ -241,7 +287,7 @@ function viewKreatifitas($id_skp, $status = '0') {
         <tr id="r_<?php echo 'kre_' . $no; ?>">
             <td style="width:3%;" class="center" valign="middle"><?php echo $no; ?><label class="hide" id="id_kre_<?php echo $no; ?>" name="idtmbhn[]"><?php echo $isinya['idkreatifitas']; ?></label></td>
             <td><label style="width: 100%;" id="uraian_kre_<?php echo $no; ?>" name="uraian_kre[]"><?php echo ucfirst($isinya['uraiankreatifitas']); ?></label></td>
-            <td class="center"><label id="nilai_kre_<?php echo $no; ?>"><?php echo $isinya['nilai'];?></label></td>
+            <td class="center"><label id="nilai_kre_<?php echo $no; ?>"><?php echo $isinya['nilai']; ?></label></td>
             <td class="center">
                 <?php if ($status == '1') { ?>
                     <i style="cursor:default" title="Sudah Konfirmasi" class="icon-ok"></i>

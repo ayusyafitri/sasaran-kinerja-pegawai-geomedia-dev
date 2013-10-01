@@ -206,6 +206,8 @@ $jabStaf = get_datas("SELECT * FROM skp_jabatan where parent = '" . $jabPeg['idj
                     $('#mutuTP_' + a).html(nl[1]);
                     $('#waktuTP_' + a).html(nl[2]);
                     $('#biayaTP_' + a).html(nl[3]);
+                    $('#pr_' + a).html(nl[4]);
+                    $('#cap_' + a).html(nl[5]);
                 }, 1200);
             } else if (spt[0] === '2') {
                 ms.removeClass('icon-spin icon-spinner');

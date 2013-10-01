@@ -2,4 +2,15 @@ status
 PNS => 	0 : Aktif
 	1 : Pensiun
 	2 : Cuti
+	
+status jabatan => 
+	0 : pensiun
+	1 : aktif
+	2 : mutasi/promosi/penuruan
+	3 : cuti
+	4 : pemecatan
 
+overview
+JFU =>  - peta jabatan posisi pemangku
+	- chart pie realisasi
+	- last login nama

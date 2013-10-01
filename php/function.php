@@ -22,8 +22,8 @@ function format_tglSimpan($date, $splitChar = '-', $flip = TRUE) {
         $tgl = explode('-', $date);
         $tt = $tgl[2] . $splitChar . $tgl[1] . $splitChar . $tgl[0];
     }
-    if(empty($date)){
-        $tt = '';   
+    if (empty($date)) {
+        $tt = '';
     }
     return $tt;
 }
@@ -74,7 +74,7 @@ function getDataPNS($idPns) {
 function getDataAtasan($idPns) {
     $data = getDataPNS($idPns);
     $dt = get_data("SELECT p.id_pns FROM skp_pns p, skp_jabatan j where j.kode_jabatan = p.kode_jabatan and j.idjab = '" . $data['idJabAtasan'] . "'");
-    echo "SELECT p.id_pns FROM skp_pns p, skp_jabatan j where j.kode_jabatan = p.kode_jabatan and j.idjab = '" . $data['idJabAtasan'] . "'";
+    //  echo "SELECT p.id_pns FROM skp_pns p, skp_jabatan j where j.kode_jabatan = p.kode_jabatan and j.idjab = '" . $data['idJabAtasan'] . "'";
     $dataAtasan = getDataPNS($dt['id_pns']);
     return $dataAtasan;
 }
@@ -90,10 +90,15 @@ function stripIfEmpty($var, $rp = null, $ext = NULL) {
     if (empty($var) OR $var == "" OR $var == '0') {
         return "-";
     } else {
-        return $rp."&nbsp;".$var.$ext;
+        return $rp . "&nbsp;" . $var . $ext;
     }
 }
 
+/**
+ * Gawnanane sinta
+ * @param type $var
+ * @return string
+ */
 function dotIfEmpty($var) {
     if (empty($var) OR $var == "" OR $var == '0') {
         return ".........................................";
@@ -102,7 +107,7 @@ function dotIfEmpty($var) {
     }
 }
 
-function showPassInOtherCharacter($pass,$char = "#"){
+function showPassInOtherCharacter($pass, $char = "#") {
     $symbol = '';
     for ($u = 0; $u < strlen($pass); $u++) {
         $symbol .= $char;
@@ -111,47 +116,60 @@ function showPassInOtherCharacter($pass,$char = "#"){
 }
 
 function tugasTambahan($n) {
-    if ((n >= 1) && (n <= 3)) {
+    if (($n >= 1) && ($n <= 3)) {
         $nilai = 1;
-    } elseif ((n >= 4) && (n <= 6)) {
+    } elseif ((n >= 4) && ($n <= 6)) {
         $nilai = 2;
-    } elseif ((n >= 7) && (n <= 100)) {
+    } elseif (($n >= 7) && ($n <= 100)) {
         $nilai = 3;
     }
     return $nilai;
 }
+
 /**
- * Array multi dimensi, do foreach first to get value with these indexs : uraian, no_uraian, tupoksi, angka_kredit, output,
- * mutu, waktu, biaya, id_tkerja, status
+ * Mengmembalikan nilai target pns dalam tahun berjalan sebagai paramater multi dimensi, do foreach first to get value with.. 
+ * <br/>these indexs : uraian, noUraian, tupoksi, ak, output, mutu, waktu, biaya, idTkerja, status
  * @param String $idPns id Pns
  * @param Int $year tahun
  * @param String $kodeJab kode jabatan yang dipangku sekarang
  * @return Array
  */
-function getDataTarget($idPns, $year, $kodeJab){
+function getDataTarget($idPns, $year, $kodeJab) {
+    $dataTarget = array();
     $target = get_datas("SELECT u.uraian,u.no_uraian,u.tupoksi,k.angka_kredit,k.output, k.mutu,k.waktu,k.biaya,k.id_tkerja, s.status FROM skp_t_kerja k, skp_uraian u, skp_t_status s 
-where s.id_tkerja = k.id_tkerja AND k.id_uraian = u.id_uraian and k.tahun = '" . $year. "' and k.id_pns = '" . $idPns . "' and k.kode_jabatan = '" . $kodeJab . "' order by u.no_uraian ASC");    
+where s.id_tkerja = k.id_tkerja AND k.id_uraian = u.id_uraian and k.tahun = '" . $year . "' and k.id_pns = '" . $idPns . "' and k.kode_jabatan = '" . $kodeJab . "' order by u.no_uraian ASC");
+    foreach ($target as $key => $value) {
+        $dataTarget[$key]['uraian'] = $value['uraian'];
+        $dataTarget[$key]['noUraian'] = $value['no_uraian'];
+        $dataTarget[$key]['tupoksi'] = $value['tupoksi'];
+        $dataTarget[$key]['ak'] = $value['angka_kredit'];
+        $dataTarget[$key]['output'] = $value['output'];
+        $dataTarget[$key]['mutu'] = $value['mutu'];
+        $dataTarget[$key]['biaya'] = $value['biaya'];
+        $dataTarget[$key]['idTkerja'] = $value['id_tkerja'];
+        $dataTarget[$key]['status'] = $value['status'];
+    }
     return $target;
 }
 
 /**
- * index  => stgsTam : Nilai Tugas Tambahan; kreatif : Nilai Tugas Kreatif; 
+ * JO LALI TARGET, CAPAIAN REALISASI HARUS SUDAH DI KONFIRMASI
+ * index  => tgsTam : Nilai Tugas Tambahan; kreatif : Nilai Tugas Kreatif; 
  * nilaiSKP : Nilai SKP ;skpAbjad : bentuk Nilai SKP dalam Abjad; perilaku : Nilai Perilaku; capaian: n Perilaku ditambah SKP
  * <br/> Untuk indekx 'dataSKP' ,'uraianTam' : type array <br/> <b>mSih belum ada perhitungan angka kredit</b>
  * @param String $idPns : id nya pns
  * @param Integer $year : tahun
  * @return array
  */
-function hitungSkp($idPns, $year, $bulan) {
+function hitungSkp($idPns, $year, $bulan, $mutasi = FALSE) {
     $total_perhitungan = 0;
     $jumlah = array();
     $target = array();
     $total_capaian = 0;
     $dtaRealisasi = get_datas("SELECT u.uraian, t.id_skp,t.id_tkerja,t.output, t.mutu, t.waktu, t.biaya, t.angka_kredit,r.id_realisasi, r.r_output,r.r_mutu,r.r_waktu,r.r_biaya
 FROM skp_t_kerja t INNER JOIN skp_uraian u  ON t.tahun = '$year' and t.id_pns = '$idPns' and u.id_uraian = t.id_uraian
-LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja order by u.no_uraian ASC");  
+LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja order by u.no_uraian ASC");
     $id_skp = 0;
-    $pembagi = 0;
     $no = 0;
     foreach ($dtaRealisasi as $isiRealisasi) {
         $t_output = $isiRealisasi['output'];
@@ -162,7 +180,7 @@ LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja order by u.no_uraian 
         $target[$no]['output'] = $t_output;
         $target[$no]['mutu'] = $t_mutu;
         $target[$no]['waktu'] = $t_waktu;
-        $target[$no]['biaya'] = $t_biaya;        
+        $target[$no]['biaya'] = $t_biaya;
         $target[$no]['angka_kredit'] = $isiRealisasi['angka_kredit'];
         $r_output = $isiRealisasi['r_output'];
         $r_mutu = $isiRealisasi['r_mutu'];
@@ -172,10 +190,14 @@ LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja order by u.no_uraian 
         $target[$no]['r_mutu'] = $r_mutu;
         $target[$no]['r_waktu'] = $r_waktu;
         $target[$no]['r_biaya'] = $r_biaya;
+        if ($mutasi) {
+            $t_output = $bulan / 12 * $t_output;
+            $t_waktu = $bulan;
+        }
         $pembagi = 2;
         $nOutput = (empty($t_output) OR ($t_output <= 0)) ? 0 : ($r_output / $t_output) * 100;
         $nMutu = (empty($t_mutu) OR ($t_mutu <= 0)) ? 0 : ($r_mutu / $t_mutu) * 100;
-        $asWaktu = (empty($t_biaya) OR ($t_waktu <= 0)) ? 0 : 100 - ($r_waktu / $t_waktu * 100);
+        $asWaktu = (empty($t_waktu) OR ($t_waktu <= 0)) ? 0 : 100 - ($r_waktu / $t_waktu * 100);
         if ($asWaktu > 0) {
             $nWaktu = ($asWaktu <= 24) ? ((1.76 * $t_waktu - $r_waktu) / $t_waktu) * 100 : 76 - (((1.76 * $t_waktu - $r_waktu) / $t_waktu * 100) - 100);
             $pembagi++;
@@ -199,24 +221,29 @@ LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja order by u.no_uraian 
         $pembagi++;
         $no++;
     }
+    $jumUraian = ($no + 1);
     $tm = hitungTgsTambahan($id_skp);
     $jumlah['dataSKP'] = $target;
     $jumlah['NilaiTgsTam'] = $tm['nilai'];
     $jumlah['uraianTam'] = $tm['uraians'];
     $jumlah['kreatif'] = hitungNilaiKreatif($id_skp);
     $jumlah['perilaku'] = hitungNPerilaku($idPns, $year, $bulan);
-    $jumlah['nilaiSKP'] = ($total_capaian / $pembagi) + $jumlah['kreatif'] + $jumlah['tgsTam'];
+    $jumlah['nilaiSKP'] = ($total_capaian / $jumUraian) + $jumlah['kreatif'] + $jumlah['tgsTam'];
     $jumlah['nilaiSKP'] = ($jumlah['nilaiSKP'] * 60) / 100;
     $triW = getTriwulan($bulan);
-    if ($triW < 4) { // untuk penetapan skp itu ada di akhir tahun
-        $jumlah['perilaku'] = ($jumlah['perilaku'] * 10) / 100;
+    if ($triW < 4) { // untuk penetapan skp itu ada di akhir tahun                
+        if ($mutasi) {
+            $jumlah['perilaku'] = ($jumlah['perilaku'] * 40) / 100;
+        } else {
+            $jumlah['perilaku'] = ($jumlah['perilaku'] * 10) / 100;
+        }
     } else {
         $prilk = ($jumlah['perilaku'] * 10) / 100; // triwulan 4 
         $pr = get_data("SELECT sum(nilai_prilaku) as nperilaku FROM skp_penilaian where EXTRACT(YEAR from tanggal) = $year");
-        if (count($pr) > 0) {
+        if (count($pr) > 0 AND ($mutasi = FALSE)) {
             $jumlah['perilaku'] = ($pr['nperilaku'] + $prilk) / 4;
         } else {
-            $jumlah['perilaku'] = ($jumlah['perilaku'] * 60) / 100;
+            $jumlah['perilaku'] = ($jumlah['perilaku'] * 40) / 100;
         }
     }
     $jumlah['capaian'] = number_format(($jumlah['nilaiSKP'] + $jumlah['perilaku']), 2);
@@ -230,12 +257,12 @@ LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja order by u.no_uraian 
  * @return array
  */
 function hitungTgsTambahan($idSkp) {
-    $tambahan = get_datas("SELECT uraian_tambahan FROM skp_r_tambahan where id_skp = " . $idSkp);    
+    $tambahan = get_datas("SELECT uraian_tambahan FROM skp_r_tambahan where id_skp = " . $idSkp);
     $tbhn = array();
     $tugas = array();
     foreach ($tambahan as $value) {
-        array_push($tugas, $value['uraian_tambahan']);        
-    }    
+        array_push($tugas, $value['uraian_tambahan']);
+    }
     $tbhn['uraians'] = $tugas;
     $jum = count($tugas);
     if ($jum >= 1 AND $jum <= 3) {
@@ -286,6 +313,39 @@ function getTriwulan($bulan) {
         $caturwln = 4;
     }
     return $caturwln;
+}
+
+/**
+ * index for aray : <ul><li>0 -> idjab</li><li>1 -> parent</li><li>2 -> kode jabatan</li>
+ * <li>3 -> nama jabatan</li><li>4 -> jabatan</li><li>11 -> base/level</li></ul>
+ * @global integer $explc
+ * @global array $explv array data jabatan yang diambil
+ * @param type $uk unit_kerja
+ * @param Integer $parent parent awal
+ * @param Integer $base Level start with 0
+ */
+function explore($uk, $parent, $base) {
+    global $explc;
+    global $explv;
+    if ($parent == 0) {
+        $query = exec_query("SELECT idjab,parent,kode_jabatan,nama_jabatan,jabatan FROM skp_jabatan WHERE parent=" . $parent . " AND unit_kerja=" . $uk . " ORDER BY kode_jabatan");
+    } else {
+        $query = exec_query("SELECT idjab,parent,kode_jabatan,nama_jabatan,jabatan FROM skp_jabatan WHERE parent=" . $parent . " ORDER BY kode_jabatan");
+    }
+    $explc++;
+    while ($jabatan = pg_fetch_assoc($query)) {
+        $explv[$explc][0] = $jabatan['idjab'];
+        $explv[$explc][1] = $jabatan['parent'];
+        $explv[$explc][2] = $jabatan['kode_jabatan'];
+        $explv[$explc][3] = $jabatan['nama_jabatan'];
+        $explv[$explc][4] = $jabatan['jabatan'];
+
+        $explv[$explc][11] = $base;
+
+        $base++;
+        explore($uk, $jabatan['idjab'], $base);
+        $base--;
+    }
 }
 
 ?>

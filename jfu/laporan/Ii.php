@@ -1,19 +1,20 @@
 <?php
 session_start();
 include_once('../../php/include_all.php');
-if (!isset($_SESSION['_idpns'])) {
+if (!isset($_SESSION['_id'])) {
     echo "<h2>Page Not Found</h2>";
     exit();
 }
-$dtaAtasan = getDataAtasan(SKP_ID);
-$dtPeg = getDataPNS(SKP_ID);
+$idPns = (isset($_GET['d']))?abs($_GET['d']):SKP_ID;
+$dtaAtasan = getDataAtasan($idPns);
+$dtPeg = getDataPNS($idPns);
 $dtpalingAtas = getDataAtasan($dtaAtasan['id']);
 ?>
 <!DOCTIYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>Formulir SKP PNS <?php echo SKP_NIP; ?></title>
+        <title>Formulir SKP PNS <?php echo $dtPeg['nip']; ?></title>
         <meta name="descritption" content="This is page header(.page-header &gt; h1)"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="../../themes/css/bootstrap.min.css" rel="stylesheet"/>

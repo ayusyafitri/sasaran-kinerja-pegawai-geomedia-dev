@@ -84,7 +84,7 @@ where s.id_tkerja = k.id_tkerja AND k.id_uraian = u.id_uraian and k.tahun = '" .
                     </td>
                         <td style="text-align:center;">   
                             <?php if ($isiData['status'] == '1'){?>
-                            <span style='cursor:pointer;' class='badge badge-user center' title="Sudah Dikonfirmasi" ><i class="icon-check-sign"></i></span>
+                            <i class="icon-ok green" title="Sudah Dikonfirmasi"></i>
                             <?php }else{?>
                             <div id="btns-act_<?php echo  $no; ?>" style='width:75px;'>
                                 <span id="msgD_<?php echo $no; ?>"></span>

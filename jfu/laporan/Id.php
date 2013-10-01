@@ -1,18 +1,19 @@
 <?php
 session_start();
 include_once('../../php/include_all.php');
-if (!isset($_SESSION['_idpns'])) {
+if (!isset($_SESSION['_id'])) {
     echo "<h2>Page Not Found</h2>";
     exit();
 }
-$dtaAtasan = getDataAtasan(SKP_ID);
-$dtPeg = getDataPNS(SKP_ID);
+$idPns = (isset($_GET['d']))?abs($_GET['d']):SKP_ID;
+$dtaAtasan = getDataAtasan($idPns);
+$dtPeg = getDataPNS($idPns);
 ?>
 <!DOCTIYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>KREATIVITAS <?php echo SKP_NAMA; ?></title>
+        <title>KREATIVITAS <?php echo $dtPeg['nama']; ?></title>
         <meta name="descritption" content="This is page header(.page-header &gt; h1)"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="../../themes/css/bootstrap.min.css" rel="stylesheet"/>
@@ -95,14 +96,14 @@ $dtPeg = getDataPNS(SKP_ID);
                     <td style="width:1px;">a.</td>
                     <td style="width:28px;">Nama</td>
                     <td style="width:1px;">:</td>
-                    <td style="width:70px;"><?php echo SKP_NAMA; ?></td>
+                    <td style="width:70px;"><?php echo ucfirst(stripIfEmpty($dtPeg['nama'])); ?></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td style="width:1px;">b.</td>
                     <td style="width:28px;">NIP</td>
                     <td style="width:1px;">:</td>
-                    <td style="width:70px;"><?php echo SKP_NIP; ?></td>
+                    <td style="width:70px;"><?php echo ucfirst(stripIfEmpty($dtPeg['nip'])); ?></td>
                 </tr>
                 <tr>
                     <td></td>

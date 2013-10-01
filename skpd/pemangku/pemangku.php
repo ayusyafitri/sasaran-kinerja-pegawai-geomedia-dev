@@ -164,7 +164,8 @@ $nama_bln = array(1 => "Januari", "Februari", "Maret", "April", "Mei",
                                 var url = 'skpd/pemangku/aksi.php';
                                 var rslt = $('#result');
                                 $("#tglLahir").datepicker({
-                                    format: 'dd/mm/yyyy'
+                                    format: 'dd/mm/yyyy',
+                                    setDate: '18/06/1990'                    
                                 });
                                 $('.jab').change(function() {
                                     source = "skpd/pemangku/tools.php?code=jab&kdjab=" + this.value;

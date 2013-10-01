@@ -202,7 +202,7 @@ function rollBack($arID, $tble) {
 function viewTblRealisasi() {
     $dtaRealisasi = get_datas("SELECT t.id_skp,t.id_tkerja,t.output, t.mutu, t.waktu, t.biaya, u.id_uraian, u.uraian, t.angka_kredit, r.id_realisasi, r.r_output,r.r_mutu,r.r_waktu,r.r_biaya FROM skp_t_kerja t 
 INNER JOIN skp_uraian u  ON t.id_uraian = u.id_uraian and t.tahun = '" . date('Y') . "' and t.id_pns = '" . SKP_ID . "' and t.kode_jabatan = '" . SKP_KODEJAB . "'
-LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja");
+LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja order by u.no_uraian ASC");
     if (count($dtaRealisasi) > 0) {
         $no = 1;
         foreach ($dtaRealisasi as $isiRealisasi) {
@@ -245,10 +245,10 @@ LEFT OUTER JOIN skp_r_kerja r ON t.id_tkerja = r.id_tkerja");
                     <input type="text" class="input-small" name="biaya[]" id="biaya_<?php echo $no; ?>" value="<?php echo $r_biaya; ?>" />
                 </td>
                 <td class="center">
-                    <?php echo number_format($prhtungan, 2); ?>
+                    <?php echo (number_format($prhtungan, 2) + 0); ?>
                 </td>
                 <td class="center">
-                    <?php echo number_format($nCapaianSKP, 2); ?>
+                    <?php echo (number_format($nCapaianSKP, 2) + 0); ?>
                 </td>
             </tr>
             <?php

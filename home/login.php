@@ -97,7 +97,7 @@ if (isset($_SESSION['$LEVEL'])) {
     <script>
         var alerto = $("#alerto");
         alerto.removeClass().addClass('alert alert-success');
-        alerto.html('<div class="spinner pull-left"></div> You have logged in, redirecting...');
+        alerto.html('<div class="icon-spin icon-spinner pull-left"></div> You have logged in, redirecting...');
         setTimeout(function() {
             location.href = 'system.php';
         }, 3000);
@@ -112,7 +112,7 @@ if (isset($_SESSION['$LEVEL'])) {
 	var btn = $(this);
 	var load = $('#loader');
 	var rslt = $('#result');
-	load.addClass('spinner pull-left');
+	load.addClass('icon-spin icon-spinner pull-left');
 	btn.removeClass('btn-primary').addClass('btn-info');
 	
 	var pass = $('#pass').val();
@@ -188,7 +188,7 @@ if (isset($_SESSION['$LEVEL'])) {
 
         var alerto = $("#alerto");
         alerto.removeClass().addClass('alert');
-        alerto.html('<div class="icon-spinner icon-spin pull-right"></div>&nbsp;Mohon tunggu...');
+        alerto.html('<div class="icon-spin icon-spinner icon-spin pull-right"></div>&nbsp;Mohon tunggu...');
 
         var url = 'php/1nd3x.php';
         var posting = $.post(url, {whoareyou: user, yoursecret: pass,part : $('#part').val(),what:'inn'});
@@ -196,7 +196,7 @@ if (isset($_SESSION['$LEVEL'])) {
             var dt = data.split('___');
             if (dt[0] == 'suk') {
                 alerto.removeClass().addClass('alert alert-success');
-                alerto.html('<div class="spinner pull-left"></div>Good, redirecting...');
+                alerto.html('<div class="icon-spin icon-spinner pull-left"></div>Good, redirecting...');
                 setTimeout(function() {
                     location.href = dt[1];
                 }, 2000);
