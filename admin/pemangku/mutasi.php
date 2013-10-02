@@ -24,9 +24,10 @@ else if($act == 'input_mutasi'){
 	$skpd = $_POST['mut'];
 	$jab = $_POST['jabb'];
 	$jabawl = $_POST['kode_jabAwl'];
+	
 	if (!is_numeric($id)) {
-	echo $id;
-        echo "Err : invalid id. ";
+	//echo $id;
+        echo "Err : invalid id.";
         exit;
     }
 	if($id > 0){
@@ -39,7 +40,7 @@ else if($act == 'input_mutasi'){
 			if (count($realisasi) > 0) {
 				exec_query ("update skp_pns set kode_jabatan='".$jab."' where id_pns=".$id."");
 			//	echo 'success__';
-				
+			
 				$dataSKP = hitungSkp($id, $tahun, $bulan, TRUE);
 				$capaian = $dataSKP['capaian'];
 				
@@ -47,23 +48,16 @@ else if($act == 'input_mutasi'){
 				exec_query("insert into skp_jabatan_hist (id_temp, id_pns, kode_jabatan, bulan, tahun, tanggal, nilai_skp,kodejab_tujuan) values (".$maxid.",".$id.",'".$kode_jabAwl."',".$bulan.",".$tahun.",".$tgl.",".$capaian.",'".$jab."')");
 				$br = get_data("select id_temp from skp_jabatan_hist where id_temp=".$maxid);
 				if($br['id_temp'] == $maxid){
-					echo 'success__';
+					echo '__success__';
 					$idd = $maxid; 
 				}
 				
-				// echo $idd. '__';
-				// $pnsbr = get_data("select p.nama as nama_pe, p.nip, j.nama_jabatan, j.unit_kerja, s.nama from skp_skpd s, skp_jabatan j, skp_pns p where s.id=j.unit_kerja and j.kode_jabatan=p.kode_jabatan and id_pns=".$id);
-				// echo $namabr = $pnsbr['nama_pe'].'__';
-				// echo $nipbr = $pnsbr['nip'].'__';
-				// echo $jabbr = $pnsbr['nama_jabatan'].'__';
-				// echo $skpdbr = $pnsbr['nama'].'__';
-	
 			} else {
-				echo 'gagal__';
+				echo '__gagal__';
 				echo "Belum ada data realisasi yang diinputkan";
 			}
 		} else {
-			echo 'gagal__';
+			echo '__gagal__';
 			echo "Belum ada data realisasi yang diinputkan";
 		}
 	

@@ -376,33 +376,34 @@ $('.btn-simpan-mutasi').click(function(){
 	var post = $.post(url, data);
 	post.done(function(res){
 		var result = res.split('__');
-		if(result.length==7){ 						//result leng tdk terbaca
-			 
-		    if(result[0]=='success'){
-				rslt.html('<font color="green">data tersimpan </font>');
-				setTimeout(function(){
-					rslt.html('');
-				}, 1500);
+		if(result.length==8){ 					
+				console.log('tes : '+result[0]);
+				if(result[1] == 'success'){
+					rslt.html('<font color="green">data tersimpan </font>');
+					setTimeout(function(){
+						rslt.html('');
+					}, 1500);
+								
+					
+					bootbox.alert(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5], function() {
+					//	Example.show("jakakaka");
+						 console.log(result[4]);
+					});
 							
-				var tbody = $('#tampil_pemangku');
-				bootbox.alert(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5], function() {
-					//Example.show(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5]);
-					 console.log("Alert Callback");
-				});
-						
-				 	  //  alert(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5]);
-				tbody.html(result[7]);
-				init();
-				$('#showDetail').modal('hide');
-			}else{
-				//rslt.html('<font color="red">'+res+'</font>');   
-                                
-				bootbox.alert(result[1], function() {
-				//	Example.show("jakakaka");
-					 console.log(result[1]);
-				});
-                                                
-				$('#showDetail').modal('hide');
+				//	alert(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5]);
+					var tbody = $('#tampil_pemangku');
+					tbody.html(result[7]);
+				//	init();
+					$('#showDetail').modal('hide');
+				}else{
+					//rslt.html('<font color="red">'+res+'</font>');   
+									
+					bootbox.alert(result[2], function() {
+					//	Example.show("jakakaka");
+						 console.log(result[2]);
+					});
+													
+					$('#showDetail').modal('hide');
 				}
 			}else{
                rslt.html('<font color="red">'+res+'</font>');   
