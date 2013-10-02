@@ -16,7 +16,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
 			<td>&nbsp;</td>
 			<td><div id="loaderSKPD"></div>
 				<select name="skpd" id="skpd" >
-					<option id="0" value="0">Pilih SKPD</option>
+					<option id="idskpd" value="0">Pilih SKPD</option>
 					<?php
 					$skpd = get_datas("select * from skp_skpd where nama not like '%admin%' order by id");
 					foreach ($skpd as $skpd) {
@@ -377,7 +377,7 @@ $('.btn-simpan-mutasi').click(function(){
 	post.done(function(res){
 		var result = res.split('__');
 		if(result.length==8){ 					
-				console.log('tes : '+result[0]);
+			 
 				if(result[1] == 'success'){
 					rslt.html('<font color="green">data tersimpan </font>');
 					setTimeout(function(){
@@ -389,12 +389,11 @@ $('.btn-simpan-mutasi').click(function(){
 					//	Example.show("jakakaka");
 						 console.log(result[4]);
 					});
-							
-				//	alert(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5]);
+					document.getElementById('idskpd').selected=true;
+					$('#tabelSKPD').html(result[6]); 		
 					var tbody = $('#tampil_pemangku');
 					tbody.html(result[7]);
-				//	init();
-					$('#showDetail').modal('hide');
+				 	$('#showDetail').modal('hide');
 				}else{
 					//rslt.html('<font color="red">'+res+'</font>');   
 									
