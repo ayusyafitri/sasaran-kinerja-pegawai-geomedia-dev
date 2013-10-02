@@ -87,42 +87,5 @@ function mutasiskpd(){
 		});
 }
 
-/*
-function simpan_mut(){
- var url ='admin/pemangku/mutasi.php';
-$('.btn-simpan-mutasi').click(function(){ 
-	 var btn = $(this);
-	var load = $('#loader');
-    load.addClass('icon-spinner icon-spin icon-2x white');
-	
-	var form = $('#mutasi');
-    var data = form.serializeArray();
-	var post = $.post(url, data);
-	post.done(function (res){
-		var result = res.split('__');
-		if(result.length==3){
-                    if(result[0]=='success'){
-                        rslt.html('<font color="green">data tersimpan </font>');
-                        setTimeout(function(){
-                        rslt.html('');
-                        }, 1500);
-                        
-						var tbody = $('#tampil_pemangku');
-						tbody.html(result[6]);
-					//	init();
-                     //   alert(result[2]+'NIP'+result[3]+'telah dimutasi ke SKPD'+result[5]+'sebagai'+result[4]);
-					alert("kkkkk");	
-					}else{
-                      rslt.html('<font color="red">'+res+'</font>');   
-                    }
-                }else{
-                   rslt.html('<font color="red">'+res+'</font>');   
-                }
-		load.removeClass();
-            btn.removeClass('btn-info').addClass('btn-primary');
-
-	});
-	
-});
-} */
+ 
 </script>

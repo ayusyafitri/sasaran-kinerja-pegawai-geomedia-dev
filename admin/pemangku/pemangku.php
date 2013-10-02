@@ -196,6 +196,7 @@ $nama_bln=array(1=> "Januari", "Februari", "Maret", "April", "Mei",
     </table>    
 </div>
 <div id="misal"></div>
+
 <script>
     var url = 'admin/pemangku/aksi.php';
     var rslt = $('#result'); 
@@ -375,26 +376,37 @@ $('.btn-simpan-mutasi').click(function(){
 	var post = $.post(url, data);
 	post.done(function(res){
 		var result = res.split('__');
-		if(result.length==8){ 						//result leng tdk terbaca
+		if(result.length==7){ 						//result leng tdk terbaca
 			 
-		    if(result[0]=='success'||result[1]=='success'){
-					rslt.html('<font color="green">data tersimpan </font>');
-                      	setTimeout(function(){
-					     rslt.html('');
+		    if(result[0]=='success'){
+				rslt.html('<font color="green">data tersimpan </font>');
+				setTimeout(function(){
+					rslt.html('');
 				}, 1500);
+							
+				var tbody = $('#tampil_pemangku');
+				bootbox.alert(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5], function() {
+					//Example.show(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5]);
+					 console.log("Alert Callback");
+				});
 						
-						var tbody = $('#tampil_pemangku');
-						
-				 	    alert(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5]);
-				 		tbody.html(result[7]);
-				 		init();
-						$('#showDetail').modal('hide');
-					}else{
-                      rslt.html('<font color="red">'+res+'</font>');   
-                    }
-                }else{
-                   rslt.html('<font color="red">'+res+'</font>');   
-                }
+				 	  //  alert(result[3]+'('+result[4]+') telah dimutasi ke SKPD '+result[6]+' sebagai '+result[5]);
+				tbody.html(result[7]);
+				init();
+				$('#showDetail').modal('hide');
+			}else{
+				//rslt.html('<font color="red">'+res+'</font>');   
+                                
+				bootbox.alert(result[1], function() {
+				//	Example.show("jakakaka");
+					 console.log(result[1]);
+				});
+                                                
+				$('#showDetail').modal('hide');
+				}
+			}else{
+               rslt.html('<font color="red">'+res+'</font>');   
+        }
 		loadd.removeClass();
             btn.removeClass('btn-info').addClass('btn-primary');
 
@@ -403,8 +415,8 @@ $('.btn-simpan-mutasi').click(function(){
 });
 }
 
+
 	
-    replay();
     
     
 	

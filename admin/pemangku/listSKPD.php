@@ -27,6 +27,7 @@ from skp_pns p, skp_jabatan j where j.kode_jabatan=p.kode_jabatan and j.unit_ker
 				<td><?php echo $golongan['nama_golongan']?> (<?  echo $golongan['keterangan'] ?>)</td>
                 <td><?php echo $pr['nama_jabatan'] ?></td> 
 				<td class="center" >
+					 
 					<a href="#modalwin" data-toggle="modal"  class="btn btn-info bt-edit btn-small" name="<?php echo $pr['id_pns']; ?>"><i class="icon-edit icon-white"></i> ubah</a>
                     <a class="btn btn-danger bt-hapus btn-small" name="<?php echo $pr['id_pns']; ?>"><i class="icon-trash icon-white"></i> hapus</a>
 
